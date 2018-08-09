@@ -1,0 +1,28 @@
+class Solution:
+    """
+    @param: A: An integers array.
+    @return: return any of peek positions.
+    """
+    def findPeak(self, A):
+        # write your code here
+        # binary search: 4 situations: 
+        # if A[i-1] < A[i] < A[i+1], keep right part
+        # if A[i-1] > A[i] > A[i+1], keep left part   
+        # if A[i-1] > A[i] < A[i+1], keep left/right part 
+        # if A[i-1] < A[i] > A[i+1], then A[i] is the peak
+        # we know the peak cannot be the first or last postion, search from 1 to len-2 
+        
+        start, end = 1, len(A) - 1
+        while start + 1 < end:
+            mid = int(start + (end - start) / 2)
+            if A[mid] < A[mid + 1]:
+                start = mid
+            elif A[mid] < A[mid - 1]:
+                end = mid
+            else:
+                end = mid
+        
+        if A[start] < A[end]:
+            return end
+        else:
+            return start 
