@@ -1,0 +1,23 @@
+class Solution:
+    """
+    @param str: An array of char
+    @param offset: An integer
+    @return: nothing
+    """
+    def rotateString(self, str, offset):
+        # write your code here
+        # special cases
+        if len(str) == 0:
+            return 
+        pos = offset % len(str)
+        self.reverse(str, 0, len(str) - pos - 1)
+        self.reverse(str, len(str) - pos, len(str) - 1)
+        self.reverse(str, 0, len(str) - 1)
+        
+    def reverse(self, nums, start, end):
+        while start < end:
+            temp = nums[start]
+            nums[start] = nums[end]
+            nums[end] = temp 
+            start += 1
+            end -= 1
