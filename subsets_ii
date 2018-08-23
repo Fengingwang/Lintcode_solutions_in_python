@@ -1,0 +1,22 @@
+class Solution:
+    """
+    @param nums: A set of numbers
+    @return: A list of lists
+    """
+    def subsetsWithDup(self, nums):
+        # write your code here
+        if nums is None:
+            return []
+        result = []
+        nums.sort()
+        self.dfs(nums, 0, [], result)
+        return result
+        
+    def dfs(self, nums, pos, subset, res):
+        res.append([] + subset)
+        for i in range(pos, len(nums)):
+            if (i != pos and nums[i] == nums[i - 1]):
+                continue 
+            subset.append(nums[i])
+            self.dfs(nums, i + 1, subset, res)
+            subset.pop()       
