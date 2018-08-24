@@ -41,3 +41,6 @@ class Solution:
             rightBound = start
             
         return [leftBound, rightBound]
+
+
+# 34. Find First and Last Position of Element in Sorted Array
