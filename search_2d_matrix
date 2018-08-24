@@ -11,6 +11,8 @@ class Solution:
         # deal with special case
         if len(matrix) == 0 :
             return False 
+        if len(matrix[0]) == 0:
+            return False 
         
         n, m = len(matrix), len(matrix[0])
         start, end = 0, n * m  - 1
