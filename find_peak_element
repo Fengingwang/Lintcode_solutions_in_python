@@ -12,7 +12,7 @@ class Solution:
         # if A[i-1] < A[i] > A[i+1], then A[i] is the peak
         # we know the peak cannot be the first or last postion, search from 1 to len-2 
         
-        start, end = 1, len(A) - 1
+        start, end = 1, len(A) - 2
         while start + 1 < end:
             mid = int(start + (end - start) / 2)
             if A[mid] < A[mid + 1]:
