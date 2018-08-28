@@ -1,0 +1,28 @@
+class Solution:
+    """
+    @param: s: A string
+    @param: wordDict: A set of words.
+    @return: All possible sentences.
+    """
+    def wordBreak(self, s, wordDict):
+        # write your code here
+        memo = {}
+        return self.dfs(s, wordDict, memo)
+   
+        
+    def dfs(self, s, worddict, memo):
+        if s in memo:
+            return memo[s]
+        res = []
+        if s in worddict:
+            res.append(s)
+        for i in range(1, len(s)):
+            word = s[:i]
+            if word not in worddict:
+                continue 
+            suffix = s[i:]
+            segmentions = self.dfs(suffix, worddict, memo)
+            for segmention in segmentions:
+                res.append(word + " " + segmention)
+        memo[s] = res
+        return res
