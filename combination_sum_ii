@@ -1,0 +1,23 @@
+class Solution:
+    """
+    @param num: Given the candidate numbers
+    @param target: Given the target number
+    @return: All the combinations that sum to target
+    """
+    def combinationSum2(self, num, target):
+        # write your code here
+        num.sort()
+        result, temp, visited = [], [], [False] * len(num)
+        self.dfs(num, target, 0, 0, temp, visited, result)
+        return result
+        
+    def dfs(self, nums, target, pos, current, temp, visited, res):
+        if current == target:
+            res.append(temp[:])
+        for i in range(pos, len(nums)):
+            if current + nums[i] <= target and (i == 0 or nums[i] != nums[i - 1] or visited[i - 1] == True):
+                temp.append(nums[i])
+                visited[i] = True
+                self.dfs(nums, target, i + 1, current + nums[i], temp, visited, res)
+                temp.pop()
+                visited[i] = False
