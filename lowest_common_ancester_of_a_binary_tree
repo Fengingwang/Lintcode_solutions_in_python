@@ -31,7 +31,7 @@ class Solution:
         # 右子树有一个点或者右子树有LCA
         # 左右子树啥都没有
         if left_result and right_result:
-            return left_result
+            return root
         if left_result:
             return left_result
         if right_result:
