@@ -5,6 +5,41 @@ class TreeNode:
         self.val = val
         self.left, self.right = None, None
 """
+from collections import deque
+
+class Solution:
+    """
+    @param root: A Tree
+    @return: A list of lists of integer include the zigzag level order traversal of its nodes' values.
+    """
+    def zigzagLevelOrder(self, root):
+        # write your code here
+        if root is None:
+            return []
+        
+        queue = deque([root])
+        temp = []
+        result = []
+        
+        while queue:
+            level = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                level.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            temp.append(level)
+            
+        for i, item in enumerate(temp):
+            if i % 2 == 0:
+                result.append(item)
+            else:
+                result.append(item[::-1])
+        
+        return result 
+                
 
 class Solution:
     """
