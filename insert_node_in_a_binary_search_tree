@@ -1,0 +1,38 @@
+思路：为要插入的值建议一个newNode，如果原来的树是空树，直接返回newNode。
+将newnodeval与root.val比较，
+如果newnodeval < root.val，
+如果左子树为空，则newNode为左子节点，
+否则在左子树上进一步如上的操作。
+同理，右子树也是一样的。
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    """
+    @param: root: The root of the binary search tree.
+    @param: node: insert this node into the binary search tree
+    @return: The root of the new binary search tree.
+    """
+    def insertNode(self, root, node):
+        # write your code here
+        if root is None:
+            return node
+        
+        curt = root
+        while curt != node:
+            if node.val < curt.val:
+                if curt.left is None:
+                    curt.left = node
+                curt = curt.left 
+            else:
+                if curt.right is None:
+                    curt.right = node
+                curt = curt.right 
+                
+        return root
