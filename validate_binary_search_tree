@@ -1,0 +1,41 @@
+对于这棵树而言，怎样进行递归呢？
+root.left这棵树的所有节点值都小于root，
+root.right这棵树的所有节点值都大于root。
+然后依次递归下去就可以了。
+例如：如果这棵树是二叉查找树，
+                   4
+
+　　　　　　　　　　　　　　　　　/    \
+
+　　　　　　　　　　　　　　　　 2　　 6
+
+　　　　　　　　　　　　　　　 /    \   /   \
+
+　　　　　　　　　　　　　　 1      3 5    7
+那么左子树的节点值一定处于（负无穷，4）这个范围内，
+右子树的节点值一定处于（4，正无穷）这个范围内。
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    """
+    @param root: The root of binary tree.
+    @return: True if the binary tree is BST, or false
+    """
+    def isValidBST(self, root):
+        # write your code here
+        return self.validBST(root, -sys.maxsize, sys.maxsize)
+        
+    def validBST(self, root, minval, maxval):
+        if root is None:
+            return True
+        if root.val <= minval or root.val >= maxval:
+            return False
+        return self.validBST(root.left, minval, root.val) and self.validBST(root.right, root.val, maxval)
+    
