@@ -1,0 +1,31 @@
+"""
+Definition of ListNode
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+
+class Solution:
+    """
+    @param head: head is the head of the linked list
+    @return: head of the linked list
+    """
+    def deleteDuplicates(self, head):
+        # write your code here
+        if head is None or head.next is None:
+            return head
+            
+        dummy = ListNode(-1)
+        dummy.next = head 
+        head = dummy 
+        
+        while head.next is not None and head.next.next is not None:
+            if head.next.val == head.next.next.val:
+                temp = head.next.val
+                while head.next is not None and head.next.val == temp:
+                    head.next = head.next.next
+            else:
+                head = head.next 
+                
+        return dummy.next
