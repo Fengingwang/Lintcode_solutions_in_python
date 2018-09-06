@@ -1,0 +1,59 @@
+"""
+Definition of ListNode
+class ListNode(object):
+
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+class Solution:
+    """
+    @param lists: a list of ListNode
+    @return: The head of one sorted list.
+    """
+    def mergeKLists(self, lists):
+        # write your code here
+        if len(lists) == 0:
+            return 
+        return self.mergehelper(lists, 0, len(lists) - 1)
+        
+        
+    def mergehelper(self, list1, start, end):
+        if start == end:
+            return list1[start]
+        mid = int(start + (end - start) / 2)
+        left = self.mergehelper(list1, start, mid)
+        right = self.mergehelper(list1, mid + 1, end)
+        return self.mergetwolists(left, right)
+        
+    def mergetwolists(self, list1, list2):
+        if list1 is None:
+            return list2
+        if list2 is None:
+            return list1
+        
+        head = None
+        if list1.val < list2.val:
+            head = list1
+            list1 = list1.next 
+        else:
+            head = list2
+            list2 = list2.next 
+        
+        temp = head 
+        while list1 is not None and list2 is not None:
+            if list1.val < list2.val:
+                temp.next = list1
+                temp = list1
+                list1 = list1.next 
+            else:
+                temp.next = list2
+                temp = list2
+                list2= list2.next
+                
+        if list1 is not None:
+            temp.next = list1
+        if list2 is not None:
+            temp.next = list2
+            
+        return head 
