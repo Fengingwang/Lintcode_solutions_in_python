@@ -15,33 +15,33 @@ class Solution:
     """
     def reverseBetween(self, head, m, n):
         # write your code here
-        dummy = ListNode(-1, head)
-        mth_prev = self.findkth(dummy, m - 1)
-        mth = mth_prev.next
+        dummy = ListNode(-sys.maxsize, head)
+        
+        mth_pre = self.findkth(dummy, m - 1)
+        mth = mth_pre.next 
+        
         nth = self.findkth(dummy, n)
-        nth_next = nth.next
+        nth_next = nth.next 
         nth.next = None 
         
         self.reverse(mth)
-        mth_prev.next = nth
-        mth.next = nth_next
+        mth_pre.next = nth 
+        mth.next = nth_next 
         return dummy.next 
+        
         
     def findkth(self, head, k):
         for i in range(k):
             if head is None:
                 return None
-            head = head.next
+            head = head.next 
         return head 
         
-    def reverse(self, head):
-        curt = None
-        while head != None:
-            temp = head.next
-            head.next = curt
-            curt = head
-            head = temp
-        return curt 
-            
-            
-        
+    def reverse(self, curt):
+        pren = None
+        while curt is not None:
+            temp = curt.next
+            curt.next = pren
+            pren = curt
+            curt = temp
+        return pren 
