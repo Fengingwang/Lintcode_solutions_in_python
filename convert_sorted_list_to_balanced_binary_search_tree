@@ -1,0 +1,42 @@
+"""
+Definition of ListNode
+class ListNode(object):
+
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+
+class Solution:
+    """
+    @param: head: The first node of linked list.
+    @return: a tree node
+    """
+    def sortedListToBST(self, head):
+        # write your code here
+        array = []
+        temp = head
+        while temp:
+            array.append(temp.val)
+            temp = temp.next 
+            
+        return self.sortedarraytobst(array)
+        
+    def sortedarraytobst(self, array):
+        length = len(array)
+        if length == 0:
+            return 
+        if length == 1:
+            return TreeNode(array[0])
+        root = TreeNode(array[length // 2])
+        root.left = self.sortedarraytobst(array[:length // 2])
+        root.right = self.sortedarraytobst(array[length // 2 + 1:])
+        return root
+   
