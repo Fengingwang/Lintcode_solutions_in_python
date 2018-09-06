@@ -22,3 +22,13 @@ class Solution:
             curt = head 
             head = temp 
         return curt
+        
+        
+    def reverse(self, curt):
+        pren = None
+        while curt is not None:
+            temp = curt.next
+            curt.next = pren
+            pren = curt
+            curt = temp
+        return pren 
