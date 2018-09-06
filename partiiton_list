@@ -17,7 +17,7 @@ class Solution:
         if head is None:
             return head
         
-        ahead, bhead = ListNode(0), ListNode(0)
+        ahead, bhead = ListNode(-sys.maxsize), ListNode(-sys.maxsize)
         atail, btail = ahead, bhead
         
         while head is not None:
