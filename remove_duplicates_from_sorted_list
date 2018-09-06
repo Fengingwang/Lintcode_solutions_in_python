@@ -1,3 +1,5 @@
+"""
+Definition of ListNode
 class ListNode(object):
     def __init__(self, val, next=None):
         self.val = val
@@ -18,10 +20,10 @@ class Solution:
         dummy.next = head
         head = dummy
         
-        while head.next is not None:
-            if head.val == head.next.val:
+        while head.next is not None and head.next.next is not None:
+            if head.next.val == head.next.next.val:
                 head.next = head.next.next
             else:
-                head = head.next
-        
-        return dummy.next
+                head = head.next 
+            
+        return dummy.next 
