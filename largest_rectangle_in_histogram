@@ -1,3 +1,8 @@
+Search from the middle to left and right, find the first element that smaller than it
+Since the stack is increasing
+the left_first_smaller_one is the element just left to it
+the right_first_smaller_one is kind of complex: we continuouly add num from heights, if the to_add one is smaller than 
+    the last one in stack, it should be the right_first_smaller. This is also where the while comes from 
 class Solution:
     """
     @param height: A list of integer
