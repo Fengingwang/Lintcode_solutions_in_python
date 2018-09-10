@@ -1,0 +1,17 @@
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    def constructMaximumBinaryTree(self, nums):
+        if not nums: #if nums is None ???? it does not work
+            return None
+        root, maxi = TreeNode(max(nums)), nums.index(max(nums))
+        root.left = self.constructMaximumBinaryTree(nums[:maxi])
+        root.right = self.constructMaximumBinaryTree(nums[maxi + 1:])
+        return root
+        
