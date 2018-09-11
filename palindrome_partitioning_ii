@@ -1,0 +1,30 @@
+# 解题思路：
+# p[i][j]表示从字符i到j是否为一个回文字符串。
+# f[i] 表示前i个字母，最少可以被分割为多少个回文串 -1, that is mincut ~ f
+
+class Solution:
+    """
+    @param s: A string
+    @return: An integer
+    """
+    def minCut(self, s):
+        if len(s) == 0:
+            return 
+        
+        # intial 
+        n = len(s)
+        pal = [[False for _ in range(n)] for _ in range(n)]
+        f = [n - i - 1 for i in range(n)]
+        
+        # status and transfer
+        for start in range(n - 1, -1, -1):
+            for end in range(start, n):
+                if s[start] == s[end] and (end - start <= 1 or pal[start + 1][end - 1]):
+                    pal[start][end] = True
+                    if end == n - 1:
+                        f[start] = 0
+                    else:
+                        f[start] = min(f[start],  f[end + 1] + 1)
+        
+        # return                
+        return f[0]
