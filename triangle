@@ -1,0 +1,23 @@
+class Solution:
+    """
+    @param triangle: a list of lists of integers
+    @return: An integer, minimum path sum
+    """
+    def minimumTotal(self, triangle):
+        # write your code here
+        if len(triangle) == 0 or len(triangle[0]) == 0:
+            return -1 
+        
+        # initial 
+        N = len(triangle)
+        f = [[0 for x in range(N)] for y in range(N)]
+        for i in range(N):
+            f[N - 1][i] = triangle[N - 1][i]
+        
+        # status and transfer
+        for i in range(N - 2, 0 - 1, -1):
+            for j in range(0, i + 1):
+                f[i][j] = min(f[i + 1][j], f[i + 1][j + 1]) + triangle[i][j]
+        
+        # return 
+        return f[0][0]
