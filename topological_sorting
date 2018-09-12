@@ -1,0 +1,42 @@
+"""
+Definition for a Directed graph node
+class DirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+"""
+
+
+class Solution:
+    """
+    @param: graph: A list of Directed graph node
+    @return: Any topological order for the given graph.
+    """
+    def topSort(self, graph):
+        # write your code here
+        # repeatedly search for node with indegree == 0 
+        node_to_indegree = self.get_indegree(graph)
+        
+        # BFS
+        order = []
+        start_nodes = [i for i in graph if node_to_indegree[i] == 0]
+        queue = collections.deque(start_nodes)
+        
+        while queue:
+            node = queue.popleft()
+            order.append(node)
+            for neighbor in node.neighbors:
+                node_to_indegree[neighbor] -= 1
+                if node_to_indegree[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        return order
+        
+    def get_indegree(self, graph):
+        node_to_indegree = {x: 0 for x in graph}
+        
+        for node in graph:
+            for neighbor in node.neighbors:
+                node_to_indegree[neighbor] += 1 
+                
+        return node_to_indegree
