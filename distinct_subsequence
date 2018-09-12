@@ -1,0 +1,36 @@
+# 解题思路
+# 这道题使用动态规划来解决。
+# 题的意思是：S的所有子串中，有多少子串是T。
+# dp[i][j]表示S[0...i-1]中有多少子串是T[0...j-1]。
+# 当S[i-1]=T[j-1]时：dp[i][j]=dp[i-1][j-1]+dp[i-1][j]；
+# S[0...i-1]中有多少子串是T[0...j-1]包含：
+# {S[0...i-2]中有多少子串是T[0...j-2]}+{S[0...i-2]中有多少子串是T[0...j-1]}
+# 当S[i-1]!=T[j-1]时：dp[i][j]=dp[i-1][j-1]
+# 初始化状态：dp[i][0]=1；S[0...i-1]只有一个子串是空串。
+
+class Solution:
+    """
+    @param: : A string
+    @param: : A string
+    @return: Count the number of distinct subsequences
+    """
+    def numDistinct(self, S, T):
+        # write your code here
+        
+        #intial 
+        lens = len(S)
+        lent = len(T)
+        f = [[0 for _ in range(lent + 1)] for _ in range(lens + 1)]
+        for i in range(lens + 1):
+            f[i][0] = 1
+        
+        # status and transfer
+        for i in range(1, lens + 1):
+            for j in range(1, min(i + 1, lent + 1)):
+                if S[i - 1] == T[j - 1]:
+                    f[i][j] = f[i - 1][j] + f[i - 1][j - 1]
+                else:
+                    f[i][j] = f[i - 1][j] 
+        
+        # return 
+        return f[lens][lent]
