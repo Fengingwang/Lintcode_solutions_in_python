@@ -1,0 +1,39 @@
+# Create a table to store lengths of longest common suffixes of substrings.  
+# Note that LCSuff[i][j] contains the  length of longest common suffix of  
+# X[0...i-1] and Y[0...j-1]. The first row and first column entries have no 
+# logical meaning, they are used only  for simplicity of the program. 
+# state: f[i][j] is the length of the longest lcs
+# ended with A[i - 1] & B[j - 1] in A[0..i-1] & B[0..j-1]
+# initialize: f[i][j] is 0 by default
+# function: f[i][j] = f[i - 1][j - 1] + 1 or 0        
+# answer: max{f[i][j]}
+
+
+class Solution:
+    """
+    @param A: A string
+    @param B: A string
+    @return: the length of the longest common substring.
+    """
+    def longestCommonSubstring(self, A, B):
+        # write your code here
+        
+        # intial
+        n = len(A)
+        m = len(B)
+        f = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
+        f[0][0] = 0
+        
+        # status and transfer
+        maxn = 0
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                if A[i - 1] == B[j - 1]:
+                    f[i][j] = f[i - 1][j - 1] + 1
+                    maxn = max(maxn, f[i][j])
+                else:
+                    f[i][j] = 0
+        
+        # return 
+        return maxn
+                    
