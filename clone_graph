@@ -1,0 +1,50 @@
+# 解题思路：由于遍历一个图有两种方式：bfs和dfs。所以深拷贝一个图也可以采用这两种方法。
+# 不管使用dfs还是bfs都需要一个哈希表map来存储原图中的节点和新图中的节点的一一映射。
+# map的作用在于替代bfs和dfs中的visit数组，
+# 一旦map中出现了映射关系，就说明已经复制完成，也就是已经访问过了。
+
+"""
+Definition for a undirected graph node
+class UndirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+"""
+class Solution:
+    """
+    @param: node: A undirected graph node
+    @return: A undirected graph node
+    """
+    def cloneGraph(self, node):
+        # write your code here
+        root = node
+        if node is None:
+            return node
+            
+        # use BFS alg to traverse the graph and get all nodes
+        nodes = self.getnodes(node)
+        
+        # copy nodes, store teh old -> new mapping information in the hashmap
+        mapping = {}
+        for node in nodes:
+            mapping[node] = UndirectedGraphNode(node.label)
+        
+        # copy edges
+        for node in nodes:
+            new_node = mapping[node]
+            for neighbor in node.neighbors:
+                new_neighbor = mapping[neighbor]
+                new_node.neighbors.append(new_neighbor)
+                
+        return mapping[root]
+        
+    def getnodes(self, node):
+        q = collections.deque([node])
+        res = set([node])
+        while q:
+            head = q.popleft()
+            for neighbor in head.neighbors:
+                if neighbor not in res:
+                    res.add(neighbor)
+                    q.append(neighbor)
+        return res
