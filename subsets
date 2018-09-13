@@ -18,3 +18,16 @@ class Solution:
             subset.append(nums[i])
             self.dfs(nums, i + 1, subset, res)
             subset.pop()
+
+there is one point what we need to point out:
+if nums is None: return []
+if len(nums) == 0: return [[]]
+this is right
+or only the below one is also right 
+if nums is None: return []
+but teh below one is not right 
+if len(nums) == 0: return []
+so we need to know the difference of 
+None and len(nums) == 0
+The first one is blank input, no input
+The second one is like []
