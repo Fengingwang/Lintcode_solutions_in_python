@@ -16,6 +16,8 @@ class Solution:
         if head is None or head.next is None:
             return head 
         
+        # When fastPointer reaches end of list, slowPointer will be pointing to middle element of list
+        # if there are 5 elements, the faster one point to the end Null, the slow one is in the 3rd element 
         fast, slow = head, head
         while fast.next is not None and fast.next.next is not None:
             fast = fast.next.next
@@ -49,4 +51,11 @@ class Solution:
         else:
             temp.next = l2
         return dummy.next 
-                
+       
+
+
+slow pointer and a fast pointer is mostly used in case of identifying
+getting middle element of linked list in one pass
+whether loop is present in Linked list
+http://javabypatel.blogspot.com/2016/10/find-middle-element-of-linked-list.html
+https://www.quora.com/What-is-a-slow-pointer-and-a-fast-pointer-in-a-linked-list
