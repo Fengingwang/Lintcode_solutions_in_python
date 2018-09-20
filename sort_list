@@ -23,11 +23,11 @@ class Solution:
             fast = fast.next.next
             slow = slow.next
             
-        mid = slow.next 
+        newhead = slow.next 
         slow.next = None 
         
         list1 = self.sortList(head)
-        list2 = self.sortList(mid)
+        list2 = self.sortList(newhead)
         
         result = self.mergeTwoLists(list1, list2)
         
