@@ -9,41 +9,43 @@ class ListNode(object):
 class Solution:
     # @param head, a ListNode
     # @return nothing
-    
     def reorderList(self, head):
+        # find the middle, cut at middle and separate into 2 parts, reverse the right part
+        # then combine two parts one by one 
         if head is None or head.next is None or head.next.next is None:
             return head
 
-        #find mid
-        slow = head
-        fast = head
+        # find middle
+        fast, slow = head, head 
         while fast.next is not None and fast.next.next is not None:
             slow = slow.next
             fast = fast.next.next
         mid = slow
 
-        #cut in the middle
-        left = head
-        right_pre = mid.next
-        if right_pre is None:
-            return head
+        # cut in the middle and separate into two lists
+        newhead = mid.next
         mid.next = None
+        if newhead is None:
+            return head
         
-        right = self.reverse(right_pre)
+        # reverse the right part
+        l1 = head 
+        l2 = self.reverse(newhead)
         
-        # merge left and right
+        # merge two parts one by one 
         dummy = ListNode(-sys.maxsize)
         temp = dummy
         
-        while left is not None or right is not None:
-            if left is not None:
-                temp.next = left
-                left = left.next
-                temp = temp.next
-            if right is not None:
-                temp.next = right
-                right = right.next
-                temp = temp.next
+        while l1 is not None or l2 is not None:   # "while" not "if" && "or" not "and"
+            if l1 is not None:
+                temp.next = l1
+                l1 = l1.next 
+                temp = temp.next    
+                # cannot put the "temp = temp.next" out of if since we do the "move step" once for l1 and once for l2
+            if l2 is not None:
+                temp.next = l2
+                l2 = l2.next 
+                temp = temp.next 
                 
         return  dummy.next
         
