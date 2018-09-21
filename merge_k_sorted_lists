@@ -17,7 +17,6 @@ class Solution:
             return 
         return self.mergehelper(lists, 0, len(lists) - 1)
         
-        
     def mergehelper(self, list1, start, end):
         if start == end:
             return list1[start]
@@ -26,58 +25,15 @@ class Solution:
         right = self.mergehelper(list1, mid + 1, end)
         return self.mergetwolists(left, right)
         
-    def mergetwolists(self, list1, list2):
-        if list1 is None:
-            return list2
-        if list2 is None:
-            return list1
-        
-        head = None
-        if list1.val < list2.val:
-            head = list1
-            list1 = list1.next 
-        else:
-            head = list2
-            list2 = list2.next 
-        
-        temp = head 
-        while list1 is not None and list2 is not None:
-            if list1.val < list2.val:
-                temp.next = list1
-                temp = list1
-                list1 = list1.next 
-            else:
-                temp.next = list2
-                temp = list2
-                list2= list2.next
-                
-        if list1 is not None:
-            temp.next = list1
-        if list2 is not None:
-            temp.next = list2
-            
-        return head 
-
-# The function below is not right, but double check why and what's the point 
-def merge2sortedlists(self, l1, l2):
-   
-        dummy = ListNode(-sys.maxsize)
-        temp = dummy 
-        
-        if l1 is not None and l2 is not None:
+    def mergetwolists(self, l1, l2):
+        temp = dummy = ListNode(-sys.maxsize)
+        while l1 and l2:
             if l1.val < l2.val:
                 temp.next = l1
-                l1 = l1.next 
+                l1 = l1.next
             else:
                 temp.next = l2
-                l2 = l2.next 
-            temp = temp.next 
-            
-        if l1 is not None:
-            temp.next = l1
-        if l2 is not None:
-            temp.next = l2
-        
-        return dummy.next 
-        
-        
+                l2 = l2.next
+            temp = temp.next
+        temp.next = l1 or l2
+        return dummy.next
