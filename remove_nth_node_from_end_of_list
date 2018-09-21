@@ -17,11 +17,10 @@ class Solution:
         # 使用两个指针扫描，当第一个指针扫描到第N个结点后，
         # 第二个指针从表头与第一个指针同时向后移动，
         # 当第一个指针指向空节点时，另一个指针就指向倒数第n个结点了 
-        dummy = ListNode(0)
-        dummy.next = head
+        dummy = ListNode(-sys.maxsize, head)
         temp = dummy
         
-        for i in range(0, n):
+        for i in range(n):
             head = head.next 
         while head is not None:
             head = head.next
