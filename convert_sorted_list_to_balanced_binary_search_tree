@@ -24,9 +24,8 @@ class Solution:
         array = []
         temp = head
         while temp:
-            array.append(temp.val)
-            temp = temp.next 
-            
+            array.append(temp.val)  #should be temp.val not temp 
+            temp = temp.next            
         return self.sortedarraytobst(array)
         
     def sortedarraytobst(self, array):
