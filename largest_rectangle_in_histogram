@@ -22,3 +22,15 @@ class Solution:
             
         return area
                 
+
+stack (“last-in, first-out”) usually uses list to implement it
+so now most of operations are based on list
+
+list.append(): Add an item to the end, which is equivalent to a[len(a):] = [x]
+list.pop([i]): Remove the item at the given position in the list, and return it
+               If no index is specified, a.pop() removes and returns the last item in the list
+list[-1]: this will get the last element of stack
+The difference between list.pop() and list[-1] is: 
+list.pop() return the last one but at the same time this element will be removed from the list, so the list_length is decreasing by 1,
+           if you use this operation in a loop, the list_length is Dynamic 
+list[-1]: only get the last element 
