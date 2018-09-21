@@ -35,5 +35,9 @@ class Solution:
                 temp.next = l2
                 l2 = l2.next
             temp = temp.next
-        temp.next = l1 or l2
+        # temp.next = l1 or l2
+        if l1 is not None:
+            temp.next = l1
+        if l2 is not None:
+            temp.next = l2
         return dummy.next
