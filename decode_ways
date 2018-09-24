@@ -5,6 +5,35 @@
 # 当s[i-2:i]等于10或者20时，由于10和20只有一种编码方式，所以dp[i]=dp[i-2]
 # 当s[i-2:i]不在以上两个范围时，如09这种，编码方式为0，而31这种，dp[i]=dp[i-1]。
 # 注意初始化时：dp[0]=1,dp[1]=1
+class Solution:
+    """
+    @param s: a string,  encoded message
+    @return: an integer, the number of ways decoding
+    """
+    def numDecodings(self, s):
+        # write your code here
+        if len(s) == 0 or s[0] == '0':
+            return 0
+        
+        # intalization
+        n = len(s)
+        f = [0] * (max(n + 1, 2))
+        f[0], f[1] = 1, 1
+        
+        # status and transfer
+        for i in range(2, n + 1):
+            if 10 <= int(s[i - 2:i]) <= 26 and s[i - 1] != '0':
+                f[i] = f[i - 1] + f[i - 2]
+            elif int(s[i-2:i]) == 10 or int(s[i-2:i]) == 20:
+                f[i] = f[i - 2]
+            elif s[i-1] != '0':
+                f[i] = f[i - 1]
+            else:
+                return 0
+        
+        # return        
+        return f[n]
+
 
 class Solution:
     """
