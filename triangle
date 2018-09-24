@@ -17,7 +17,7 @@ class Solution:
         # status and transfer
         for i in range(N - 2, 0 - 1, -1):
             for j in range(0, i + 1):
-                f[i][j] = min(f[i + 1][j], f[i + 1][j + 1]) + triangle[i][j]
+                f[i][j] = min(f[i + 1][j] + triangle[i][j], f[i + 1][j + 1] + triangle[i][j])
         
         # return 
         return f[0][0]
