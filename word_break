@@ -18,9 +18,9 @@ class Solution:
         # status and transfer
         for i in range(1, n + 1):
             for j in range(1, min(i, maxlen) + 1):
-                if f[i -j] == False:
+                if f[i -j] == False:   # first part in the dict 
                     continue 
-                if s[i - j:i] in dict:
+                if s[i - j:i] in dict: # second part in the dict 
                     f[i] = True
                     break
         
