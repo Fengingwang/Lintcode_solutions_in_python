@@ -2,7 +2,6 @@
 # w, h = 8, 5;
 # Matrix = [[0 for x in range(w)] for y in range(h)] 
 
-
 class Solution:
     """
     @param grid: a list of lists of integers
@@ -10,24 +9,23 @@ class Solution:
     """
     def minPathSum(self, grid):
         # write your code here
-        M = len(grid)
-        N = len(grid[0])
+        m = len(grid) # row
+        n = len(grid[0]) # column 
         
-        # initial 
-        dp = [[0 for x in range(N)] for y in range(M)] 
-        dp[0][0] = grid[0][0]
+        # intialization 
+        f = [[0 for x in range(n)] for y in range(m)] # m row n column grid filled with 0
+        f[0][0] = grid[0][0] 
         
         # status and transfer
-        for i in range(1,M):
-            dp[i][0] = dp[i - 1][0] + grid[i][0]
-        for j in range(1,N):
-            dp[0][j] = dp[0][j - 1] + grid[0][j]
-        for i in range(1,M):
-            for j in range(1,N):
-                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+        for i in range(1, m): # first column 
+            f[i][0] = f[i - 1][0] + grid[i][0]
+        for j in range(1, n): # first row 
+            f[0][j] = f[0][j - 1] + grid[0][j]
+        for i in range(1, m): # inner girds
+            for j in range(1, n):
+                f[i][j] = min(f[i - 1][j] + grid[i][j], f[i][j - 1] + grid[i][j])
         
         # return         
-        return dp[-1][-1]
+        return f[-1][-1]  
         # return dp[M - 1][N - 1]
-            
 
