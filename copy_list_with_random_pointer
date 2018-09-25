@@ -23,7 +23,7 @@ class Solution:
         # create a empty dict
         res = dict()
         
-        # copy the next_pointer
+        # copy the node
         node = head
         while node:
             res[node] = RandomListNode(node.label)
@@ -32,7 +32,7 @@ class Solution:
         # create a empty pointer
         res[None] = None
 
-        # copy the random_pointer
+        # copy the next_pointer and random_pointer
         node = head
         while node:
             res[node].next = res[node.next]
