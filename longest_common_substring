@@ -8,7 +8,6 @@
 # function: f[i][j] = f[i - 1][j - 1] + 1 or 0        
 # answer: max{f[i][j]}
 
-
 class Solution:
     """
     @param A: A string
@@ -17,15 +16,15 @@ class Solution:
     """
     def longestCommonSubstring(self, A, B):
         # write your code here
-        
-        # intial
         n = len(A)
         m = len(B)
-        f = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
+        
+        # intailzation
+        f = [[0 for j in range(m + 1)] for i in range(n + 1)]
         f[0][0] = 0
         
         # status and transfer
-        maxn = 0
+        maxn = 0 
         for i in range(1, n + 1):
             for j in range(1, m + 1):
                 if A[i - 1] == B[j - 1]:
@@ -34,6 +33,5 @@ class Solution:
                 else:
                     f[i][j] = 0
         
-        # return 
-        return maxn
-                    
+        # return          
+        return maxn 
