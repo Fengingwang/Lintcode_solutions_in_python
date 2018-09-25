@@ -1,6 +1,7 @@
-# 使用hashtable，
-# 在这个hash表里，记录了老链表和新链表的每一组对应。
-# 这样先构造了一个纯next的链表，然后再次循环就能得到带random的链表了
+# 链表的拷贝其实可以看做两个步骤，一个是节点数据的拷贝，另一个是节点关系的拷贝。
+# 我们也可以先把所有的节点进行拷贝，并存入字典中。
+# 然后遍历链表并拷贝两个指针。
+# 因为任意指针可能指向空指针，所以在字典中添加一个空指针项。
 
 """
 Definition for singly-linked list with a random pointer.
@@ -10,25 +11,32 @@ class RandomListNode:
         self.next = None
         self.random = None
 """
+
+
 class Solution:
     # @param head: A RandomListNode
     # @return: A RandomListNode
     def copyRandomList(self, head):
-        # write your code here
-        nodeDict = dict()
-        dummy = RandomListNode(0)
-        pointer, newHead = head, dummy
+        if head is None:
+            return 
         
-        while pointer:
-            newNode = RandomListNode(pointer.label)
-            nodeDict[pointer] = newHead.next = newNode
-            newHead, pointer = newHead.next, pointer.next
-        pointer, newHead = head, dummy.next
+        # create a empty dict
+        res = dict()
         
-        while pointer:
-            if pointer.random:
-                newHead.random = nodeDict[pointer.random]
-            pointer, newHead = pointer.next, newHead.next
+        # copy the next_pointer
+        node = head
+        while node:
+            res[node] = RandomListNode(node.label)
+            node = node.next
+
+        # create a empty pointer
+        res[None] = None
+
+        # copy the random_pointer
+        node = head
+        while node:
+            res[node].next = res[node.next]
+            res[node].random = res[node.random]
+            node = node.next
             
-        return dummy.next
-        
+        return res[head]
