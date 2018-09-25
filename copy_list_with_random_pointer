@@ -40,3 +40,23 @@ class Solution:
             node = node.next
             
         return res[head]
+
+
+
+numbers = dict(x=5, y=0)    
+/*output: numbers = {'x': 5, 'y': 0}*/
+empty = dict()             
+/*output: empty = {}*/
+numbers1 = dict([('x', 5), ('y', -5)]) 
+/*output: numbers1 = {'y': -5, 'x': 5}*/
+numbers2 = dict([('x', 5), ('y', -5)], z=8)
+/*numbers2 = {'z': 8, 'y': -5, 'x': 5}*/
+numbers3 = dict(dict(zip(['x', 'y', 'z'], [1, 2, 3])))
+/*numbers3 = {'z': 3, 'y': 2, 'x': 1}*/
+numbers1 = dict({'x': 4, 'y': 5})
+/*numbers1 = {'x': 4, 'y': 5}*/
+numbers2 = {'x': 4, 'y': 5}
+/*numbers2 = {'x': 4, 'y': 5}*/
+numbers3 = dict({'x': 4, 'y': 5}, z=8)
+/*numbers3 = {'x': 4, 'z': 8, 'y': 5}*/
+
