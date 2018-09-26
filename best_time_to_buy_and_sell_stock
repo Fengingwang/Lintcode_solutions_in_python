@@ -1,0 +1,21 @@
+# 一次循环就可以求出结果
+# 在遍历的过程中，用一个变量保存目前为止最小的数，
+# 用当前的数与目前最小的数相减，
+# 判断这个差与此前得到的最大收益的大小，取较大值更新最大收益
+
+class Solution:
+    """
+    @param prices: Given an integer array
+    @return: Maximum profit
+    """
+    def maxProfit(self, prices):
+        # write your code here
+        pmin, profit = sys.maxsize, 0
+        
+        for price in prices:
+            if price - pmin > profit:
+                profit = price - pmin
+            if price < pmin:
+                pmin = price 
+                
+        return profit 
