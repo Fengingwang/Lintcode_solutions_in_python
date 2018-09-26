@@ -10,12 +10,12 @@ class Solution:
     """
     def maxProfit(self, prices):
         # write your code here
-        pmin, profit = sys.maxsize, 0
+        low, profit = sys.maxsize, 0
         
         for price in prices:
-            if price - pmin > profit:
-                profit = price - pmin
-            if price < pmin:
-                pmin = price 
+            if price - low > profit:
+                profit = price - low
+            if price < low:
+                low = price 
                 
         return profit 
