@@ -1,0 +1,36 @@
+# 这个题的思路是，因为 两个subarray 一定不重叠, 
+# 所以必定存在一条分割线, 分开这两个subarrays
+# 所以 最后的部分里：
+#   max = Integer.MIN_VALUE;
+#         for(int i = 0; i < size - 1; i++){
+#             max = Math.max(max, left[i] + right[i + 1]);
+#         }
+#         return max;
+# 这里是在枚举 这条分割线的位置
+# 然后 left[]和right[]里分别存的是，
+# 某个位置往左的 maximum subarray 和往右的 maximum subarray
+
+class Solution:
+    """
+    @param nums: A list of integers
+    @return: An integer denotes the sum of max two non-overlapping subarrays
+    """
+    def maxTwoSubArrays(self, nums):
+        # write your code here   
+        # write your code here   
+        n = len(nums)
+        a = nums[:]
+        aa = nums[:]
+        for i in range(1, n):
+            a[i] = max(nums[i], a[i-1] + nums[i])
+            aa[i] = max(a[i], aa[i-1])
+        b = nums[:]
+    	bb = nums[:]
+        for i in range(n-2, -1, -1):
+            b[i] = max(b[i+1] + nums[i], nums[i])
+            bb[i] = max(b[i], bb[i+1])
+        mx = -65535
+        for i in range(n - 1):
+            mx = max(aa[i]+b[i+1], mx)
+
+        return mx
