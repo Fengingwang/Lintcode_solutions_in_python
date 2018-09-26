@@ -1,0 +1,40 @@
+# XOR3
+# a XOR3 a XOR3 a = 0
+# a XOR3 0 = a
+# 交换律
+# 结合律
+
+# 3_bit only 0 1 2 will show up
+# 0 1 2
+# 0 1 2
+# 0 1 2 
+# -----
+# 0 0 0
+# 抵销思想
+
+# 用一个32位的数的每一位表示某一位出现几次，出现3次就给它归零
+# 如果除一个数字外其余的数字出现了n次
+# 可以用了一个包含32个元素（因为int型数值为32位）的数组来记录每一个位出现的次数，
+# 最后对每位对n进行取余操作(出现3次就给它归零), 并通过位移操作将剩余的数字拼起来。
+
+class Solution:
+    """
+    @param A: An integer array
+    @return: An integer
+    """
+    def singleNumberII(self, A):
+        # write your code here
+        if A is None or len(A) == 0:
+            return - 1
+        
+        res = 0
+        for i in range(32):
+            temp = 0
+            for num in A:
+                if (num >> i & 1) == 1:
+                    temp += 1
+                    temp = temp % 3
+                    
+            res |= temp << i
+        
+        return res
