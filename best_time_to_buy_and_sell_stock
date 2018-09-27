@@ -11,11 +11,9 @@ class Solution:
     def maxProfit(self, prices):
         # write your code here
         low, profit = sys.maxsize, 0
-        
-        for price in prices:
-            if price - low > profit:
-                profit = price - low
-            if price < low:
-                low = price 
-                
-        return profit 
+        for num in prices:
+            if num - low > profit:
+                profit = num - low 
+            if num < low:
+                low = num 
+        return profit
