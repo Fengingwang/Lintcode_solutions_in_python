@@ -13,7 +13,7 @@ class Solution:
         
         while i < j:
             if nums[i] + nums[j] == target:
-                return [i, j]
+                return [i + 1, j + 1]
             elif nums[i] + nums[j] > target:
                 j -= 1
             else:
