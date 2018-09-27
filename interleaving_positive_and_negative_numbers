@@ -1,0 +1,24 @@
+class Solution:
+    """
+    @param A: An integer array.
+    @return nothing
+    """
+    def rerange(self, A):
+        # write your code here
+        l1 = [i for i in A if i > 0]
+        l2 = [i for i in A if i < 0]
+        if(len(l1) > len(l2)):
+            tmp = self.subfun(l1, l2)
+        else:
+            tmp = self.subfun(l2, l1)
+        for i in range(len(tmp)):
+            A[i] = tmp[i]
+            
+    def subfun(self, A, B):
+        res = []
+        for i in range(len(B)):
+            res.append(A[i])
+            res.append(B[i])
+        if(len(A) > len(B)):
+            res.append(A[-1])
+        return res
