@@ -1,0 +1,25 @@
+# first, create sum[i]
+#       sum[0] = 0
+#       sum[i] = sum of first i nums 
+# second, find maxsub = ith_num to jth_num
+#                     = sum[j] - sum[i -1]
+
+class Solution:
+    """
+    @param nums: A list of integers
+    @return: A integer indicate the sum of max subarray
+    """
+    def maxSubArray(self, nums):
+        # write your code here
+        if nums is None or len(nums) == 0:
+            return 0
+        
+        minp, maxsub = 0, -sys.maxsize
+        sumi = 0
+        
+        for num in nums:
+            sumi += num 
+            maxsub = max(maxsub, sumi - minp) # cannot change the order of these two 
+            minp = min(minp, sumi)
+        
+        return maxsub
