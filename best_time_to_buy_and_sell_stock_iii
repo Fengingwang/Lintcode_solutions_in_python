@@ -13,25 +13,27 @@ class Solution:
     """
     def maxProfit(self, prices):
         # write your code here
+        if len(prices) <= 1:
+            return 0
         
         n = len(prices)
-        if n <= 1:
-            return 0
-        p1 = [0] * n
-        p2 = [0] * n
         
-        minV = prices[0]
-        for i in range(1,n):
-            minV = min(minV, prices[i]) 
-            p1[i] = max(p1[i - 1], prices[i] - minV)
+        left = [0 for i in range(n)]
+        right = [0 for i in range(n)]
         
-        maxV = prices[-1]
-        for i in range(n-2, -1, -1):
-            maxV = max(maxV, prices[i])
-            p2[i] = max(p2[i + 1], maxV - prices[i])
+        minp = prices[0]
+        for i in range(1, n):
+            minp = min(minp, prices[i])
+            left[i] = max(left[i - 1], prices[i] - minp)
+            
+        maxp = prices[n - 1]
+        for i in range(n - 2, 0 - 1, -1):
+            maxp = max(maxp, prices[i])
+            right[i] = max(right[i + 1], maxp - prices[i])
         
-        res = 0
+        profit = 0
         for i in range(n):
-            res = max(res, p1[i] + p2[i])
-        return res
+            profit = max(profit, left[i] + right[i])
+        
+        return profit
         
