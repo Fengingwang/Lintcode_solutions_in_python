@@ -16,7 +16,7 @@ class Solution:
             
         n = len(nums)
         sumi, minp, maxsub = 0, 0, -sys.maxsize
-        for i in range(0, n):
+        for i in range(0, n, 1):
             sumi += nums[i]
             maxsub = max(maxsub, sumi - minp)
             minp = min(minp, sumi)
