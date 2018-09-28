@@ -17,7 +17,7 @@ class Solution:
     """
     def maxTwoSubArrays(self, nums):
         # write your code here
-        if len(nums) == 0:
+        if nums is None or len(nums) == 0:
             return 0
         
         n = len(nums)
