@@ -48,7 +48,7 @@ class Solution:
             maxp = max(maxp, sumi)
             rightmin[i] = minsub
             
-        diff = 0
+        diff = 0                 # the diff at least 1
         for i in range(0, n - 1, 1):
             diff = max(diff, abs(leftmax[i] - rightmin[i + 1]))
             diff = max(diff, abs(leftmin[i] - rightmax[i + 1]))
