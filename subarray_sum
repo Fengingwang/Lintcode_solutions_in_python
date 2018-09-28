@@ -10,15 +10,12 @@ class Solution:
         if nums is None or len(nums) == 0:
             return [-1, -1]
         
-        mapping = {0: -1}
         n = len(nums)
-        sumi = 0
-        
-        for i in range(n):
+        sumi, mapping = 0, {0: -1}
+        for i in range(0, n, 1):
             sumi += nums[i]
             if sumi in mapping:
-                return mapping[sumi] + 1, i
+                return [mapping[sumi] + 1, i]
             mapping[sumi] = i
         
         return [-1, -1]
-        
