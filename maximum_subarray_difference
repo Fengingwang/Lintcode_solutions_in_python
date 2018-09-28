@@ -21,7 +21,7 @@ class Solution:
         rightmax, rightmin = [0] * n, [0] * n
         
         sumi, minp, maxsub = 0, 0, -sys.maxsize 
-        for i in range(0, n):
+        for i in range(0, n, 1):
             sumi += nums[i]
             maxsub = max(maxsub, sumi - minp)
             minp = min(minp, sumi)
@@ -35,7 +35,7 @@ class Solution:
             rightmax[i] = maxsub
             
         sumi, maxp, minsub = 0, 0, sys.maxsize
-        for i in range(0, n):
+        for i in range(0, n, 1):
             sumi += nums[i]
             minsub = min(minsub, sumi - maxp)
             maxp = max(maxp, sumi)
@@ -49,7 +49,7 @@ class Solution:
             rightmin[i] = minsub
             
         diff = 0
-        for i in range(n - 1):
+        for i in range(0, n - 1, 1):
             diff = max(diff, abs(leftmax[i] - rightmin[i + 1]))
             diff = max(diff, abs(leftmin[i] - rightmax[i + 1]))
             
