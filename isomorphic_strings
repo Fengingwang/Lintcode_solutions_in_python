@@ -1,0 +1,34 @@
+# 题目解析：给出两个字符串s和t，它们同构，（顺序相同，长度相同，结构相同）。
+# 思路：使用字典进行映射关系的判断。主要是建立映射关系，和重复项关系判断。
+# 1. 新建一个放s[i]为键，t[i]为值的字典dict和一个字符串string存放满足映射的t
+# 2. 判断s[i]是否为dict的键,若是则代表dict中该键的值为t[i]
+# 3. 若不是则先判断一个问题，t[i]是否是前面t值重复的，
+#   这时候就需要与字符串进行比较，判断是否是前面出现的t[0:t-1]，
+#   若存在，则代表s与t映射关系出现错误（如果存在映射关系，s[i]不在dict，代表t[i]的值不应该存在string）
+# 4. 将s[i]、t[i]放在字典中，t[i]放在字符串string中
+# 5. 跳转到2
+
+class Solution:
+    """
+    @param s: a string
+    @param t: a string
+    @return: true if the characters in s can be replaced to get t or false
+    """
+    def isIsomorphic(self, s, t):
+        # write your code here]
+        if len(s) < 0 or len(t) < 0 or len(s) != len(t):
+            return False 
+        
+        mapping = {}
+        string = ''
+        
+        for i in range(len(s)):
+            if s[i] not in mapping.keys():
+                if t[i] in string:
+                    return False 
+                mapping[s[i]] = t[i]
+                string = string + t[i]
+            else:
+                if mapping[s[i]] != t[i]:
+                    return False
+        return True 
