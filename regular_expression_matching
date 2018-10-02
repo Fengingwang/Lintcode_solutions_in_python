@@ -32,7 +32,7 @@ class Solution:
                 if p[j - 1] == '*':
                     f[i][j] = f[i][j - 2]
                     if s[i - 1] == p[j - 2] or p[j - 2] == '.':
-                        f[i][j] |= f[i - 1][j]
+                        f[i][j] |= f[i - 1][j]  # OR operation between the current variable and the other one
                 else:
                     if s[i - 1] == p[j - 1] or p[j - 1] == '.':
                         f[i][j] = f[i - 1][j - 1]
