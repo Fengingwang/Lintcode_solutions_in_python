@@ -1,0 +1,49 @@
+# 万用字符通配符的字符串匹配判断。"?"表示一个任意的字符，"*"表示任意多个字符。判断目标字符串是否与模式串相匹配。
+# 用两个指针分别来表示目标串和模式串遍历到的当前位置，
+# 如果两个字符相等(考虑"?"通配符)，则继续前进，
+# 如果是"*"通配符，那么要记录下目标字符串当前位置，及模式串下一个位置，
+# 现在假设的是"*"用来匹配0个字符，继续尝试匹配，
+# 如果后面出现不匹配的情况，那么应该回退到这两个位置（目标串的位置要向后移一位，否则会不断回退到原来的位置），
+# 发生一次回退，代表着"*"要多匹配掉一个字符。
+# 按照这种方式不断尝试匹配，直到目标串都已经匹配掉或者匹配失败（匹配串中没有"*"，且不能匹配整个目标串）。
+# 这时候要看看匹配串是否还有剩余除了"*"以外的字符。如果最终匹配串都全部遍历完了，那么说明匹配成功。
+
+class Solution:
+    """
+    @param s: A string 
+    @param p: A string includes "?" and "*"
+    @return: is Match?
+    """
+    def isMatch(self, s, p):
+        # write your code here
+        p_ptr, last_p_ptr = 0, -1
+        s_ptr, last_s_ptr = 0, -1
+        while s_ptr < len(s):
+            # Normal match including '?'
+            if p_ptr < len(p) and (s[s_ptr] == p[p_ptr] or p[p_ptr] == '?'):
+                s_ptr += 1
+                p_ptr += 1
+                
+            # Match with '*'   
+            elif p_ptr < len(p) and p[p_ptr] == '*':
+                p_ptr += 1
+                last_s_ptr = s_ptr
+                last_p_ptr = p_ptr
+                
+            # Not match, but there is a '*' before
+            elif last_p_ptr != -1:
+                last_s_ptr += 1
+                s_ptr = last_s_ptr
+                p_ptr = last_p_ptr
+                
+            # Not match and there is no '*' before
+            else:
+                return False 
+                
+        # Check if there is still character except '*' in the pattern       
+        while p_ptr < len(p) and p[p_ptr] == "*":
+            p_ptr += 1
+            
+        # If finish scanning both string and pattern, then it matches well    
+        return p_ptr == len(p)
+        
