@@ -1,0 +1,26 @@
+class Solution:
+    """
+    @param: strs: a list of strings
+    @return: encodes a list of strings to a single string.
+    """
+    def encode(self, strs):
+        # write your code here
+        res = ''
+        for i in strs:
+            res += str(len(i)) + "#" + i
+        return res
+
+    """
+    @param: str: A string
+    @return: dcodes a single string to a list of strings
+    """
+    def decode(self, str):
+        # write your code here
+        i, res = 0, []
+        while i < len(str):
+            sharp = str.find("#", i)
+            l = int(str[i:sharp])
+            res.append(str[sharp + 1:sharp + l + 1])
+            i = sharp + l + 1
+        return res
+        
