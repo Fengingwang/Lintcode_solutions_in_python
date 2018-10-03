@@ -7,22 +7,21 @@ you can call Reader.read4(buf)
 
 class Solution(object):
     def __init__(self):
-        self.__buf4 = [''] * 4
-        self.__i4 = 0
-        self.__n4 = 0
-
+        self.buf4 = [''] * 4
+        self.ptr = 0
+        self.cnt = 0
+        
     def read(self, buf, n):
         i = 0
         while i < n:
-            if self.__i4 < self.__n4:  # Any characters in buf4.
-                buf[i] = self.__buf4[self.__i4]
+            if self.ptr == self.cnt:
+                self.cnt = Reader.read4(self.buf4)
+                self.ptr = 0
+            if self.cnt == 0:
+                break
+            while (i < n and self.ptr < self.cnt):
+                buf[i] = self.buf4[self.ptr]
+                self.ptr += 1
                 i += 1
-                self.__i4 += 1
-            else:
-                self.__n4 = Reader.read4(self.__buf4)  # Read more characters.
-                if self.__n4:
-                    self.__i4 = 0
-                else: # Buffer has been empty.
-                    break
-
+                
         return i
