@@ -1,0 +1,21 @@
+class Solution:
+    """
+    @param s: a string
+    @return: it's index
+    """
+    def firstUniqChar(self, s):
+        # write your code here
+        mapping = {}
+        
+        for val in s:
+            if val in mapping.keys():
+                mapping[val] += 1
+            else:
+                mapping[val] = 1
+        
+        for i in range(len(s)):
+            temp = s[i]
+            if mapping[temp] == 1:
+                return i
+        
+        return -1 
