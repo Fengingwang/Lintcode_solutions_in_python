@@ -1,0 +1,28 @@
+class Solution:
+    """
+    @param: nums: a sorted integer array
+    @param: lower: An integer
+    @param: upper: An integer
+    @return: a list of its missing ranges
+    """
+    def findMissingRanges(self, nums, lower, upper):
+        # write your code here
+        res = []
+        
+        if len(nums) == 0:
+            self.addrange(res, lower, upper)
+            return res
+            
+        self.addrange(res, lower, nums[0] - 1)
+        for i in range(1, len(nums)):
+            self.addrange(res, nums[i - 1] + 1, nums[i] - 1)
+        self.addrange(res, nums[len(nums) - 1] + 1, upper)
+        return res
+
+    def addrange(self, res, start, end):
+        if start > end:
+            return 
+        elif start == end:
+            res.append(str(start))
+        else:
+            res.append(str(start) + "->" + str(end))
