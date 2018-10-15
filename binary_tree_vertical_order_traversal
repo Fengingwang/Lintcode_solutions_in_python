@@ -1,0 +1,26 @@
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    # @param {TreeNode} root the root of binary tree
+    # @return {int[][]} the vertical order traversal
+    def verticalOrder(self, root):
+        # Write your code here
+        results = collections.defaultdict(list)
+        import queue
+        queue = queue.Queue()
+        queue.put((root, 0))
+        while not queue.empty():
+            node, x = queue.get()
+            if node:
+                results[x].append(node.val)
+                queue.put((node.left, x - 1))
+                queue.put((node.right, x + 1))
+                
+        return [results[i] for i in sorted(results)]
