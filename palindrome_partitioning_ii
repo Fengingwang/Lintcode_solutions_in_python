@@ -39,7 +39,7 @@ class Solution:
         f = [n - i for i in range(n + 1)]
         
         for i in range(n - 1, 0 - 1, -1):
-            for j in range(i, n):
+            for j in range(n - 1, i - 1, -1):
                 if s[i] == s[j] and (j - i <= 1 or pal[i + 1][j - 1] == True):
                     pal[i][j] = True
                     f[i] = min(f[i], f[j + 1] + 1)
