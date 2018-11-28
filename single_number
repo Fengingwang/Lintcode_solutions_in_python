@@ -1,6 +1,65 @@
-# 先设定一个0，然后循环和数组中的每个数去做异或运算，每次得出的结果都继续和下一个数再异或。
-# 最后得出来的结果就是单个的那个数了！
+summary 
+https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanation-and-generalization-of-the-bitwise-operation-method-for-single-numbers
+As others pointed out, in order to apply the bitwise operations, we should rethink how integers are represented in computers -- by bits.
+To start, let's consider only one bit for now. 
+Suppose we have an array of 1-bit numbers (which can only be 0 or 1), we'd like to count the number of 1's in the array 
+such that whenever the counted number of 1 reaches a certain value, say k, the count returns to zero and starts over 
+(in case you are curious, this k will be the same as the one in the problem statement above). 
+To keep track of how many 1's we have encountered so far, we need a counter. 
+Suppose the counter has m bits in binary form: xm, ..., x1 (from most significant bit to least significant bit). 
+We can conclude at least the following four properties of the counter:
 
+There is an initial state of the counter, which for simplicity is zero;
+For each input from the array, if we hit a 0, the counter should remain unchanged;
+For each input from the array, if we hit a 1, the counter should increase by one;
+In order to cover k counts, we require 2^m >= k, which implies m >= logk.
+
+Here is the key part: 
+how each bit in the counter (x1 to xm) changes as we are scanning the array. 
+Note we are prompted to use bitwise operations. 
+In order to satisfy the second property, x = x ^ i, where i is the scanned element from the array. 
+
+At the beginning, all bits of the counter is initialized to zero, i.e., xm = 0, ..., x1 = 0 
+Since we are gonna choose bitwise operations that guarantee all bits of the counter remain unchanged if we hit 0's, 
+the counter will be 0 until we hit the first 1 in the array. 
+hit the first 1, we got: xm = 0, ...,x2 = 0, x1 = 1. 
+hit the second 1, we have: xm = 0, ..., x2 = 1, x1 = 0. 
+Note that x1 changed from 1 to 0. What about x2, ..., xm? 
+The idea is to find the condition under which x2, ..., xm will change their values. 
+Take x2 as an example. 
+If we hit a 1 and need to change the value of x2, what must be the value of x1 right before we do the change? 
+The answer is: x1 must be 1 otherwise we shouldn't change x2 because changing x1 from 0 to 1 will do the job. 
+So x2 will change value only if x1 and i are both 1, or mathematically, x2 = x2 ^ (x1 & i). 
+Similarly xm will change value only when xm-1, ..., x1 and i are all 1: xm = xm ^ (xm-1 & ... & x1 & i). 
+
+However, you may notice that the bitwise operations found above will count from 0 until 2^m - 1, instead of k. 
+If k < 2^m - 1, we need some "cutting" mechanism to reinitialize the counter to 0 when the count reaches k. 
+To this end, we apply bitwise AND to xm,..., x1 with some variable called mask, 
+i.e., xm = xm & mask, ..., x1 = x1 & mask.
+If we can make sure that mask will be 0 only when the count reaches k and be 1 for all other count cases, then we are done. 
+How do we achieve that? Try to think what distinguishes the case with k count from all other count cases. 
+Yes, it's the count of 1's! 
+mask = ~(y1 & y2 & ... & ym), where yj = xj if kj = 1, and yj = ~xj if kj = 0 (j = 1 to m).
+
+Let's do some examples:
+k = 3: k1 = 1, k2 = 1, mask = ~(x1 & x2);
+k = 5: k1 = 1, k2 = 0, k3 = 1, mask = ~(x1 & ~x2 & x3);
+
+In summary, our algorithm will go like this (nums is the input array):
+for (int i : nums) {
+    xm ^= (xm-1 & ... & x1 & i);
+    xm-1 ^= (xm-2 & ... & x1 & i);
+    .....
+    x1 ^= i;
+    
+    mask = ~(y1 & y2 & ... & ym) where yj = xj if kj = 1, and yj = ~xj if kj = 0 (j = 1 to m).
+
+    xm &= mask;
+    ......
+    x1 &= mask;
+}
+
+# SINGLE NUMBER I
 # 为什么？因为异或这个运算有三个很重要的特性：
 # 两个相同的数异或后为0；
 # 0和一个数异或后为那个数；
@@ -43,3 +102,21 @@ def singleNumber(self, nums):
     :rtype: int
     """
     return 2 * sum(set(nums)) - sum(nums)
+
+# SINGLE NUMBER II
+class Solution:
+    """
+    @param A: An integer array
+    @return: An integer
+    """
+    def singleNumberII(self, A):
+        # write your code here
+        x1, x2, mask = 0, 0, 0
+        for num in A:
+            x2 ^= x1 & num 
+            x1 ^= num
+            mask = ~(x1 & x2)
+            x2 &= mask
+            x1 &= mask 
+        return x1
+
