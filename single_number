@@ -35,3 +35,11 @@ class Solution:
             res = res ^ num 
         
         return res
+
+从数学的角度考虑，用两倍所有非重复元素和减去原数组即可，而且在python中，去除list中重复的元素转为set就可实现。
+def singleNumber(self, nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    return 2 * sum(set(nums)) - sum(nums)
