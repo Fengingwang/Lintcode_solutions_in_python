@@ -1,0 +1,35 @@
+使用分治法来解决。
+传入两个区间，一个是颜色区间 color_from, color_to。另外一个是待排序的数组区间 index_from, index_to.
+找到颜色区间的中点，将数组范围内进行 partition，<= color 的去左边，>color 的去右边。
+然后继续递归。
+时间复杂度 O(nlogk)O(nlogk) n是数的个数， k 是颜色数目。这是基于比较的算法的最优时间复杂度。
+
+class Solution:
+    """
+    @param colors: A list of integer
+    @param k: An integer
+    @return: nothing
+    """
+    def sortColors2(self, colors, k):
+        # write your code here
+        self.sort(colors, 1, k, 0, len(colors) - 1)
+        
+    def sort(self, nums, num1, num2, index1, index2):
+        if num1 == num2 or index1 == index2:
+            return 
+        
+        mid = int((num1 + num2) / 2)
+        
+        i, j = index1, index2
+        while i <= j:
+            while i <= j and nums[i] <= mid:
+                i += 1
+            while i <= j and nums[j] > mid:
+                j -= 1
+            if i <= j:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += 1
+                j -= 1
+        
+        self.sort(nums, num1, mid, index1, j)
+        self.sort(nums, mid + 1, num2, i, index2)
