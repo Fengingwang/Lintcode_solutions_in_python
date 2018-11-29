@@ -7,8 +7,11 @@ class Solution:
     """
     def sortColors(self, nums):
         # write your code here
-        start_index = self.sort(nums, 0, 0)
-        self.sort(nums, 1, start_index)
+        if nums is None or len(nums) == 0:
+            return 
+        
+        start = self.sort(nums, 0, 0)
+        self.sort(nums, 1, start)
         
     def sort(self, nums, flag, index):
         i, j = index, len(nums) - 1
@@ -21,4 +24,4 @@ class Solution:
                 nums[i], nums[j] = nums[j], nums[i]
                 i += 1
                 j -= 1
-        return i
+        return  i 
