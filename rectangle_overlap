@@ -1,10 +1,20 @@
-"""
-Definition for a point.
-class Point:
-    def __init__(self, a=0, b=0):
-        self.x = a
-        self.y = b
-"""
+思路
+如果长方形1在长方形2的左边或者右边，我们不需要考虑y坐标，直接返回false。
+    ______        _________
+   |      |      |         |
+   |______|      |_________|
+------------------------------------>
+
+如果长方形1在长方形2的上面活着下面，我们也不需要考虑x坐标，直接返回false。
+^
+|    _____
+|    |    |
+|    |____|
+|
+|      _____
+|      |    |
+|      |____|
+|
 
 class Solution:
     """
@@ -14,6 +24,16 @@ class Solution:
     @param r2: bottom-right coordinate of second rectangle
     @return: true if they are overlap or false
     """
+    def doOverlap(self, l1, r1, l2, r2):
+        # write your code here
+        if (l1.x > r2.x or l2.x > r1.x):
+            return False 
+        if (r1.y > l2.y or r2.y > l1.y):
+            return False
+        return True
+
+
+class Solution:
     def doOverlap(self, l1, r1, l2, r2):
         # write your code here
         a = True if max(l1.x, l2.x) <= min(r1.x, r2.x) else False 
