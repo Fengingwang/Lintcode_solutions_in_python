@@ -11,66 +11,30 @@
 那么就是说即使前面这个字符并没有在s中出现过也无所谓，只要后面的能匹配上就可以了。
 而外卡匹配就不是这样的，外卡匹配中的星号跟前面的字符没有半毛钱关系，
 如果前面的字符没有匹配上，那么直接返回false了，根本不用管星号。
-class Solution:
-    """
-    @param s: A string 
-    @param p: A string includes "." and "*"
-    @return: A boolean
-    """
-    def isMatch(self, s, p):
-        # write your code here
-        m = len(s)
-        n = len(p)
-        
-        # intialization
-        f = [[False for x in range(n + 1)] for y in range(m + 1)]
-        f[0][0] = True
-        
-        # status and transfer
-        for i in range(1, n + 1):
-            if p[i - 1] == '*':
-                f[0][i] = f[0][i - 2]
-        
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if p[j - 1] == '*':
-                    f[i][j] = f[i][j - 2]
-                    if s[i - 1] == p[j - 2] or p[j - 2] == '.':
-                        f[i][j] |= f[i - 1][j]  # OR operation between the current variable and the other one
-                else:
-                    if s[i - 1] == p[j - 1] or p[j - 1] == '.':
-                        f[i][j] = f[i - 1][j - 1]
-        # return            
-        return f[-1][-1]
-        
-class Solution:
-    """
-    @param s: A string 
-    @param p: A string includes "." and "*"
-    @return: A boolean
-    """
-    def isMatch(self, s, p):
-        # write your code here
-        m = len(s)
-        n = len(p)
-        
-        # intialization
-        f = [[False for x in range(n + 1)] for y in range(m + 1)]
-        f[0][0] = True
-        
-        # status and transfer
-        for i in range(1, n + 1):
-            if p[i - 1] == '*':
-                f[0][i] = f[0][i - 2]
-        
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if p[j - 1] != '*':
-                    f[i][j] = f[i - 1][j - 1] and (s[i - 1] == p[j - 1] or p[j - 1] == '.')
-                else:
-                    f[i][j] = f[i][j - 2] or (f[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.'))
-                    
-        # return            
-        return f[m][n]
-        
 
+class Solution:
+    """
+    @param s: A string 
+    @param p: A string includes "." and "*"
+    @return: A boolean
+    """
+    def isMatch(self, s, p):
+        # write your code here
+        m = len(s)
+        n = len(p)
+        
+        f = [[False for _ in range(n + 1)] for _ in range(m + 1)]
+        f[0][0] = True
+        
+        for j in range(1, n + 1):
+            if p[j - 1] == '*':
+                f[0][j] = f[0][j - 2]
+        
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if p[j - 1] == '.' or p[j - 1] == s[i - 1]:
+                    f[i][j] = f[i - 1][j - 1]
+                elif p[j - 1] == '*':
+                    f[i][j] = f[i][j - 2] or (f[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == '.'))
+        
+        return f[-1][-1]
