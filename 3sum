@@ -15,7 +15,8 @@ class Solution:
         res = []
         
         for k in range(0, n - 2):
-            if k and nums[k] == nums[k - 1]:
+            if k > 0 and nums[k] == nums[k - 1]:  
+#if there are duplicates numbers, just ignore and move forward, making sure nums[i] is a unique item
                 continue 
             target = -nums[k]
             
