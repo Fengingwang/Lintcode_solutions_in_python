@@ -1,3 +1,39 @@
+You can put positive or negative number first, it depends on which one is longer
+
+class Solution:
+    """
+    @param: A: An integer array.
+    @return: nothing
+    """
+    def rerange(self, A):
+        # write your code here
+        l1 = [i for i in A if i > 0]
+        l2 = [i for i in A if i < 0]
+        
+        temp = []
+        temp = self.sort(l1, l2)
+        
+        for i in range(len(A)):
+            A[i] = temp[i]
+        
+    def sort(self, A, B):
+        res = []
+        n = min(len(A), len(B))
+        
+        if len(A) >= len(B):
+            for i in range(n):
+                res.append(A[i])
+                res.append(B[i])
+            res.append(A[-1])
+        else:
+            for i in range(n):
+                res.append(B[i])
+                res.append(A[i])
+            res.append(B[-1])
+            
+        return res 
+        
+
 class Solution:
     """
     @param A: An integer array.
