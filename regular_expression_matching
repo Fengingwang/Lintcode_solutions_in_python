@@ -1,19 +1,17 @@
-递推公式：
-dp[i][j]表示s[0:i-1]是否能和p[0:j-1]匹配。
-由于只有p中会含有regular expression，所以以p[j-1]来进行分类。
-case 1:
-p[j-1] != '.' && p[j-1] != '*'：
-dp[i][j] = dp[i-1][j-1] && (s[i-1] == p[j-1])
-case 2:
-p[j-1] == '.'： dp[i][j] = dp[i-1][j-1]
+case1:
+- if p.charAt(j) == s.charAt(i) : 
+dp[i][j] = dp[i-1][j-1]
+case2:
+- if p.charAt(j) == '.' : 
+dp[i][j] = dp[i-1][j-1]
 case 3:
-而关键的难点在于 p[j-1] = '*'。由于星号可以匹配0，1，乃至多个p[j-2]。
-1. 匹配0个元素，即消去p[j-2]，此时p[0: j-1] = p[0: j-3]
-dp[i][j] = dp[i][j-2]
-2. 匹配1个元素，此时p[0: j-1] = p[0: j-2]
-dp[i][j] = dp[i][j-1]
-3. 匹配多个元素，此时p[0: j-1] = { p[0: j-2], p[j-2], ... , p[j-2] }
-dp[i][j] = dp[i-1][j] && (p[j-2]=='.' || s[i-2]==p[j-2])
+- if p.charAt(j) == '*':
+- - if p.charAt(j-1) != s.charAt(i) : 
+    dp[i][j] = dp[i][j-2] //in this case, a* only counts as empty
+- - if p.charAt(i-1) == s.charAt(i) or p.charAt(i-1) == '.':
+dp[i][j] = dp[i-1][j] //in this case, a* counts as multiple a
+dp[i][j] = dp[i][j-1] // in this case, a* counts as single a
+dp[i][j] = dp[i][j-2] // in this case, a* counts as empty
 
 外卡匹配和正则匹配最大的区别就是在星号的使用规则上，
 对于正则匹配来说，星号不能单独存在，前面必须要有一个字符，而星号存在的意义就是表明前面这个字符的个数可以是任意个，包括0个，
