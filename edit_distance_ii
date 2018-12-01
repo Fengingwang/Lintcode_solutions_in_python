@@ -13,7 +13,7 @@ class Solution:
         # write your code here
         diff = abs(len(s) - len(t))
         
-        if diff > 1 or s == t:
+        if diff > 1:
             return False 
         
         if diff == 0:
