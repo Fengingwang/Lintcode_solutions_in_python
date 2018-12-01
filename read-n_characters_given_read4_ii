@@ -5,23 +5,33 @@ The read4 API is already defined for you.
 you can call Reader.read4(buf)
 """
 
-class Solution(object):
+from queue import Queue
+
+class Solution:
+    # @param {char[]} buf destination buffer
+    # @param {int} n maximum number of characters to read
+    # @return {int} the number of characters read
+    
     def __init__(self):
-        self.buf4 = [''] * 4
-        self.ptr = 0
-        self.cnt = 0
+        self.queue = Queue()
+        self.end = False 
         
     def read(self, buf, n):
-        i = 0
-        while i < n:
-            if self.ptr == self.cnt:
-                self.cnt = Reader.read4(self.buf4)
-                self.ptr = 0
-            if self.cnt == 0:
-                break
-            while (i < n and self.ptr < self.cnt):
-                buf[i] = self.buf4[self.ptr]
-                self.ptr += 1
-                i += 1
-                
-        return i
+        # Write your code here
+        if n == 0:
+            return 0
+        
+        while self.queue.qsize() < n and not self.end:
+            temp = [''] * 4
+            r = Reader.read4(temp)
+            if r < 4:
+                self.end = True
+            for i in range(r):
+                self.queue.put(temp[i])
+        
+        total = 0
+        for i in range(min(self.queue.qsize(), n)):
+            buf[i] = self.queue.get()
+            total += 1
+        
+        return total 
