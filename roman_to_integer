@@ -1,3 +1,9 @@
+# 根据罗马数字的规则，
+# 只有在前面的字母比当前字母小的情况下要执行减法，
+# 其他情况只需要把罗马字母对应的数字直接相加即可。
+# 从右向左依次处理：
+# 当遇到这个字母表示的数字比后一个小的时候，减去这个数；否则，累加。
+
 class Solution:
     """
     @param s: Roman representation
@@ -7,14 +13,15 @@ class Solution:
         ROMAN = { 'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
         if s == "":
             return 0
-            
-        index = len(s) - 2
+        
+        n = len(s)
         res = ROMAN[s[-1]]
-        while index >= 0:
-            if ROMAN[s[index]] < ROMAN[s[index + 1]]:
-                res -= ROMAN[s[index]]
+        
+        for i in range(n - 2, 0 - 1, -1):
+            if ROMAN[s[i]] < ROMAN[s[i + 1]]:
+                res -= ROMAN[s[i]]
             else:
-                res += ROMAN[s[index]]
-            index -= 1
-            
-        return res
+                res += ROMAN[s[i]]
+                
+        return res 
+ 
