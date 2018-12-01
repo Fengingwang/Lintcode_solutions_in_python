@@ -24,3 +24,9 @@ class Solution:
             i = sharp + l + 1
         return res
         
+        
+Note: str.find(sub[, start[, end]] ) 
+The find() method returns an integer value.
+If substring exists inside the string, it returns the index of first occurence of the substring.
+If substring doesn't exist inside the string, it returns -1.
+        
