@@ -4,9 +4,9 @@ The read4 API is already defined for you.
 @return an integer
 you can call Reader.read4(buf)
 """
+题解：需要用Queue保存之前多读的character。每次读时，先看Queue里的够不够，如果不够，先读到够为止。
 
 from queue import Queue
-
 class Solution:
     # @param {char[]} buf destination buffer
     # @param {int} n maximum number of characters to read
