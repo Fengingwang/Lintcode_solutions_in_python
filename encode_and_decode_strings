@@ -6,9 +6,9 @@ class Solution:
     def encode(self, strs):
         # write your code here
         res = ''
-        for i in strs:
-            res += str(len(i)) + "#" + i
-        return res
+        for temp in strs:
+            res += str(len(temp)) + '#' + temp 
+        return res 
 
     """
     @param: str: A string
@@ -18,10 +18,10 @@ class Solution:
         # write your code here
         i, res = 0, []
         while i < len(str):
-            sharp = str.find("#", i)
-            l = int(str[i:sharp])
-            res.append(str[sharp + 1:sharp + l + 1])
-            i = sharp + l + 1
+            sharp = str.find('#', i)
+            length = int(str[i:sharp])
+            res.append(str[sharp + 1: sharp + 1 + length])
+            i = sharp + 1 + length
         return res
         
         
