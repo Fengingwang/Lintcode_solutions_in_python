@@ -1,19 +1,34 @@
-class Solution:
-    """
-    @param input: an abstract file system
-    @return: return the length of the longest absolute path to file
-    """
+# 一個字符串表示文檔系統的目錄結構，裏面包含\n(回車)和\t(tab)的特殊字符，要找到最長的絕對文檔路徑。
+# 1. 將字符串以'\n'進行拆分，stack = (目录的深度，当前总的字符串长度)
+# 2. 對這個數組迭代，對於每個目錄字符串統計其前面的'\t'個數， 個數加1就是當前目錄的層深度，
+#   比如： 0個'\t'，層數就是1，1個'\t'，層數是2。
+# 3. 比較當前目錄層數和棧頂層數：
+#     1）如果目錄層數大於棧頂層數：判斷是否含'.' ，
+#       a. 不含'.'，則是目錄，計算當前目錄長度（字符長度+1因為要多1個"/"）+ 上層目錄最大長度，入棧。
+#       b. 含'.' , 則為文檔，計算當前文檔長度（字符長度），此長度加上棧頂元素長度（上層目錄最大長度）和maxLen比較取最大。
+#     2）如果目錄層數小於棧頂層數：
+#       則彈出棧頂元素，用while循環，一直彈到棧頂的層小於當前層數。然後重複上面的a, b步驟
+# 最後，返回maxLen
+
+class Solution(object):
     def lengthLongestPath(self, input):
-        # write your code here
-        maxlen = 0
-        pathlen = {0: 0}
+        """
+        :type input: str
+        :rtype: int
+        """
+        stack = [(-1, 0)] # 目录的深度，当前总的字符串长度
+        max_len = 0
         
-        for line in input.splitlines():
-            name = line.lstrip('\t')
-            depth = len(line) - len(name)
-            if '.' in name:
-                maxlen = max(maxlen, pathlen[depth] + len(name))
-            else:
-                pathlen[depth + 1] = pathlen[depth] + len(name) + 1
+        for p in input.split("\n"):
+            depth = p.count('\t')
+            p = p.replace('\t', '')
+            
+            while stack and depth <= stack[-1][0]: # 一样深，或者当前目录更浅
+                stack.pop()
                 
-        return maxlen
+            if '.' not in p: # 目录
+                stack.append((depth, len(p) + stack[-1][1] + 1))
+            else: # 文件
+                max_len = max(max_len, len(p) + stack[-1][1])
+                
+        return max_len
