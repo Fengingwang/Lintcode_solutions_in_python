@@ -1,3 +1,8 @@
+design a function to add ranger 
+first, deal with lower_bar to nums[0]
+second, deal with nums[0] to nums[i]
+third, deal with nums[i] to upper_bar 
+
 class Solution:
     """
     @param: nums: a sorted integer array
@@ -11,18 +16,19 @@ class Solution:
         
         if len(nums) == 0:
             self.addrange(res, lower, upper)
-            return res
-            
+            return res 
+        
         self.addrange(res, lower, nums[0] - 1)
         for i in range(1, len(nums)):
             self.addrange(res, nums[i - 1] + 1, nums[i] - 1)
         self.addrange(res, nums[len(nums) - 1] + 1, upper)
-        return res
-
+        
+        return res 
+         
     def addrange(self, res, start, end):
         if start > end:
             return 
         elif start == end:
             res.append(str(start))
         else:
-            res.append(str(start) + "->" + str(end))
+            res.append(str(start) + '->' + str(end))
