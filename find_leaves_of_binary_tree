@@ -1,3 +1,10 @@
+# 这道题给了我们一个二叉树，让我们返回其每层的叶节点，就像剥洋葱一样，将这个二叉树一层一层剥掉，最后一个剥掉根节点。
+# 用DFS来做:
+# 每一个节点从左子节点和右子节点分开走可以得到两个深度，
+# 由于成为叶节点的条件是左右子节点都为空，所以我们取左右子节点中较大值加1为当前节点的深度值，
+# 知道了深度值就可以将节点值加入到结果res中的正确位置了，
+# 求深度的方法我们可以参见Maximum Depth of Binary Tree中求最大深度的方法
+
 """
 Definition of TreeNode:
 class TreeNode:
@@ -5,42 +12,39 @@ class TreeNode:
         self.val = val
         self.left, self.right = None, None
 """
-
-public class Solution {    
-    int dfs(TreeNode cur, Map<Integer, List<Integer>> depth) {
-        if (cur == null) {
-            return 0;
-        }
-        int d = Math.max(dfs(cur.left, depth), dfs(cur.right, depth)) + 1;
-
-        depth.putIfAbsent(d, new ArrayList<>());
-        depth.get(d).add(cur.val);
-        return d;
-    }
-
-    public List<List<Integer>> findLeaves(TreeNode root) {
-        // Write your code here
-        List<List<Integer>> ans = new ArrayList<>();
-
-        Map<Integer, List<Integer>> depth = new HashMap<>();
-        int max_depth = dfs(root, depth);
-
-        for (int i = 1; i <= max_depth; i++) {
-            ans.add(depth.get(i));
-        }
-        return ans;
-    }
-}
-
-def findLeaves(self, root):
-    def dfs(node):
-        if not node:
+class Solution:
+    """
+    @param: root: the root of binary tree
+    @return: collect and remove all leaves
+    """
+    def findLeaves(self, root):
+        # write your code here
+        self.res = []
+        self.dfs(root)
+        return self.res 
+        
+    def dfs(self, root):
+        if root is None:
             return -1
-        i = 1 + max(dfs(node.left), dfs(node.right))
-        if i == len(out):
-            out.append([])
-        out[i].append(node.val)
-        return i
-    out = []
-    dfs(root)
-    return out
+        depth = 1 + max(self.dfs(root.right), self.dfs(root.left))
+        if depth == len(self.res):
+            self.res.append([])      # resize 
+        self.res[depth].append(root.val)
+        return depth
+        
+class Solution {
+public:
+    vector<vector<int>> findLeaves(TreeNode* root) {
+        vector<vector<int>> res;
+        helper(root, res);
+        return res;
+    }
+    int helper(TreeNode *root, vector<vector<int>> &res) {
+        if (!root) return -1;
+        int depth = 1 + max(helper(root->left, res), helper(root->right, res));
+        if (depth >= res.size()) res.resize(depth + 1);
+        res[depth].push_back(root->val);
+        return depth;
+    }
+};
+    
