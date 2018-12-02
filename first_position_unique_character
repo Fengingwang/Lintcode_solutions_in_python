@@ -12,10 +12,9 @@ class Solution:
                 mapping[val] += 1
             else:
                 mapping[val] = 1
-        
-        for i in range(len(s)):
-            temp = s[i]
-            if mapping[temp] == 1:
+            
+        for i, val in enumerate(s):
+            if mapping[val] == 1:
                 return i
         
         return -1 
