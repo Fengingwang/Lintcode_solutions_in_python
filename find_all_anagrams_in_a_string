@@ -1,4 +1,36 @@
-# 单词的字谜变换（anagram）是指与其字母个数相同只是顺序不同的单词
+题目大意：
+给定一个字符串s与一个非空字符串p，寻找s中所有p的字谜变换的起始下标。输出顺序无所谓。
+字符统计，单词的字谜变换（anagram）是指与其字母个数相同只是顺序不同的单词
+
+from collections import Counter
+class Solution:
+    """
+    @param s: a string
+    @param p: a string
+    @return: a list of index
+    """
+    def findAnagrams(self, s, p):
+        # write your code here
+        if len(s) < len(p):
+            return []
+        
+        res = []
+        lens = len(s)
+        lenp = len(p)
+        
+        maps = Counter(s[0: lenp - 1])
+        mapp = Counter(p)
+        
+        for i in range(lenp - 1, lens):
+            maps[s[i]] += 1
+            if maps == mapp:
+                res.append(i - lenp + 1)
+            maps[s[i - lenp + 1]] -= 1
+            if maps[s[i - lenp + 1]] == 0:
+                del maps[s[i - lenp + 1]]
+        
+        return res 
+        
 from collections import Counter
 class Solution:
     """
@@ -23,34 +55,4 @@ class Solution:
             cnts[s[i - len(p) + 1]] -= 1  # decrease the count of oldest char in the window
             if cnts[s[i - len(p) + 1]] == 0: # remove the count if it is 0
                 del cnts[s[i - len(p) + 1]]
-        return res
-
-# 思路二：
-# 同思路一一样，不过进行优化，利用滑动窗口，
-# 在第一次用vector a记录p的字符的个数时，也同时用vector b记录s中前p.length()个字符的个数，
-# 判断a==b，若成立，将0放进要返回的vector。
-# 然后开始从i=1，i小于s.length()滑动窗口，每次滑动一个字符，
-# 将s中i-1处对应的字符在b中的个数减1，而s中i-1+p.length()处对应的字符在b中的个数加1，
-# 这样不需要思路一种每次遍历p.length()个字符，只需要改动两个位置即可。
-# 然后判断a==b，若成立，将i放进要返回的vector。继续循环即可。
-
-class Solution(object):
-    def findAnagrams(self, s, p):
-        a=[0]*26
-        b=[0]*26
-        res=[]
-        if len(s)<len(p):
-            return res
-        for i in range(0,len(p)):
-            a[ord(p[i])-ord('a')]+=1
-            b[ord(s[i])-ord('a')]+=1
-        if a==b:
-            res.append(0)
-        for j in range(1,len(s)):
-            if j+len(p)>len(s):
-                break
-            b[ord(s[j-1])-ord('a')]-=1
-            b[ord(s[j+len(p)-1])-ord('a')]+=1
-            if a==b:
-                res.append(j)
         return res
