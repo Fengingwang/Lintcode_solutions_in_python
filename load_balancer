@@ -28,3 +28,7 @@ class LoadBalancer:
         import random 
         ids = self.mapping.keys()
         return random.sample(ids, 1)[0] if len(ids) > 0 else None 
+
+
+random.sample(population, k)
+Return a k length list of unique elements chosen from the population sequence or set. Used for random sampling without replacement.
