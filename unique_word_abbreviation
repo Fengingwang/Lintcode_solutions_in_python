@@ -4,33 +4,30 @@ class ValidWordAbbr:
     """
     def __init__(self, dictionary):
         # do intialization if necessary
-        self.mapdict, self.mapabbr = {}, {}
-        for word in dictionary:
-            if word in self.mapdict:
-                self.mapdict[word] += 1
+        self.mapdict = {}
+        self.mapabbr = {}
+        
+        for val in dictionary:
+            if val in self.mapdict:
+                self.mapdict[val] += 1
             else:
-                self.mapdict[word] = 1
+                self.mapdict[val] = 1
                 
-            abbrtemp = self.getabbr(word)
-            if abbrtemp in self.mapabbr:
-                self.mapabbr[abbrtemp] += 1
+            temp = self.getabbr(val)
+            if temp in self.mapabbr:
+                self.mapabbr[temp] += 1
             else:
-                self.mapabbr[abbrtemp] = 1
+                self.mapabbr[temp] = 1
+    
+    def getabbr(self, word):
+        if len(word) <= 2:
+            return word 
+        return word[0] + str(len(word) - 2) + word[-1]
+
     """
     @param: word: a string
     @return: true if its abbreviation is unique or false
     """
     def isUnique(self, word):
-        # # write your code here
-        # use the dict.get() function to assign a default value if the word is not
-        # in the dict. Don't use dict[word] one, it will mess up 
+        # write your code here
         return self.mapdict.get(word, 0) == self.mapabbr.get(self.getabbr(word), 0)
-        
-    def getabbr(self, word):
-        if len(word) <= 2:
-            return word
-        return word[0] + str(len(word)-2) + word[-1]
-
-# Your ValidWordAbbr object will be instantiated and called as such:
-# obj = ValidWordAbbr(dictionary)
-# param = obj.isUnique(word)
