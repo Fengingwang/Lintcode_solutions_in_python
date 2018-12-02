@@ -1,3 +1,4 @@
+BST中找中序遍历的后继节点
 """
 Definition for a binary tree node.
 class TreeNode(object):
@@ -6,8 +7,6 @@ class TreeNode(object):
         self.left = None
         self.right = None
 """
-
-
 class Solution:
     """
     @param: root: The root of the BST.
