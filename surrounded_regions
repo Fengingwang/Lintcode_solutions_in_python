@@ -5,36 +5,35 @@ class Solution:
     """
     def surroundedRegions(self, board):
         # write your code here
-        if board is None or len(board) == 0:
+        if not board or not board[0]:
             return 
         
         m = len(board)
         n = len(board[0])
-        queue = collections.deque([])   # queue = []
+        queue = []
         
-        # 保存所有位于边缘的O 
-        # i in (0, n - 1) 最上面和最下面两排
+        # 保存所有位于边缘的O,  i in (0, n - 1) 最上面和最下面两排
         for i in range(m):
             for j in range(n):
                 if ((i in [0, m - 1]) or (j in [0, n - 1])) and board[i][j] == 'O':
-                    queue.append((i, j))
+                    queue.append((i, j)) 
         
-        # 保存所有与边缘O相连的O
-        # 变为D的则是不需要变成X的
+        # 保存所有与边缘O相连的O, 变为D的则是不需要变成X的
+        dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         while queue:
-            i, j = queue.popleft()  # i, j = queue.pop()
-            if 0 <= i < m and 0 <= j < n and board[i][j] == 'O':
-                board[i][j] = 'D'
-                queue.append((i - 1, j))
-                queue.append((i + 1, j))
-                queue.append((i, j - 1))
-                queue.append((i, j + 1))
-                
-        # 重新更新棋盘
+            i, j = queue.pop()
+            board[i][j] = 'D'
+            for (dx, dy) in dirs:
+                x, y = i + dx, j + dy 
+                if 0 <= x < m and 0 <= y < n and board[x][y] == 'O':
+                    queue.append((x, y))
+        
+        # 重新更新棋盘            
         for i in range(m):
             for j in range(n):
                 if board[i][j] == 'O':
                     board[i][j] = 'X'
                 elif board[i][j] == 'D':
                     board[i][j] = 'O'
+                    
                     
