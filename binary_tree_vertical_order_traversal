@@ -1,4 +1,10 @@
-
+# 竖直遍历二叉树，并把每一列存入一个二维数组
+# 我们隐约的可以感觉到好像是一种层序遍历的前后顺序，那么我们如何来确定列的顺序呢?
+# 我们可以把根节点给个序号0，然后开始层序遍历，凡是左子节点则序号减1，右子节点序号加1，
+# 这样我们可以通过序号来把相同列的节点值放到一起
+# 层序遍历需要用到queue，此时queue里不能只存节点，而是要存序号和节点组成的pair，
+# 这样我们每次取出就可以操作序号，而且排入队中的节点也赋上其正确的序号
+ 
 """
 Definition of TreeNode:
 class TreeNode:
@@ -8,19 +14,23 @@ class TreeNode:
 """
 
 class Solution:
-    # @param {TreeNode} root the root of binary tree
-    # @return {int[][]} the vertical order traversal
+    """
+    @param root: the root of tree
+    @return: the vertical order traversal
+    """
     def verticalOrder(self, root):
-        # Write your code here
-        results = collections.defaultdict(list)
-        import queue
-        queue = queue.Queue()
-        queue.put((root, 0))
-        while not queue.empty():
-            node, x = queue.get()
-            if node:
-                results[x].append(node.val)
-                queue.put((node.left, x - 1))
-                queue.put((node.right, x + 1))
+        # write your code here
+        if root is None:
+            return []
+            
+        cols = collections.defaultdict(list)
+        queue = [(root, 0)]
+        for node, order in queue:
+            if node is not None:
+                cols[order].append(node.val)
+                queue += (node.left, order - 1), (node.right, order + 1)
                 
-        return [results[i] for i in sorted(results)]
+        res = []
+        for i in range(min(cols.keys()), max(cols.keys()) + 1):
+            res.append(cols[i])
+        return res 
