@@ -1,0 +1,39 @@
+# 解题思路：
+# 深度优先搜索（DFS）+ 剪枝（Pruning）
+# 首先构建一个单词前缀prefix->单词word的字典mdict
+# 深度优先搜索search(word, line)，其中word是当前单词，line是行数
+# 利用变量matrix记录当前已经生成的单词
+# 前缀prefix = matrix[0..line][line]，如果prefix对应单词不存在，则可以剪枝
+# 否则枚举mdict[prefix]，并递归搜索
+
+class Solution(object):
+    def wordSquares(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[List[str]]
+        """
+        m = len(words)
+        n = len(words[0]) if m else 0
+        
+        mdict = collections.defaultdict(set)
+        for word in words:
+            for i in range(n):
+                mdict[word[:i]].add(word)
+                
+        matrix = []
+        ans = []
+        
+        def search(word, line):
+            matrix.append(word)
+            if line == n:
+                ans.append(matrix[:])
+            else:
+                prefix = ''.join(matrix[x][line] for x in range(line))
+                for word in mdict[prefix]:
+                    search(word, line + 1)
+            matrix.pop()
+            
+        for word in words:
+            search(word, 1)
+            
+        return ans
