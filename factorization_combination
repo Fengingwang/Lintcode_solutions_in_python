@@ -1,0 +1,18 @@
+class Solution:
+    """
+    @param n: a integer
+    @return: return a 2D array
+    """
+    def getFactors(self, n):
+        # write your code here
+        res = []
+        self.dfs(n, [], 2, res)
+        return res 
+        
+    def dfs(self, n, temp, start, res):
+        while start * start <= n:
+            if n % start == 0:
+                res.append(temp + [start, n // start])
+                self.dfs(n // start, temp + [start], start, res)
+            start += 1
+        return res
