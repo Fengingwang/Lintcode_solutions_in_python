@@ -1,0 +1,34 @@
+# BFS解法: 借助queue
+# 首先把门的位置都排入queue
+# 开始循环: 对于门位置的四个相邻点，判断其是否在矩阵范围内，并且位置值是否大于上一位置的值加1
+# 如果满足这些条件，我们将当前位置赋为上一位置加1，并将次位置排入queue中
+# 这样等queue中的元素遍历完了，所有位置的值就被正确地更新了
+
+class Solution:
+    """
+    @param rooms: m x n 2D grid
+    @return: nothing
+    """
+    def wallsAndGates(self, rooms):
+        # write your code here
+        if rooms is None or len(rooms) == 0:
+            return 
+        
+        m = len(rooms)
+        n = len(rooms[0])
+        queue = []
+        dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        
+        for i in range(m):
+            for j in range(n):
+                if rooms[i][j] == 0:
+                    queue.append((i, j))
+                    
+        dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        while queue:
+            i, j = queue.pop()
+            for (dx, dy) in dirs:
+                x, y = i + dx, j + dy 
+                if 0 <= x < m and 0 <= y < n and rooms[x][y] > rooms[i][j] + 1:
+                    queue.append((x, y))
+                    rooms[x][y] = rooms[i][j] + 1
