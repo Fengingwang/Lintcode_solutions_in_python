@@ -1,0 +1,22 @@
+class Solution:
+    """
+    @param A: a sparse matrix
+    @param B: a sparse matrix
+    @return: the result of A * B
+    """
+    def multiply(self, A, B):
+        # write your code here
+        arow = len(A)
+        acolbrow = len(A[0])
+        bcol = len(B[0])
+        
+        res = [[0 for _ in range(bcol)] for _ in range(arow)]
+        
+        for i in range(arow):
+            for j in range(acolbrow):
+                if A[i][j] != 0:
+                    for k in range(bcol):
+                        res[i][k] += A[i][j] * B[j][k]
+        
+        return res
+                
