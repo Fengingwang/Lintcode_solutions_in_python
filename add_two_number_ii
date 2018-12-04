@@ -1,0 +1,46 @@
+"""
+Definition of ListNode
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+
+class Solution:
+    """
+    @param l1: The first list.
+    @param l2: The second list.
+    @return: the sum list of l1 and l2.
+    """
+    def addLists2(self, l1, l2):
+        # write your code here
+        x1, x2 = 0, 0
+        while l1:
+            x1 = x1 * 10 + l1.val
+            l1 = l1.next
+        while l2:
+            x2 = x2 * 10 + l2.val
+            l2 = l2.next
+        x = x1 +  x2
+        
+        if x == 0:
+            return ListNode(0)
+        
+        dummy = ListNode(0)
+        curt = dummy
+        
+        while x:
+            temp, x = x % 10, x // 10
+            curt.next = ListNode(temp)
+            curt = curt.next 
+            
+        return self.reverse(dummy.next)
+
+    def reverse(self, curt):
+        pren = None
+        while curt:
+            temp = curt.next 
+            curt.next = pren 
+            pren = curt 
+            curt = temp 
+        return pren 
