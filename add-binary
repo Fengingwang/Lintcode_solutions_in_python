@@ -1,0 +1,26 @@
+class Solution:
+    """
+    @param a: a number
+    @param b: a number
+    @return: the result
+    """
+    def addBinary(self, a, b):
+        # write your code here
+        res = []
+        i, j, carry = len(a) - 1, len(b) - 1, 0
+        
+        while i >= 0 or j >= 0:
+            n1 = int(a[i]) if i >= 0 else 0
+            n2 = int(b[j]) if j >= 0 else 0
+            i -= 1
+            j -= 1
+            
+            temp = n1 + n2 + carry
+            carry = temp // 2
+            res.append(temp % 2)
+            
+        if carry: res.append(carry)
+        
+        return ''.join([str(i) for i in res])[::-1]  
+    
+            
