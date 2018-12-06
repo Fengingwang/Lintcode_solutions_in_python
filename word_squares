@@ -6,34 +6,38 @@
 # 前缀prefix = matrix[0..line][line]，如果prefix对应单词不存在，则可以剪枝
 # 否则枚举mdict[prefix]，并递归搜索
 
-class Solution(object):
+class Solution:
+    """
+    @param: words: a set of words without duplicates
+    @return: all word squares
+    """
     def wordSquares(self, words):
-        """
-        :type words: List[str]
-        :rtype: List[List[str]]
-        """
-        m = len(words)
-        n = len(words[0]) if m else 0
+        # write your code here
+        if not words or not words[0]:
+            return []
         
-        mdict = collections.defaultdict(set)
-        for word in words:
-            for i in range(n):
-                mdict[word[:i]].add(word)
-                
-        matrix = []
-        ans = []
+        self.mapping = collections.defaultdict(set)
+        self.n = len(words[0])
         
-        def search(word, line):
-            matrix.append(word)
-            if line == n:
-                ans.append(matrix[:])
-            else:
-                prefix = ''.join(matrix[x][line] for x in range(line))
-                for word in mdict[prefix]:
-                    search(word, line + 1)
-            matrix.pop()
-            
         for word in words:
-            search(word, 1)
+            for i in range(self.n):
+                self.mapping[word[:i]].add(word)
+        
+        self.matrix = []
+        self.res = []
+        
+        for word in words:
+            self.dfs(word, 1)
+        
+        return self.res
             
-        return ans
+    def dfs(self, word, line):
+        self.matrix.append(word)
+        if line == self.n:
+            self.res.append(self.matrix[:])
+        else:
+            prefix = ''.join(self.matrix[x][line] for x in range(line))
+            for val in self.mapping[prefix]:
+                self.dfs(val, line + 1)
+        self.matrix.pop()
+        
