@@ -1,20 +1,27 @@
-class Solution(object):
+class Solution:
+    """
+    @param num: a string contains only digits 0-9
+    @param target: An integer
+    @return: return all possibilities
+    """
     def addOperators(self, num, target):
-        results = []
-        self.helper(num, 0, target, 0, 0, "", results)
-        return results
-    
-    def helper(self, string, start, target, sum_so_far, last, path, results):
-        if start == len(string) and sum_so_far == target:
-            results.append(path)
-        for end in range(start+1, len(string)+1):
-            sub_string = string[start:end]
-            if len(sub_string) > 1 and sub_string[0] == '0':
-                break
-            cur = int(sub_string)
+        # write your code here
+        res = []
+        self.dfs(num, 0, target, 0, 0, '', res)
+        return res 
+        
+    def dfs(self, num, start, target, sum_now, last, path, res):
+        if start == len(num) and sum_now == target:
+            res.append(path)
+            
+        for end in range(start + 1, len(num) + 1):
+            subpath = num[start : end]
+            if len(subpath) > 1 and subpath[0] == '0':
+                break 
+            curt = int(subpath)
             if start == 0:
-                self.helper(string, end, target, sum_so_far + cur, cur, path + sub_string, results)
+                self.dfs(num, end, target, sum_now + curt, curt, path + subpath, res)
             else:
-                self.helper(string, end, target, sum_so_far + cur, cur, path + "+" + sub_string, results)
-                self.helper(string, end, target, sum_so_far - cur, -cur, path + "-" + sub_string, results)
-                self.helper(string, end, target, sum_so_far - last + cur * last, cur * last, path + "*" + sub_string, results)
+                self.dfs(num, end, target, sum_now + curt, curt, path + '+' + subpath, res)
+                self.dfs(num, end, target, sum_now - curt, -curt, path + '-' + subpath, res)
+                self.dfs(num, end, target, sum_now - last + curt * last, curt * last, path + '*' + subpath, res)
