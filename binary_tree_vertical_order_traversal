@@ -23,18 +23,18 @@ class Solution:
         if root is None:
             return []
         
-        cols = collections.defaultdict(list)
         queue = [(root, 0)]
+        mapping = collections.defaultdict(list)
         
         for node, order in queue:
             if node is not None:
-                cols[order].append(node.val)
+                mapping[order].append(node.val)
                 queue.append((node.left, order - 1))
                 queue.append((node.right, order + 1))
                 # queue += (node.left, order - 1), (node.right, order + 1)
         
         res = []
-        for i in range(min(cols.keys()), max(cols.keys()) + 1):
-            res.append(cols[i])
-        
-        return res 
+        for i in range(min(mapping.keys()), max(mapping.keys()) + 1):
+            res.append(mapping[i])
+            
+        return res
