@@ -22,15 +22,19 @@ class Solution:
         # write your code here
         if root is None:
             return []
-            
+        
         cols = collections.defaultdict(list)
         queue = [(root, 0)]
+        
         for node, order in queue:
             if node is not None:
                 cols[order].append(node.val)
-                queue += (node.left, order - 1), (node.right, order + 1)
-                
+                queue.append((node.left, order - 1))
+                queue.append((node.right, order + 1))
+                # queue += (node.left, order - 1), (node.right, order + 1)
+        
         res = []
         for i in range(min(cols.keys()), max(cols.keys()) + 1):
             res.append(cols[i])
+        
         return res 
