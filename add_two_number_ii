@@ -14,32 +14,30 @@ class Solution:
     """
     def addLists2(self, l1, l2):
         # write your code here
-        x1, x2 = 0, 0
-        while l1:
-            x1 = x1 * 10 + l1.val
-            l1 = l1.next
-        while l2:
-            x2 = x2 * 10 + l2.val
-            l2 = l2.next
-        x = x1 +  x2
+        t1 = self.reverse(l1)
+        t2 = self.reverse(l2)
         
-        if x == 0:
-            return ListNode(0)
-        
+        carry = 0
         dummy = ListNode(0)
         curt = dummy
-        
-        while x:
-            temp, x = x % 10, x // 10
-            curt.next = ListNode(temp)
+        while t1 or t2:
+            n1 = t1.val if t1 else 0
+            n2 = t2.val if t2 else 0
+            t1 = t1.next if t1 else 0
+            t2 = t2.next if t2 else 0
+            temp = n1 + n2 + carry
+            curt.next = ListNode(temp % 10)
             curt = curt.next 
-            
+            carry = temp // 10
+        if carry:
+            curt.next = ListNode(carry)
+        
         return self.reverse(dummy.next)
-
+            
     def reverse(self, curt):
         pren = None
         while curt:
-            temp = curt.next 
+            temp = curt.next
             curt.next = pren 
             pren = curt 
             curt = temp 
