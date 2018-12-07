@@ -61,3 +61,21 @@ class Solution:
         if b == 1: return a % 1337
         return self.pow(a % 1337, b // 2) * self.pow(a % 1337, b - b // 2) % 1337
 
+POW(X, N)
+# Function的三种可能性：
+# 当b为偶数的时候，比如 2 ^ 100，拆分的时候就变成 (2 ^ 50) * (2 ^ 50)
+# 当b为基数的时候，比如 2 ^ 25，拆分的时候就变成 (2 ^12) * (2 ^ 12) * 2
+# 当b为负数的时候，返回 1.0 / self.myPow(a, -b)
+class Solution:
+    def myPow(self, x, n):
+        # write your code here
+        if n == 0:
+            return 1
+        if n < 0:
+            return 1 / self.myPow(x, -n)
+        
+        half = self.myPow(x, n // 2)
+        if n % 2 == 0:
+            return half * half
+        else:
+            return half * half * x
