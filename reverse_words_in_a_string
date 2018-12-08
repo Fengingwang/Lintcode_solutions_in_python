@@ -1,8 +1,16 @@
+I
 class Solution:
-    """
-    @param: s: A string
-    @return: A string
-    """
     def reverseWords(self, s):
         # write your code here
         return " ".join(reversed(s.strip().split()))
+
+II
+class Solution:
+    def reverseWords(self, s):
+        # write your code here
+        return " ".join(reversed(s.strip().split()))
+III
+class Solution:
+    def reverseWords(self, s):
+        # Write your code here
+        return ' '.join([val[::-1] for val in s.split(' ')])
