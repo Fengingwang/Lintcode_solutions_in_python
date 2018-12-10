@@ -1,6 +1,7 @@
 class MyQueue:
-
+    
     def __init__(self):
+        # do intialization if necessary
         self.stack1 = []
         self.stack2 = []
 
@@ -8,14 +9,17 @@ class MyQueue:
         if len(self.stack2) == 0:
             while len(self.stack1) != 0:
                 self.stack2.append(self.stack1.pop())
-                
+ 
     def push(self, element):
+        # write your code here
         self.stack1.append(element)
 
-    def top(self):
-        self.adjust()
-        return self.stack2[len(self.stack2) - 1]
-
     def pop(self):
+        # write your code here
         self.adjust()
         return self.stack2.pop()
+
+    def top(self):
+        # write your code here
+        self.adjust()
+        return self.stack2[len(self.stack2) - 1]
