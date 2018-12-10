@@ -1,4 +1,28 @@
+# The basic thoughts underline is a greedy style
+# Every one more jump, you want to jump as far as possible
+# In Jump Game I, when you at position i, you care about what is the furthest position could be reached from i th position
+# In Jump Game II, you care about what would be the next furthest jump could be made 
+#                  when you could reach as far as ith position from last jump
+#                  So you iterate all positions could be reached from last jump till ith position to find it out
 
+class Solution:
+    """
+    @param A: A list of integers
+    @return: An integer
+    """
+    def jump(self, A):
+        # write your code here
+        last, curt, step, i = 0, 0, 0, 0
+        while curt < len(A) - 1:
+            while i <= last:
+                curt = max(i + A[i], curt)
+                i += 1
+            if last == curt:
+                return -1
+            last = curt 
+            step += 1
+        return step 
+              
 # dp is time limited exceeded!
 class Solution:
     """
