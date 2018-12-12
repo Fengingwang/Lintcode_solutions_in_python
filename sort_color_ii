@@ -31,5 +31,8 @@ class Solution:
                 i += 1
                 j -= 1
         
-        self.sort(nums, num1, mid, index1, i)
-        self.sort(nums, mid + 1, num2, j, index2)
+        # both works here, but second one should be more easy to image 
+        # self.sort(nums, num1, mid, index1, i)
+        # self.sort(nums, mid + 1, num2, j, index2)
+        self.sort(nums, flag1, mid, index1, j)
+        self.sort(nums, mid + 1, flag2, i, index2)
