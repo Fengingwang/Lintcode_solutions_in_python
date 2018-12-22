@@ -14,3 +14,4 @@ class Solution:
     def reverseWords(self, s):
         # Write your code here
         return ' '.join([val[::-1] for val in s.split(' ')])
+        return ' '.join([val[::-1] for val in s.strip().split(' ')])
