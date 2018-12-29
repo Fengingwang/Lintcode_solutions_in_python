@@ -1,0 +1,37 @@
+
+# use hash map (dictionary) to store the {dictance : (x, y)}
+"""
+Definition for a point.
+class Point:
+    def __init__(self, a=0, b=0):
+        self.x = a
+        self.y = b
+"""
+from collections import defaultdict 
+
+class Solution:
+    """
+    @param points: a list of points
+    @param origin: a point
+    @param k: An integer
+    @return: the k closest points
+    """
+    def kClosest(self, points, origin, k):
+        # write your code here
+        mapping = defaultdict(list)
+        res = []
+        
+        for p in points:
+            dist = self.get_distance(p, origin)
+            mapping[dist].append((p.x, p.y))
+        
+        i = 1
+        for key in sorted(mapping.keys()):
+            item = mapping[key]
+            for x, y in sorted(item):
+                res.append(Point(x,y))
+                if i == k: return res 
+                i += 1
+            
+    def get_distance(self, point, origin):
+        return abs(point.x - origin.x) ** 2 + abs(point.y - origin.y) ** 2
