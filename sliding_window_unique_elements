@@ -1,0 +1,44 @@
+from collections import Counter
+class Solution:
+    count, keylist = 0, []
+    
+    def Add(self, value):
+        self.count += 1
+        self.keylist.append(value)
+        
+    def Remove(self, value):
+        self.count -= 1
+        self.keylist.remove(value)
+
+    def slidingWindowUniqueElementsSum(self, nums, k):
+        res = 0
+        if len(nums) <= k:
+            d = Counter(nums)
+            for key in d:
+                if d[key] == 1:
+                    res += 1
+        else:
+            dic = Counter(nums[:k])
+            for key in dic:
+                if dic[key] == 1:
+                    self.Add(key)
+            start, end = 0, k - 1
+            res += self.count
+            while end + 1 < len(nums):
+                v, u = nums[start], nums[end + 1]
+                dic[v] -= 1
+                if dic[v] == 0 and v in self.keylist:
+                    del dic[v]
+                    self.Remove(v)
+                if u not in dic and u not in self.keylist:
+                    dic[u] = 0
+                    self.Add(u)
+                dic[u] += 1
+                if dic[u] == 2 and u in self.keylist:
+                    self.Remove(u)
+                if v in dic and dic[v] == 1 and v not in self.keylist:
+                    self.Add(v)
+                res += self.count
+                start += 1
+                end += 1
+        return res
