@@ -25,3 +25,27 @@ class Solution:
             sumi[i] = sumi[i - 1] - nums[i - 1] + nums[i + k - 1]
         
         return sumi
+        
+class Solution:
+    def winSum(self, nums, k):
+        # write your code here
+        if nums is None or len(nums) < k:
+            return None
+        if len(nums) == 0 & k == 0:
+            return nums
+            
+        start, end = 0,k-1
+        result = []
+        sum = 0
+        
+        for i in range(0,k):
+            sum += nums[i]
+        result.append(sum)
+        
+        while end + 1 < len(nums):
+            sum = sum - nums[start] + nums[end+1]
+            result.append(sum)
+            start += 1
+            end += 1
+            
+        return result
