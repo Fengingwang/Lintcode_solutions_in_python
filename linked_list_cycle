@@ -13,6 +13,21 @@ class Solution:
     """
     def hasCycle(self, head):
         # write your code here
+        slow, fast = head, head 
+        
+        while fast and fast.next:
+            slow = slow.next 
+            fast = fast.next.next 
+            
+            if id(slow) == id(fast):
+                return True 
+        
+        return False 
+                
+
+class Solution:
+    def hasCycle(self, head):
+        # write your code here
         if head is None or head.next is None:
             return False 
         
