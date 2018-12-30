@@ -1,0 +1,21 @@
+class Solution:
+    """
+    @param source: 
+    @param target: 
+    @return: return the index
+    """
+    def strStr(self, source, target):
+        # Write your code here
+        m = len(source)
+        n = len(target)
+        
+        for i in range(0, m + 1, 1):
+            for j in range(0, n + 1, 1):
+                if j == n: 
+                    return i 
+                if i + j == m:
+                    return -1
+                if source[i + j] != target[j]:
+                    break 
+                
+                
