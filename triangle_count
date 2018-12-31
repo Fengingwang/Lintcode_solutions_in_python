@@ -1,0 +1,22 @@
+class Solution:
+    """
+    @param S: A list of integers
+    @return: An integer
+    """
+    def triangleCount(self, S):
+        # write your code here
+        S.sort()
+        res = 0
+        n = len(S)
+        
+        for end in range(n):
+            i, j = 0, end - 1
+            while i < j:
+                if S[i] + S[j] > S[end]:
+                    res += j - i 
+                    j -= 1
+                else:
+                    i += 1
+        
+        return res 
+            
