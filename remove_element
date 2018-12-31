@@ -1,0 +1,20 @@
+class Solution:
+    """
+    @param: A: A list of integers
+    @param: elem: An integer
+    @return: The new length after remove
+    """
+    def removeElement(self, A, elem):
+        # write your code here
+        if A is None or len(A) == 0: 
+            return len(A)
+            
+        n = len(A)
+        tail = 0
+        
+        for i in range(n):
+            if A[i] != elem:
+                A[tail] = A[i]
+                tail += 1
+        
+        return tail 
