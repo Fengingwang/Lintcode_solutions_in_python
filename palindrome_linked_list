@@ -1,0 +1,50 @@
+"""
+Definition of ListNode
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+
+class Solution:
+    """
+    @param head: A ListNode.
+    @return: A boolean.
+    """
+    def isPalindrome(self, head):
+        # write your code here
+        if head is None: return True 
+        
+        mid = self.getmid(head)
+        right = mid.next 
+        mid.next = None
+        
+        l1 = head 
+        l2 = self.reverse(right)
+        
+        return self.compare(l1, l2)
+        
+    def getmid(self, head):
+        fast, slow = head, head
+        while fast.next and fast.next.next:
+            fast = fast.next.next 
+            slow = slow.next
+        return slow 
+    
+    def reverse(self, curt):
+        pren = None
+        while curt:
+            temp = curt.next 
+            curt.next = pren 
+            pren = curt
+            curt = temp 
+        return pren 
+    
+    def compare(self, l1, l2):
+        while l1 and l2:
+            if l1.val != l2.val:
+                return False 
+            l1 = l1.next 
+            l2 = l2.next 
+        return True 
+            
