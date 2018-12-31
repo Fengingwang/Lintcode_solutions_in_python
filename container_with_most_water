@@ -1,0 +1,18 @@
+class Solution:
+    """
+    @param heights: a vector of integers
+    @return: an integer
+    """
+    def maxArea(self, heights):
+        # write your code here
+        i, j = 0, len(heights) - 1
+        res = 0
+        
+        while i < j:
+            res = max(res, min(heights[i], heights[j]) * (j - i))
+            if heights[i] < heights[j]:
+                i += 1
+            else:
+                j -= 1
+        
+        return res 
