@@ -1,0 +1,32 @@
+class Solution:
+    """
+    @param s: a string
+    @return: nothing
+    """
+    def validPalindrome(self, s):
+        # Write your code here
+        if len(s) <= 2: 
+            return True 
+        
+        i, j = 0, len(s) - 1
+        while i < j:
+            if s[i] == s[j]:
+                i += 1
+                j -= 1
+            else:
+                lefti, leftj = i + 1, j 
+                while lefti <= leftj and s[lefti] == s[leftj]:
+                    lefti += 1
+                    leftj -= 1
+                if lefti >= leftj: return True 
+                
+                righti, rightj = i, j - 1
+                while righti <= rightj and s[righti] == s[rightj]:
+                    righti += 1
+                    rightj -= 1
+                if righti >= rightj: return True 
+                
+                return False 
+        
+        return True 
+                    
