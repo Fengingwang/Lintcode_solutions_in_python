@@ -1,0 +1,31 @@
+思路
+根据题意，对于每一个id，我们维护一个大小为K的min-heap。一个一个把Record放进去，如果容量超了，就把最小的踢掉。这样heap里永远是最大的K个。
+全部放完以后，对于每一个id，我们把heap里的Record拿出来算一下平均数。
+
+class Solution:
+    # @param {Record[]} results a list of <student_id, score>
+    # @return {dict(id, average)} find the average of 5 highest scores for each person
+    # <key, value> (student_id, average_score)
+    def getAvg(self, scores):
+        return sum(scores) / 5.0
+
+    def highFive(self, results):
+        
+        # process raw data
+        record = {}
+        for r in results:
+            student = r.id
+            score = r.score
+            if student not in record:
+                record[student] = []
+            record[student].append(score)
+
+        # if student has more than 5 scores, get top 5
+        ans = {}
+        for stu in record:
+            if len(record[stu]) >= 5:
+                record[stu] = sorted(record[stu], reverse = True)[:5]
+                avg = self.getAvg(record[stu])
+                ans.update({stu: avg})
+
+        return ans
