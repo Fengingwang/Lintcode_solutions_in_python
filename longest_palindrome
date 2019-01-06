@@ -1,0 +1,16 @@
+class Solution:
+    """
+    @param s: a string which consists of lowercase or uppercase letters
+    @return: the length of the longest palindromes that can be built
+    """
+    def longestPalindrome(self, s):
+        # write your code here
+        mapping = set()
+        for val in s:
+            if val not in mapping:
+                mapping.add(val)
+            else:
+                mapping.remove(val)
+        
+        # len(hash) is the number of the odd letters
+        return len(s) - len(mapping) + 1 if len(mapping) > 0 else len(s)
