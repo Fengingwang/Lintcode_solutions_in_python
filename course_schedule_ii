@@ -1,0 +1,54 @@
+class Solution:
+    """
+    @param: numCourses: a total of n courses
+    @param: prerequisites: a list of prerequisite pairs
+    @return: the course order
+    """
+    def findOrder(self, n, prerequisites):
+        # write your code here
+        G = [[] for i in range(n)]
+        degree = [0] * n
+        for j, i in prerequisites:
+            G[i].append(j)
+            degree[j] += 1
+            
+        bfs = [i for i in range(n) if degree[i] == 0]
+        
+        for i in bfs:
+            for j in G[i]:
+                degree[j] -= 1
+                if degree[j] == 0:
+                    bfs.append(j)
+                    
+        return bfs if len(bfs) == n else []
+
+# PRUE DFS TLE 
+class Solution:
+    # @param {integer} numCourses
+    # @param {integer[][]} prerequisites
+    # @return {integer[]}
+    def findOrder(self, numCourses, prerequisites):
+        # use DFS to parse the course structure
+        self.graph = collections.defaultdict(list) # a graph for all courses
+        self.res = [] # start from empty
+        for pair in prerequisites:
+            self.graph[pair[0]].append(pair[1]) 
+        self.visited = [0 for x in range(numCourses)] # DAG detection 
+        for x in range(numCourses):
+            if not self.DFS(x):
+                return []
+             # continue to search the whole graph
+        return self.res
+    
+    def DFS(self, node):
+        if self.visited[node] == -1: # cycle detected
+            return False
+        if self.visited[node] == 1:
+            return True # has been finished, and been added to self.res
+        self.visited[node] = -1 # mark as visited
+        for x in self.graph[node]:
+            if not self.DFS(x):
+                return False
+        self.visited[node] = 1 # mark as finished
+        self.res.append(node) # add to solution as the course depenedent on previous ones
+        return True
