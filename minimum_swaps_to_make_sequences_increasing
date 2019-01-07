@@ -1,0 +1,58 @@
+class Solution:
+    """
+    @param A: an array
+    @param B: an array
+    @return: the minimum number of swaps to make both sequences strictly increasing
+    """
+    def minSwap(self, A, B):
+        # Write your code here
+        n = len(A)
+        noswap, swap = [n] * n,  [n] * n 
+        noswap[0], swap[0] = 0, 1
+        
+        for i in range(1, n):
+            areBothSelfIncreasing = A[i - 1] < A[i] and B[i - 1] < B[i] 
+            areInterchangeIncreasing = A[i - 1] < B[i] and B[i - 1] < A[i]
+            
+            if areBothSelfIncreasing and areInterchangeIncreasing:
+                noswap[i] = min(noswap[i - 1], swap[i - 1])
+                swap[i] = min(noswap[i - 1], swap[i - 1]) + 1
+                
+            elif areBothSelfIncreasing:
+                noswap[i] = noswap[i - 1]
+                swap[i] = swap[i - 1] + 1
+                
+            elif areInterchangeIncreasing:
+                noswap[i] = swap[i - 1]
+                swap[i] = noswap[i - 1] + 1
+                
+        return min(noswap[-1], swap[-1])
+                
+# state	
+# whether we swap the element at index i to make A[0..i] and B[0..i] both increasing can uniquely identify a state, i.e. a node in the state graph.
+# state function	
+# state(i, 0) is the minimum swaps to make A[0..i] and B[0..i] both increasing if we donot swap A[i] with B[i]
+# state(i, 1) is the minimum swaps to make A[0..i] and B[0..i] both increasing if we do swap A[i] with B[i]
+# goal state	
+# min{state(n - 1, 0), state(n - 1, 1)} where n = A.length
+# state transition	
+# We define areBothSelfIncreasing: A[i - 1] < A[i] && B[i - 1] < B[i], areInterchangeIncreasing: A[i - 1] < B[i] && B[i - 1] < A[i].
+# Since 'the given input always makes it possible', at least one of the two conditions above should be satisfied.
+
+# if i == 0, 
+# 	        state(0, 0) = 0; 
+# 	        state(0, 1) = 1;
+			
+# Generally speaking,
+# 	if areBothSelfIncreasing && areInterchangeIncreasing
+# 	        // Doesn't matter whether the previous is swapped or not.
+# 	        state(i, 0) = Math.min(state(i - 1, 0), state(i - 1, 1));
+# 	        state(i, 1) = Math.min(state(i - 1, 0), state(i - 1, 1)) + 1;
+# 	else if areBothSelfIncreasing
+# 	        // Following the previous action.
+# 	        state(i, 0) =  state(i - 1, 0);
+# 	        state(i, 1) =  state(i - 1, 1) + 1;
+# 	else if areInterchangeIncreasing
+# 	        // Opposite to the previous action.
+# 	        state(i, 0) = state(i - 1, 1);
+# 	        state(i, 1) = state(i - 1, 0) + 1;                
