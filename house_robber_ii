@@ -1,0 +1,26 @@
+# 该题在House Robber的基础上让首位链接形成环，那么即表示第一个和最后一个不能同时被抢，
+# 则问题分解为House Robber（nums[0:len(nums)-1]）和House Robber（nums[1:len(nums)]），
+# 两者中比较大的那个即为结果
+
+class Solution:
+    """
+    @param nums: An array of non-negative integers.
+    @return: The maximum amount of money you can rob tonight
+    """
+    def houseRobber2(self, nums):
+        # write your code here
+        if nums is None or len(nums) == 0: return 0
+        if len(nums) == 1: return nums[0]
+        if len(nums) == 2: return max(nums[0], nums[1])
+        
+        return max(self.rob(nums[1:]), self.rob(nums[:-1]))
+        
+    def rob(self, nums):
+        if len(nums) == 2:
+            return max(nums[0], nums[1])
+        n = len(nums)
+        f = [0] * n
+        f[0], f[1] = nums[0], max(nums[0], nums[1])
+        for i in range(2, n):
+            f[i] = max(f[i - 2] + nums[i], f[i - 1])
+        return f[n - 1]
