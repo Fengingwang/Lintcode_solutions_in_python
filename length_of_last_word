@@ -1,0 +1,14 @@
+class Solution:
+    """
+    @param s: A string
+    @return: the length of last word
+    """
+    def lengthOfLastWord(self, s):
+        # write your code here
+        cnt, tail = 0, len(s) - 1
+        while tail >= 0 and s[tail] ==' ':
+            tail -= 1
+        while tail >= 0 and s[tail] != ' ':
+            tail -= 1
+            cnt += 1
+        return cnt 
