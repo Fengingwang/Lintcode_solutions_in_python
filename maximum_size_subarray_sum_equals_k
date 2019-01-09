@@ -1,0 +1,32 @@
+# This is the version to get the maximum length array lintcode 
+class Solution:
+    """
+    @param nums: an array
+    @param k: a target value
+    @return: the maximum length of a subarray that sums to k
+    """
+    def maxSubArrayLen(self, nums, k):
+        # Write your code here
+        dict = {0: -1}
+        leng, sumi = 0, 0
+        for i in range(len(nums)):
+            sumi += nums[i]
+            if sumi - k in dict.keys():
+                leng = max(leng, i - dict[sumi - k])
+            if sumi not in dict.keys():
+                dict[sumi] = i
+ 
+        return leng
+        
+# This is the version to get the number subarray_sum_equal_k leetcode 
+# we dict.key=sumi dict.value= # of subarray sum equal to sumi to aviod situations like [0, 0, 0]
+class Solution:
+    def maxSubArrayLen(self, nums, k):
+        # Write your code here
+        dict = {0: -1}
+        res, sumi = 0, 0
+        for i in range(len(nums)):
+            sumi += nums[i]
+            res += dic.get(sumi - k, 0)
+            dict[sumi] = dict.get(sumi, 0) + 1 
+        return res
