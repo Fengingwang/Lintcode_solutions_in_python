@@ -1,0 +1,15 @@
+class Solution:
+    """
+    @param nums: the given array
+    @return: if any value appears at least twice in the array
+    """
+    def containsDuplicate(self, nums):
+        # Write your code here
+        map = {}
+        for val in nums:
+            if val in map:
+                return True
+            map[val] = True
+        return False
+                
+        # return len(nums) != len(set(nums))
