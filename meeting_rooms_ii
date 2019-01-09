@@ -1,0 +1,46 @@
+"""
+Definition of Interval.
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+class Solution:
+    """
+    @param intervals: an array of meeting time intervals
+    @return: the minimum number of conference rooms required
+    """
+    def minMeetingRooms(self, intervals):
+        # Write your code here
+        start, end = [], []
+        for val in intervals:
+            start.append(val.start)
+            end.append(val.end)
+        
+        start.sort()
+        end.sort()
+        
+        i, j = 0, 0
+        min_rooms, cnt_rooms = 0, 0
+        
+        while i < len(start):
+            if start[i] < end[j]:
+                cnt_rooms += 1  # acquire a room 
+                min_rooms = max(min_rooms, cnt_rooms) # update the min number of rooms 
+                i += 1
+            else:
+                cnt_rooms -= 1 # release a room 
+                j += 1
+        
+        return min_rooms 
+                
+
+# 252. Meeting Rooms 的拓展，同樣給一個開會的區間數組，返回最少需要的房間數。
+# 解法: 
+# 把區間變成2個數組：start時間數組和end時間數組
+# 並對兩個數組排序
+# 然後一個指針遍歷start數組，另一個指針指向end數組。
+# 如果start時間小於end時間，acquiring a new room, 房間數就加1，start時間加1，比較並記錄出現過的最多房間數。
+# start時間大於end，realase one meeting room 則所需房間數就減1，end指針加1。 
+        
