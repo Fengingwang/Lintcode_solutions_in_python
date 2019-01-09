@@ -1,0 +1,24 @@
+# 思路：
+# 找出所有字符串共同的前缀。以第一个字符串为标的，依次进行比较。
+# 设置共同前缀的index为0，最小长度是所有字符串长度中最小的那个。
+# 依次比较strs中的元素，如果不等，就返回第一个字符串到index长度的slice。i
+# ndex加一，直至大于最小长度。
+
+class Solution:
+    """
+    @param strs: A list of strings
+    @return: The longest common prefix
+    """
+    def longestCommonPrefix(self, strs):
+        # write your code here
+        if strs is None or len(strs) == 0: return ''
+        if len(strs) == 1: return strs[0]
+        
+        end, minlen = 0, min([len(s) for s in strs])
+        while end < minlen:
+            for i in range(1, len(strs)):
+                if strs[i][end] != strs[i - 1][end]:
+                    return strs[0][:end]
+            end += 1
+        
+        return strs[0][:end]
