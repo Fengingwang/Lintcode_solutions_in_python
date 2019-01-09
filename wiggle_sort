@@ -1,0 +1,27 @@
+# 思路:
+# 根据题目要求的nums[0] <= nums[1] >= nums[2] <= nums[3]....，我们可以总结出如下规律：
+# 当i为奇数时，nums[i] >= nums[i - 1]
+# 当i为偶数时，nums[i] <= nums[i - 1]
+# 那么我们只要对每个数字，根据其奇偶性，跟其对应的条件比较，如果不符合就和前面的数交换位置即可
+# 遍历一遍数组, 
+# 如果是奇数位置并且其值比下一个大,则交换其值, 
+# 如果是偶数位置并且其值比下一个小, 则交换其值. 
+# 时间复杂度是O(N)
+
+class Solution:
+    """
+    @param: nums: A list of integers
+    @return: nothing
+    """
+    def wiggleSort(self, nums):
+        # write your code here
+        if nums is None or len(nums) == 0:
+            return 
+        
+        for i in range(0, len(nums) - 1):
+            if i % 2 == 0 and nums[i] > nums[i + 1]:
+                nums[i], nums[i + 1] = nums[i + 1], nums[i]
+            if i % 2 == 1 and nums[i] < nums[i + 1]:
+                nums[i], nums[i + 1] = nums[i + 1], nums[i]
+        
+                
