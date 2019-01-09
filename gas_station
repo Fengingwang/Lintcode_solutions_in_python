@@ -1,0 +1,29 @@
+# 解题思路
+# 选择从一个加油站出发，如果车要能够到达下一个加油站，
+# 就需要这个加油站的gas>cost。
+# 不妨设c[i] = gas[i] - cost[i]，
+# c[i]表示的是从某一加油站得到的汽油减去到达下一个加油站需要耗费的汽油后剩余的汽油数目，
+# 对c求和得到的是从出发开始到当前加油站剩余的汽油数目，
+# 如果这个这个和为负，说明当前这种行驶方案无法到达当前的加油站。
+# 也就是说要使车能够不断的向前行进，就要保证途中对c的求和始终大于0。
+# 如果cost的和大于gas的和，显然汽车是无法成功走完一圈的，
+# 如果cost的和小于等于gas的和，必然存在一种方案能够让汽车走完一圈。
+
+class Solution:
+    """
+    @param gas: An array of integers
+    @param cost: An array of integers
+    @return: An integer
+    """
+    def canCompleteCircuit(self, gas, cost):
+        # write your code here
+        if sum(gas) < sum(cost): 
+            return -1
+        
+        total, start = 0, 0
+        for i in range(len(gas)):
+            total += gas[i] - cost[i]
+            if total < 0:
+                start, total = i + 1, 0
+        
+        return start 
