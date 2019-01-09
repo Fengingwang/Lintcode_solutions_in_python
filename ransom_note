@@ -1,0 +1,28 @@
+class Solution:
+    """
+    @param ransomNote: a string
+    @param magazine: a string
+    @return: whether the ransom note can be constructed from the magazines
+    """
+    def canConstruct(self, ransomNote, magazine):
+        # Write your code here
+        if len(ransomNote) > len(magazine):
+            return False 
+        
+        mapping = {}
+        for val in magazine:
+            if val in mapping.keys(): 
+                mapping[val] = mapping[val] + 1 
+            else:
+                mapping[val] = 1
+        
+        for s in ransomNote:
+            if s not in mapping.keys():
+                return False 
+            mapping[s] -= 1
+            if mapping[s] == 0:
+                del mapping[s]
+        
+        return True
+            
+                
