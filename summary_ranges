@@ -1,0 +1,28 @@
+# 第一个嵌套遍历Nums，第二个嵌套要往后走，看看后面的数字是不是比前面的数字大1，
+# 是的话就一直后移。根据i和j是否重叠来判断是加上一个数字还是加上一个区间。
+
+class Solution:
+    """
+    @param nums:  a sorted integer array without duplicates
+    @return: the summary of its ranges
+    """
+    def summaryRanges(self, nums):
+        # Write your code here
+        if nums is None or len(nums) == 0:
+            return []
+        
+        res = []
+        i = 0
+        
+        while i < len(nums):
+            temp = nums[i]
+            while i < len(nums) - 1 and nums[i + 1] == nums[i] + 1:
+                i += 1
+            if temp != nums[i]:
+                res.append(str(temp) + '->' + str(nums[i]))
+            else:
+                res.append(str(temp))
+            i += 1
+        
+        return res 
+            
