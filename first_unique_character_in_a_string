@@ -1,0 +1,18 @@
+class Solution:
+    """
+    @param str: str: the given string
+    @return: char: the first unique character in a given string
+    """
+    def firstUniqChar(self, str):
+        # Write your code here
+        mapping = {}
+        
+        for val in str:
+            if val in mapping.keys():
+                mapping[val] += 1
+            else:
+                mapping[val] = 1
+        
+        for val in str:
+            if mapping[val] == 1:
+                return val 
