@@ -1,0 +1,8 @@
+class Solution:
+    """
+    @param citations: a list of integers
+    @return: return a integer
+    """
+    def hIndex(self, citations):
+        # write your code here
+        return sum(i < j for i, j in enumerate(sorted(citations, reverse = True)))
