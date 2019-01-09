@@ -1,0 +1,18 @@
+class Solution:
+    """
+    @param nums: a list of integers
+    @return: return a boolean
+    """
+    def increasingTriplet(self, nums):
+        # write your code
+        if nums is None or len(nums) < 3:
+            return False 
+        #  start with two largest values, as soon as we find a number bigger than both, while both have been updated, return true.
+        small, big = sys.maxsize, sys.maxsize 
+        for val in nums:
+            if val <= small: small = val  #update small if n is smaller than both
+            elif val <= big: big = val #update big only if greater than small but smaller than big
+            else: return True #return if you find a number bigger than both
+        
+        return False 
+            
