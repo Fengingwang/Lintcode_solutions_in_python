@@ -1,0 +1,47 @@
+# * dp[i, j] represents the max profit up until prices[j] using at most i transactions. 
+# * dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
+# *          = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
+# * dp[0, j] = 0; 0 transactions makes 0 profit
+# * dp[i, 0] = 0; if there is only one price data point you cannot make any transaction.
+
+# dp,设dp[i][j]为第J天进行第i次交易能获取的最大值。
+# 当k >= n/2时: 相当于第122题。Best Time to Buy and Sell Stock II
+# 当k > n/2时:
+# dp[i][j] = max(dp[i][j-1] , dp[i - 1][j] + prices[i] – prices[j])  0 <= j < i
+# 第一项为第i天不进行交易，
+# 第二项为枚举j 从0 ~ i-1，第j天买入，第i天卖出
+
+# dp[i][j]=max(dp[i][j-1],prices[j] + maxTemp)  
+# 我们能获取的最大利润，当我们在第j天进行抛售时。由于maxTemp已经算了买进时的价格，所以直接加上即可。
+# maxTemp =max(maxTemp,dp[i-1][j-1] – prices[j])  
+# 可以理解为已获得的最大利润，即如果买进第j天的，那么用之前一轮的买卖，前一天的的利润即（dp[i-1][j-1]）减去prices[j]
+# one transaction is defined as buy A and sell A, so if you want to make a transaction at day j, you should sell A, since buy A only is
+# not a transaction, the K do not increase by 1 if you only buy A, it will increase by 1 at day M after you buy A before and sell A at day M.
+# So if you the K increase at Day M, you must already buy A at some day N, then you sell it at Day M
+
+class Solution:
+    # @return an integer as the maximum profit 
+    def maxProfit(self, k, prices):
+        if prices is None or len(prices) < 2:
+            return 0
+        
+        n = len(prices)
+        if k >= n // 2:
+            return self.maxProfit2(prices)
+            
+        dp =[[0 for j in range(n)]for i in range(k +  1)]
+ 
+        for i in range(1, k + 1):
+            maxTemp = dp[i - 1][0] - prices[0]
+            for j in range(1, n):
+                dp[i][j]= max(dp[i][j - 1], prices[j] + maxTemp)
+                maxTemp = max(maxTemp, dp[i - 1][j - 1] - prices[j])
+                
+        return dp[k][n - 1]
+ 
+    def maxProfit2(self, prices):
+        ans = 0
+        for i in range(1, len(prices) ):
+            if prices[i] > prices[i - 1]:
+                ans += prices[i] - prices[i - 1]
+        return ans
