@@ -1,0 +1,8 @@
+class Solution:
+    """
+    @param s: a string
+    @return: return a string
+    """
+    def reverseString(self, s):
+        # write your code here
+         return "".join(reversed(s.strip()))
