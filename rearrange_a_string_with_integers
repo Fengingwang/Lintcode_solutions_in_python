@@ -1,0 +1,26 @@
+# if there is no integer there is no number at the end 
+class Solution:
+    """
+    @param str: a string containing uppercase alphabets and integer digits
+    @return: the alphabets in the order followed by the sum of digits
+    """
+    def rearrange(self, str):
+        # Write your code here
+        temp = []
+        cnt = 0
+        numexist = False 
+        
+        for i in range(len(str)):
+            if str[i].isdigit():
+                cnt += int(str[i])
+                numexist = True
+            else:
+                temp.append(str[i])
+        
+        temp.sort()
+        res = ''.join(temp)
+            
+        if numexist is True:
+            return res + '%d'%cnt
+        else:
+            return res
