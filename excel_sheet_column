@@ -1,3 +1,4 @@
+# Excel Sheet Column Title
 class Solution:
     """
     @param n: a integer
@@ -14,6 +15,21 @@ class Solution:
         res.reverse()
         
         return ''.join(res)
+
+# Excel Sheet Column number 
+# 26进制转化为10进制
+class Solution:
+    """
+    @param s: a string
+    @return: return a integer
+    """
+    def titleToNumber(self, s):
+        # write your code here
+        res = 0
+        for val in s:
+            res = res * 26 + ord(val) - ord('A') + 1
+        return res 
+
 
 # 思路方法
 # 首先，我们要知道Excel里这个对应关系是什么样的。
