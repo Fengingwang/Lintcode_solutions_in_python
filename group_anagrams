@@ -1,0 +1,23 @@
+class Solution:
+    """
+    @param strs: the given array of strings
+    @return: The anagrams which have been divided into groups
+    """
+    def groupAnagrams(self, strs):
+        # write your code here
+        # mapping[key] = word is not valid here since we need to make everyone a list not a string, 
+        # then we can use mapping[key].append(word) later since string does not have append method 
+        mapping = {}
+        for word in strs:
+            key = ''.join(sorted(word))
+            if key not in mapping.keys():
+                mapping[key] = [word] 
+            else:
+                mapping[key].append(word)
+        
+        res = []
+        for val in mapping.values():
+            res.append(val)
+        
+        return res 
+                
