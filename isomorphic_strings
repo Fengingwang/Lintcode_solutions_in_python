@@ -1,3 +1,23 @@
+class Solution:
+    """
+    @param s: a string
+    @param t: a string
+    @return: true if the characters in s can be replaced to get t or false
+    """
+    def isIsomorphic(self, s, t):
+        # write your code here
+        pdict, sdict = {}, {}
+        if len(s) != len(t):
+            return False
+            
+        for i in range(len(s)):
+            if pdict.get(s[i],0) != sdict.get(t[i],0):
+                return False
+            pdict[s[i]] = i + 1
+            sdict[t[i]] = i + 1
+            
+        return True
+
 # 题目解析：给出两个字符串s和t，它们同构，（顺序相同，长度相同，结构相同）。
 # 思路：使用字典进行映射关系的判断。主要是建立映射关系，和重复项关系判断。
 # 1. 新建一个放s[i]为键，t[i]为值的字典dict和一个字符串string存放满足映射的t
