@@ -1,0 +1,32 @@
+class Solution(object):
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        if n == 1: return "1"
+        
+        prev, res = "1", ""
+        for i in range(n - 1):
+            count = 1
+            for j in range(len(prev) - 1):
+                if prev[j] == prev[j + 1]:
+                    count += 1
+                else:
+                    res += str(count) + prev[j]
+                    count = 1
+            res += str(count) + prev[-1]
+            prev = res
+            res = ""
+        return prev
+
+# 思路：
+# 题意实在太难理解了
+# n=1时输出字符串1；
+# n=2时，数上次字符串中的数值个数，因为上次字符串有1个1，所以输出11；
+# n=3时，由于上次字符是11，有2个1，所以输出21；
+# n=4时，由于上次字符串是21，有1个2和1个1，所以输出1211。
+# Idea here is keep track of the first letter in the sequence and count consecutive occurances. 
+# Once you encounter a new letter you add the previous count and letter to the chain. 
+# Repeat n-1 times (since we seeded the initial '1' case). 
+# We always update temp after the inner loop since we will never have already added the last sequence.
