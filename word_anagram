@@ -1,0 +1,22 @@
+class Solution:
+    """
+    @param s: The first string
+    @param t: The second string
+    @return: true or false
+    """
+    def anagram(self, s, t):
+        # write your code here
+        pdict, sdict = {}, {}
+        if len(s) != len(t):
+            return False
+        n = len(s)
+            
+        for i in range(n):
+            pdict[s[i]] = pdict.get(s[i],0) + 1
+            sdict[t[i]] = sdict.get(t[i],0) + 1
+            
+        for i in range(n):
+            if pdict.get(s[i],0) != sdict.get(s[i],0):
+                return False 
+                
+        return True
