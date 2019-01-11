@@ -1,0 +1,26 @@
+class Solution:
+    """
+    @param s: input string
+    @return: the longest palindromic substring
+    """
+    def longestPalindrome(self, s):
+        # write your code here
+        res = ''
+        for pt in range(len(s)):
+            # odd case, like "aba"
+            temp = self.helper(s, pt, pt)
+            if len(temp) > len(res):
+                res = temp 
+            # even case, like "abba"    
+            temp = self.helper(s, pt, pt + 1)
+            if len(temp) > len(res):
+                res = temp
+        return res 
+        
+    # get the longest palindrome, l, r are the middle indexes   
+    # from inner to outer    
+    def helper(self, s, i, j):
+        while i >= 0 and j <= len(s) - 1 and s[i] == s[j]:
+            i -= 1
+            j += 1
+        return s[i + 1: j]
