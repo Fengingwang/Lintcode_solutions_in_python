@@ -1,0 +1,25 @@
+# 思路：利用栈。
+# 遍历字符串，每次遇到左括号时，就入栈，
+# 遇到右括号时，
+# 判断栈为空或者栈顶字符与此时的右括号不匹配，则返回FALSE，
+# 否则，出栈。
+# 遍历结束，如果栈为空，则返回true，否则为false。
+
+class Solution:
+    """
+    @param s: A string
+    @return: whether the string is a valid parentheses
+    """
+    def isValidParentheses(self, s):
+        # write your code here
+        stack = []
+        dict = {'[':']', '(':')', '{':'}'}
+        for i in range(len(s)):
+            if s[i] in dict.keys():
+                stack.append(s[i])
+            elif s[i] in dict.values():
+                if len(stack) == 0 or s[i] != dict[stack.pop()]:
+                    return False 
+        return len(stack) == 0
+                    
+        
