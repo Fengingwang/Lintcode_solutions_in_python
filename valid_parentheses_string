@@ -1,0 +1,32 @@
+# The number of open parenthesis is in a range [cmin, cmax]
+# cmax: counts the maximum open parenthesis, 
+# which means the maximum number of unbalanced '(' that COULD be paired.
+# cmin: counts the minimum open parenthesis, 
+# which means the number of unbalanced '(' that MUST be paired.
+
+# The string is valid for 2 condition:
+# cmax will never be negative.
+# cmin is 0 at the end.
+
+class Solution:
+    """
+    @param s: the given string
+    @return: whether this string is valid
+    """
+    def checkValidString(self, s):
+        # Write your code here
+        cmin, cmax = 0, 0
+        for val in s:
+            if val == '(':
+                cmax += 1
+                cmin += 1
+            if val == ')':
+                cmax -= 1
+                cmin = min(cmin - 1, 0)
+            if val == '*':
+                cmax += 1
+                cmin = max(cmin - 1, 0)
+            if cmax < 0:
+                return False 
+             return cmin == 0
+                
