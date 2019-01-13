@@ -1,0 +1,33 @@
+class Solution(object):
+    def diffWaysToCompute(self, input):
+        """
+        :type input: str
+        :rtype: List[int]
+        """
+        res = list()
+        N = len(input)
+        
+        for i in range(N):
+            if input[i] == "+" or input[i] == "-" or input[i] == "*":
+                lefts = self.diffWaysToCompute(input[:i])
+                rights = self.diffWaysToCompute(input[i+1:])
+                for left in lefts:
+                    for right in rights:
+                        if input[i] == "+":
+                            res.append(left + right)
+                        elif input[i] == "-":
+                            res.append(left - right)
+                        elif input[i] == "*":
+                            res.append(left * right)
+        
+        if not res:
+            res.append(int(input))
+            
+        return res
+
+# 方法：分而治之
+# 如果仔细想一想，能发现这个题和95. Unique Binary Search Trees II基本一模一样
+# 都是分别求出左右的式子的值，然后再用循环拼接在一起。
+# 方法是，循环遍历式子中的每个位置
+# 如果这个位置是运算符，那么把左右的式子分别计算值，然后用运算符拼到一起。
+# 如果上面这个遍历中没有遇到运算符，那么res数组就是空的，这时input是个数字，所以结果把这个数字放进去，再返回即可。
