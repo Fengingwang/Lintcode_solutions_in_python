@@ -1,0 +1,22 @@
+# 如果左括号还有剩余，则可以放置左括号，
+# 如果右括号的剩余数大于左括号，则可以放置右括号。
+
+class Solution:
+    """
+    @param n: n pairs
+    @return: All combinations of well-formed parentheses
+    """
+    def generateParenthesis(self, n):
+        # write your code here
+        result = []
+        self.helper(n, n, '', result)
+        return result 
+        
+    def helper(self, left, right, string, res):
+        if left == 0 and right == 0:
+            res.append(string)
+            return 
+        if left > 0:
+            self.helper(left - 1, right, string + '(', res)
+        if left < right:
+            self.helper(left, right - 1, string + ')', res)
