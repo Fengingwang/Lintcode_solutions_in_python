@@ -1,0 +1,28 @@
+class Solution:
+    """
+    @param n: An integer
+    @return: true if this is a happy number or false
+    """
+    def isHappy(self, n):
+        # write your code here
+        numset = ()
+        while n != 1 and n is not in numset:
+            numset.add(n)
+            sum_temp = 0
+            while n:
+                digit = n % 10
+                sum_temp += digit * digit 
+            n //= 10
+        return n == 1
+    
+# 题目大意：
+# 编写一个算法判断某个数字是否是“快乐数”。
+# 快乐数的定义过程如下：
+# 从任意一个正整数开始，将原数替换为其每一位的平方和，
+# 重复此过程直到数字=1（此时其值将不再变化），
+# 或者进入一个不包含1的无限循环。那些以1为过程终止的数字即为“快乐数”。
+# 例如：19是一个快乐数，演算过程见题目描述。
+# 解题思路：
+# 模拟题，循环过程中用set记录每次得到的平方和
+# 当出现非1的重复平方和时，返回False
+# 否则，返回True
