@@ -1,0 +1,24 @@
+# 解题思路：
+# 求最大公约数GCD（Greatest Common Divisor)。
+# 如果x与y互质（最大公约数为1），则容量范围[1, x + y]之内的任意整数体积均可以通过适当的操作得到。
+# 否则，记x与y的最大公约数为gcd，则可以获得的容量z只能为gcd的整数倍，且z <= x + y
+
+class Solution:
+    """
+    @param x: the given number x
+    @param y: the given number y
+    @param z: the given number z
+    @return: whether it is possible to measure exactly z litres using these two jugs
+    """
+    def canMeasureWater(self, x, y, z):
+        # Write your code here
+        gcd = self.gcd(x, y)
+        if gcd == 0: 
+            return z == 0
+        return z % gcd == 0 and z <= x + y 
+        
+    def gcd(self, a, b):
+        if a > b: a, b = b, a 
+        if a == 0: return b
+        return self.gcd(b % a, a)
+        
