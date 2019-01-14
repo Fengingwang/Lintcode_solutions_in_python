@@ -1,0 +1,28 @@
+# 解题思路：
+# 不许用乘、除和求余实现两数的相除。
+# 那就只能用加和减了。
+# 正常思路是被除数一个一个的减除数，直到剩下的数比除数小为止，就得到了结果。
+
+class Solution:
+    """
+    @param dividend: the dividend
+    @param divisor: the divisor
+    @return: the result
+    """
+    def divide(self, dividend, divisor):
+        # write your code here
+        sign = (dividend < 0) == (divisor < 0)
+        dividend, divisor = abs(dividend), abs(divisor)
+        res = 0
+        while dividend >= divisor:
+            temp, i = divisor, 1
+            while dividend >= temp:
+                dividend -= temp
+                res += i
+                i += 1
+                temp += divisor 
+        
+        if sign: return min(2147483647, res)
+        else: return max(-2147483648, -res)
+        # if not sign: res = -res
+        # return min(max(-2147483648, res), 2147483647)
