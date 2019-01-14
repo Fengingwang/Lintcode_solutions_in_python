@@ -1,0 +1,22 @@
+# 某字符串的子序列是指从其中删除某些字母（也可以不删除），
+# 而剩余字符的相对顺序保持不变，得到的新字符串。
+# （例如，"ace"是"abcde"的子序列，而"aec"则不是）。
+# 解题思路：
+# 利用队列（Queue）数据结构。
+# 将s加入队列，遍历t，当t的当前字符c与队头相同时，将队头弹出。
+# 最后判断队列是否为空即可。
+
+class Solution:
+    """
+    @param s: the given string s
+    @param t: the given string t
+    @return: check if s is subsequence of t
+    """
+    def isSubsequence(self, s, t):
+        # Write your code here
+        queue = collections.deque(s)
+        for val in t:
+            if not queue: return True
+            if val == queue[0]:
+                queue.popleft()
+        return not queue
