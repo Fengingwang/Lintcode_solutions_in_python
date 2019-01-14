@@ -1,0 +1,31 @@
+class Solution:
+    """
+    @param A: an array
+    @return: the maximum value of F(0), F(1), ..., F(n-1)
+    """
+    def maxRotateFunction(self, A):
+        # Write your code here
+        n = len(A)
+        f, sumn = 0, 0
+        for i in range(n):
+            sumn += A[i]
+            f += i * A[i] #This is the F(0) = 0A + 1B + 2C +3D
+        res = f
+        for i in range(1, n):
+            f = f + sumn - n * A[n - i]
+            res = max(res, f)
+        return res 
+
+# 想想找规律的能力真的挺重要，比如之前那道Elimination Game也靠找规律，而用傻方法肯定TLE。
+# 为了找规律，先把具体的数字抽象为A,B,C,D，那么我们可以得到：
+# F(0) = 0A + 1B + 2C +3D
+# F(1) = 0D + 1A + 2B +3C
+# F(2) = 0C + 1D + 2A +3B
+# F(3) = 0B + 1C + 2D +3A
+# 我们可以得出下面的规律：
+# sum = 1A + 1B + 1C + 1D
+# F(1) = F(0) + sum - 4D
+# F(2) = F(1) + sum - 4C
+# F(3) = F(2) + sum - 4B
+# 那么我们就找到规律了:
+# F(i) = F(i-1) + sum - n*A[n-i]
