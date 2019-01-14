@@ -1,0 +1,13 @@
+# 当石头数是5、6、7时，可以分别拿走1、2、3个石头，使局面变成剩4个石头，那么对手一定输；
+# 当石头数是8时，无论自己拿走几个石头，对方面临的局面一定是剩下5或6或7个石头，从而对方一定赢。 
+# 以此类推，我们发现，当石头个数为4的倍数时总是输，否则总是赢。 
+# 最终，该问题可以转化为，判断石头数是否能整除4。
+
+class Solution:
+    """
+    @param n: an integer
+    @return: whether you can win the game given the number of stones in the heap
+    """
+    def canWinNim(self, n):
+        # Write your code here
+        return n % 4 != 0 
