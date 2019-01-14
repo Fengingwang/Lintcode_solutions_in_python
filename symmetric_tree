@@ -1,0 +1,26 @@
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    """
+    @param root: root of the given tree
+    @return: whether it is a mirror of itself 
+    """
+    def isSymmetric(self, root):
+        # Write your code here
+        if not root:
+            return True
+        return self.mirror(root.left, root.right)
+        
+    def mirror(self, a, b):
+        if not a and not b: return True
+        if not a or not b: return False 
+        l = self.mirror(a.left, b.right)
+        r = self.mirror(a.right, b.left)
+        return a.val == b.val and l and r 
+            
