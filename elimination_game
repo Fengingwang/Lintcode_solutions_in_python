@@ -1,0 +1,21 @@
+class Solution:
+    """
+    @param n: a integer
+    @return: return a integer
+    """
+    def lastRemaining(self, n):
+        # write your code here
+        head = 1
+        step = 1
+        isleft = True 
+        remaining = n
+        
+        while remaining > 1:
+            if isleft or remaining % 2 == 1:
+                head += step 
+            step *= 2
+            remaining //= 2
+            isleft = not isleft 
+        return head 
+            
+# https://leetcode.com/problems/elimination-game/discuss/87119/JAVA%3A-Easiest-solution-O(logN)-with-explanation
