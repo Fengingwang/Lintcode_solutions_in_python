@@ -1,0 +1,25 @@
+# Youtube reference 
+class Solution:
+    """
+    @param num: a string
+    @return: Is it a valid additive number
+    """
+    def isAdditiveNumber(self, num):
+        # Write your code here
+        for i in range(1, len(num) // 2 + 1, 1): # 3rd = 1rd + 2rd so the 1rd can only be half of the string 
+            if num[0] == '0' and i > 1: # The 1rd can be 0 but can be any like 01, 02
+                return False 
+            for j in range(1, len(num)): # 3rd = 1rd + 2rd so #digit of 3rd cannot be less than 1st or 2nd
+                if (max(i, j) > len(num) - i - j) or ((num[j] == '0' and j > 1)):
+                    break # eg 101 if 1, 01 it breaks but it goes into i=2 with 10, 1 it works 
+                if self.isvalid(int(num[:i]), int(num[i: i +j]), i + j, num):
+                    return True
+        return False 
+        
+    def isvalid(self, first, second, startid, num):
+        if startid == len(num):
+            return True 
+        second = first + second # now 3nd is the 3rd number 
+        first = second - first # now 1st is the 2nd number using the 3rd - 1st 
+        return num.startswith(str(second), startid) and self.isvalid(first, second, startid + len(str(second)), num) # the num should start with the 3rd number and recursively same idea to 3rd and 4th and 5th numbers 
+    
