@@ -1,0 +1,40 @@
+class Solution:
+    """
+    @param: nums: a set of distinct positive integers
+    @return: the largest subset 
+    """
+    def largestDivisibleSubset(self, nums):
+        # write your code here
+        nums.sort()
+        n = len(nums)
+        dp, pre = [1] * n, [None] * n 
+        for i in range(n):
+            for j in range(i):
+                if nums[i] % nums[j] == 0 and dp[j] + 1 > dp[i]:
+                    dp[i] = dp[j] + 1
+                    pre[i] = j
+        
+        idx = dp.index(max(dp))
+        res = []
+        while idx is not None:
+            res.append(nums[idx])
+            idx = pre[idx]
+        
+        return res 
+        
+        
+# Basic idea:
+# dp[i] = largest divisible subset that contains nums[i] from elements from 0 to i
+# Steps:
+# 1.) sort nums
+# 2.) to find dp[i], we need to traverse through nums looking for nums[j] 
+#     such that nums[i] is divisible nums[j] and that dp[j] is the biggest in size. 
+#     We can be sure that all the elements in dp[j] can divide nums[i] 
+#     because of transitive property as nums is sorted
+#     eg, 1, 2, 4, then we add 12, if 4 can divide 12 all nums before 4 can divide 12 since 
+#     they are divisor of 4
+# 3.) traverse through opt array and return the subset with max size
+
+
+        
+        
