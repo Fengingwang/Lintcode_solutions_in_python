@@ -1,0 +1,24 @@
+class Solution:
+    """
+    @param n: a non-negative integer
+    @return: number of numbers with unique digits
+    """
+    def countNumbersWithUniqueDigits(self, n):
+        # Write your code here 
+        nums = [9, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        res, product = 1, 1 
+        for i in range(min(10, n)):
+            product *= nums[i]
+            res += product 
+        return res 
+
+# 题目大意
+# 给出了一个n，找出n位的10进制数中，有多少个数字是不包含重复数字的。
+# 解题方法
+# 这个题明显不能用暴力解法，想都不用想。还是找规律吧：
+# 如果n = 1，那么可以有10个数字不同（0～9）
+# 如果n >= 2，那么第一位可以是1～9共9个数字，
+#             第二位可以是出去第一位的数字+0共9个数字，
+#             之后的每位数字都必须不能使用前面已经用过的数字所以依次递减。即9,9,8,7,…,1
+# n位数字中由不同的数字构成的数字，是比它小的各位数字所能构成的该条件的数字求和。
+# 使用循环求解，根据数字的位数，来求这个位数的能够满足条件的个数。ans是小于等于n位的求和。
