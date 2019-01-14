@@ -1,0 +1,17 @@
+class Solution:
+    """
+    @param num: a positive integer
+    @return: if num is a perfect square else False
+    """
+    def isPerfectSquare(self, num):
+        # write your code here
+        start, end = 1, num // 2 + 1
+        while start + 1 < end:
+            mid = (start + end) // 2
+            if mid * mid < num:
+                start = mid 
+            else:
+                end = mid 
+        if end * end == num or start * start == num:
+            return True 
+        else: return False
