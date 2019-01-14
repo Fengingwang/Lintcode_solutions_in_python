@@ -1,0 +1,18 @@
+# 从后向前扫描数组，每位加一，有进位则变成0且保留进位。
+# 最高位如果是9且有进位则要在数组前面多加一个元素1。
+# 当然，实际上完全不用全部数字都做判断，小于等于8的数字加一后就可以终止了。
+class Solution:
+    """
+    @param digits: a number represented as an array of digits
+    @return: the result
+    """
+    def plusOne(self, digits):
+        # write your code here
+        for i in range(len(digits) - 1, -1, -1):
+            if digits[i] < 9:
+                digits[i] = digits[i] + 1
+                return digits
+            else:
+                digits[i] = 0
+        digits.insert(0, 1)
+        return digits
