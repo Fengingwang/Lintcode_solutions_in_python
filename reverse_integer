@@ -1,0 +1,17 @@
+# 循环通过对10取模得到尾部数字，一步步乘10构造新的翻转后的整数即可。
+# 然而要注意首先判断原数字的正负，最后还要判断结果是否溢出。
+
+class Solution:
+    """
+    @param n: the integer to be reversed
+    @return: the reversed integer
+    """
+    def reverseInteger(self, n):
+        # write your code here
+        flag = 1 if n >= 0 else -1
+        new, n = 0, abs(n)
+        while n:
+            new = new * 10 + n % 10
+            n = n // 10
+        new = new * flag 
+        return new if -2147483648 <= new < 2147483648 else 0
