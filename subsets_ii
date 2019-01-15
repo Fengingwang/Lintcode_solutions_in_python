@@ -1,5 +1,27 @@
 class Solution:
     """
+    @param nums: A set of numbers.
+    @return: A list of lists. All valid subsets.
+    """
+    def subsetsWithDup(self, nums):
+        # write your code here
+        nums.sort()
+        res = []
+        self.dfs_subset(nums, 0, [], res)
+        return res 
+        
+    def dfs_subset(self, nums, pos, curt, res):
+        res.append(curt[:])
+        for i in range(pos, len(nums)):
+            if i > pos and nums[i] == nums[i - 1]:
+                continue 
+            curt.append(nums[i])
+            self.dfs_subset(nums, i + 1, curt, res)
+            curt.pop()
+
+
+class Solution:
+    """
     @param nums: A set of numbers
     @return: A list of lists
     """
