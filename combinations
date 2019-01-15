@@ -6,6 +6,28 @@ class Solution:
     """
     def combine(self, n, k):
         # write your code here
+        
+        res = []
+        self.dfs_combination(n, 0, k, 1, [], res)
+        return res 
+    
+        
+    def dfs_combination(self, n, d, k, pos, curt, res):
+        if d == k:
+            res.append(curt[:])
+        for i in range(pos, n + 1):
+            curt.append(i)
+            self.dfs_combination(n, d + 1, k, i + 1, curt, res)
+            curt.pop()
+
+class Solution:
+    """
+    @param n: Given the range of numbers
+    @param k: Given the numbers of combinations
+    @return: All the combinations of k numbers out of 1..n
+    """
+    def combine(self, n, k):
+        # write your code here
         result = []
         self.dfs(n, k, 1, [], result)
         return result 
