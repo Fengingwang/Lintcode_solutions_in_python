@@ -5,6 +5,37 @@ class Solution:
     """
     def permute(self, nums):
         # write your code here
+        nums.sort() # for any permutation and combination, sort the arry first
+        
+        n = len(nums)
+        used = [False] * n 
+        res = []
+        
+        self.dfs_permutation(nums, 0, n, used, [], res)
+        
+        return res 
+        
+    def dfs_permutation(self, nums, d, n, used, curt, res):
+        # d is the dfs depth 
+        # n is the c of premutation(l,c) 
+        if d == n:
+            res.append(curt[:])
+        for i in range(0, len(nums)):
+            if used[i]: 
+                continue
+            curt.append(nums[i])
+            used[i] = True
+            self.dfs_permutation(nums, d + 1, n, used, curt, res)
+            used[i] = False 
+            curt.pop()
+
+class Solution:
+    """
+    @param: nums: A list of integers.
+    @return: A list of permutations.
+    """
+    def permute(self, nums):
+        # write your code here
         if nums is None:
             return []
         result = []
