@@ -5,6 +5,27 @@ class Solution:
     """
     def subsets(self, nums):
         # write your code here
+        nums.sort()
+        res = []
+        self.dfs_subset(nums, 0, [], res)
+        return res 
+        
+    def dfs_subset(self, nums, pos, curt, res):
+        res.append(curt[:])
+        for i in range(pos, len(nums)):
+            curt.append(nums[i])
+            self.dfs_subset(nums, i + 1, curt, res)
+            curt.pop()
+            
+            
+
+class Solution:
+    """
+    @param nums: A set of numbers
+    @return: A list of lists
+    """
+    def subsets(self, nums):
+        # write your code here
         if nums is None:
             return []
         result = []
