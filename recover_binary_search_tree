@@ -1,0 +1,37 @@
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    """
+    @param root: the given tree
+    @return: the tree after swapping
+    """
+    def bstSwappedNode(self, root):
+        # write your code here
+        list_val, list_node = [], []
+        self.inorder(root, list_val, list_node)
+        list_val.sort()
+        for i in range(len(list_val)):
+            list_node[i].val = list_val[i]
+        return root 
+        
+        
+    def inorder(self, node, list_val, list_node):
+        if not node: return  
+        self.inorder(node.left, list_val, list_node)
+        list_val.append(node.val)
+        list_node.append(node)
+        self.inorder(node.right, list_val, list_node)
+
+# 思路很简单，
+# 一颗二叉查找树的中序遍历应该是升序的，而两个节点被交换了，
+# 那么对这个错误的二叉查找树中序遍历，肯定不是升序的。
+# 那我们只需把顺序恢复过来然后进行重新赋值就可以了。
+# 开辟两个列表，list用来存储被破坏的二叉查找树的节点值，
+# listp用来存储二叉查找树的节点的指针。
+# 然后将list排序，再使用listp里面存储的节点指针赋值就可以了。
