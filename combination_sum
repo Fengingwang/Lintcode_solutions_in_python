@@ -1,0 +1,27 @@
+class Solution:
+    """
+    @param candidates: A list of integers
+    @param target: An integer
+    @return: A list of lists of integers
+    """
+    def combinationSum(self, candidates, target):
+        # write your code here
+        candidates.sort()
+        res = []
+        self.dfs_comsum(candidates, 0, target, [], res)
+        return res 
+        
+    def dfs_comsum(self, nums, pos, target, curt, res):
+        if target == 0:
+            res.append(curt[:])
+            return
+        for i in range(pos, len(nums)):
+            if i > pos and nums[i] == nums[i - 1]:
+                continue
+            if nums[i] > target: 
+                return 
+            curt.append(nums[i])
+            self.dfs_comsum(nums, i, target - nums[i], curt, res)
+            # since a num can use ultimate times, so the pos is i not i + 1 here
+            curt.pop()
+        
