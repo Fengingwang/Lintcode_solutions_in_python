@@ -1,0 +1,26 @@
+class Solution:
+    """
+    @param word: the given word
+    @return: the generalized abbreviations of a word
+    """
+    def generateAbbreviations(self, word):
+        # Write your code here
+        res = []
+        self.dfs(word, 0, '', 0, res)
+        return res 
+        
+    def dfs(self, word, pos, curt, cnt, res):
+        if pos == len(word):
+            if cnt > 0: 
+                curt += str(cnt)
+            res.append(curt[:])
+            return 
+        
+        # abbreviate this word
+        self.dfs(word, pos + 1, curt, cnt + 1, res)
+        
+        # keep this word
+        if cnt > 0:
+            curt += str(cnt)
+        curt += word[pos]
+        self.dfs(word, pos + 1, curt, 0, res)
