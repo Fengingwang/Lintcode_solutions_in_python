@@ -1,0 +1,31 @@
+class Solution:
+    """
+    @param n: non-negative integer, n posts
+    @param k: non-negative integer, k colors
+    @return: an integer, the total number of ways
+    """
+    def numWays(self, n, k):
+        # write your code here
+        if n == 0 or k == 0: return 0
+        if n == 1: return k 
+        if n == 2: return k * k 
+        
+        f = [0] * (n + 1)
+        f[0], f[1], f[2] = 0, k, k * k
+        
+        for i in range(3, n + 1):
+            f[i] = (k - 1) * f[i - 1] + (k - 1) * f[i - 2]
+        
+        return f[n]
+
+# 这道题让我们粉刷篱笆，有n个部分需要刷，有k种颜色的油漆，
+# 规定了不能有超过两个的相同颜色涂的部分，问我们总共有多少种刷法。
+# 那么我们首先来分析一下，
+# 如果n=0的话，说明没有需要刷的部分，直接返回0即可，
+# 如果n为1的话，那么有几种颜色，就有几种刷法，所以应该返回k，
+# 当n=2时，k=2时，
+# 我们可以分两种情况来统计，
+# 一种是相邻部分没有相同的，一种相同部分有相同的颜色，
+# 那么对于没有相同的，对于第一个格子，我们有k种填法，对于下一个相邻的格子，由于不能相同，所以我们只有k-1种填法。
+# 而有相同部分颜色的刷法和上一个格子的不同颜色刷法相同，因为我们下一格的颜色和之前那个格子颜色刷成一样的即可，
+# 最后总共的刷法就是把不同和相同两个刷法加起来
