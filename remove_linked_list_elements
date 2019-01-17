@@ -1,0 +1,25 @@
+"""
+Definition of ListNode
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+
+class Solution:
+    """
+    @param head: a ListNode
+    @param val: An integer
+    @return: a ListNode
+    """
+    def removeElements(self, head, val):
+        # write your code here
+        dummy = ListNode(0, head)
+        curt = dummy
+        while curt and curt.next:
+            if curt.next.val == val:
+                curt.next = curt.next.next 
+            else:
+                curt = curt.next 
+        return dummy.next 
+                
