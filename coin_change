@@ -1,0 +1,35 @@
+class Solution:
+    """
+    @param coins: a list of integer
+    @param amount: a total amount of money amount
+    @return: the fewest number of coins that you need to make up
+    """
+    def coinChange(self, coins, amount):
+        # write your code here
+        f = [sys.maxsize] * (amount + 1)
+        f[0] = 0
+        
+        for i in range(amount + 1):
+            for val in coins:
+                if val <= i:
+                    f[i] = min(f[i - val] + 1, f[i])
+        
+        if f[amount] > amount:
+            return -1
+        return f[amount]
+        
+# 思路： 
+# 本题意思是有一堆不同面额的硬币，问最少取多少枚硬币，可以凑够想要的面值，每种硬币数无限。
+# 假设dp[i]表示凑够i元所需要的最少硬币数，一共有n种面值硬币，
+# 那么dp[i]=min(dp[i−coins[0]],dp[i−coins[1]],...dp[i−coins[k])+1，
+# 其中coins[k]<=idp[i]=min(dp[i−coins[0]],dp[i−coins[1]],...dp[i−coins[k])+1，其中coins[k]<=i
+# 比如例1中
+# dp[0] = 0
+# dp[1] = 1
+# dp[2] = min{dp[2-1]}+1
+# dp[3] = min{dp[3-1],dp[3-2]}+1
+# dp[4] = min{dp[4-1],dp[4-2]}+1
+# ...
+# dp[11] = min{11-1},dp[11-2],dp[11-5]}+1
+
+        
