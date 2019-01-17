@@ -1,0 +1,49 @@
+"""
+Definition of ListNode
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+
+class Solution:
+    """
+    @param head: the first Node
+    @return: the answer after plus one
+    """
+    def plusOne(self, head):
+        # Write your code here
+        if not head: return head 
+        rev_head = self.reverse(head)
+        pre, curt = rev_head, rev_head
+        
+        carry = 1
+        while curt:
+            pre = curt 
+            total = curt.val + carry 
+            curt.val = total % 10
+            carry = total // 10
+            if carry == 0: 
+                break 
+            curt = curt.next 
+        
+        if carry: 
+            pre.next = ListNode(1)
+        
+        return self.reverse(rev_head)
+
+    def reverse(self, curt):
+        pren = None
+        while curt:
+            temp = curt.next
+            curt.next = pren 
+            pren = curt
+            curt = temp 
+        return pren 
+
+# 这道题给了我们一个链表，用来模拟一个三位数，表头是高位，现在让我们进行加1运算，
+# 这道题的难点在于链表无法通过坐标来访问元素，只能通过遍历的方式进行，
+# 而这题刚好让我们从链尾开始操作，从后往前，遇到进位也要正确的处理，最后还有可能要在开头补上一位。
+# 那么我们反过来想，如果链尾是高位，那么进行加1运算就方便多了，直接就可以边遍历边进行运算处理，
+# 那么我们可以做的就是先把链表翻转一下，然后现在就是链尾是高位了，我们进行加1处理运算结束后，
+# 再把链表翻转回来即可
