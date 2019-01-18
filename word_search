@@ -1,0 +1,38 @@
+class Solution:
+    """
+    @param board: A list of lists of character
+    @param word: A string
+    @return: A boolean
+    """
+    def exist(self, board, word):
+        # write your code here
+        if not board: return False 
+        
+        m, n = len(board), len(board[0])
+        visited = [[False] * n for _ in range(m)]
+        
+        for i in range(m):
+            for j in range(n):
+                if self.dfs(board, word, i, j, visited, 0):
+                    return True 
+        
+        return False 
+        
+    def dfs(self, board, word, i, j, visited, pos):
+        if pos == len(word):
+            return True
+            
+        if i < 0 or i == len(board) \
+        or j < 0 or j == len(board[0]) \
+        or visited[i][j] == True \
+        or word[pos] != board[i][j]: 
+            return False 
+        
+        visited[i][j] = True
+        res = self.dfs(board, word, i, j + 1, visited, pos + 1) \
+        or self.dfs(board, word, i, j - 1, visited, pos + 1) \
+        or self.dfs(board, word, i + 1, j, visited, pos + 1) \
+        or self.dfs(board, word, i - 1, j, visited, pos + 1)
+        visited[i][j] = False
+        
+        return res 
