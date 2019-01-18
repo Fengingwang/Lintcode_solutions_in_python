@@ -1,0 +1,44 @@
+class Solution:
+    """
+    @param nums1: an integer array
+    @param nums2: an integer array
+    @return: an integer array
+    """
+    def intersection(self, nums1, nums2):
+        # write your code here
+        res = []
+        dict = {}
+        for val in nums1: 
+            dict[val] = dict[val] + 1 if val in dict else 1
+        for val in nums2: 
+            if val in dict.keys() and dict[val] > 0:
+                res.append(val)
+                dict[val] -= 1
+        return list(set(res))
+
+# 思路
+# 用字典统计第一个列表都出现了哪些数及出现的次数，
+# 然后顺序遍历第二个列表，发现同时出现的数则加入到结果列表中，
+# 同时将第一个列表中相应的出现次数减一。
+
+class Solution(object):
+    def intersect(self, nums1, nums2):
+        res = []
+        nums1.sort()
+        nums2.sort()
+        i = j = 0
+        while i < len(nums1) and j < len(nums2):
+            if nums1[i] == nums2[j]:
+                res.append(nums1[i])
+                i += 1
+                j += 1
+            elif nums1[i] < nums2[j]:
+                i += 1
+            elif nums1[i] > nums2[j]:
+                j += 1
+        return res
+# 思路
+# 先将两个数组排序，再维持两个指针分别扫描两个数组，寻找共同的元素。
+class Solution(object):
+    def intersection(self, nums1, nums2):
+        return list(set(nums1) & set(nums2))
