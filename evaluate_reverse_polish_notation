@@ -1,0 +1,31 @@
+class Solution:
+    """
+    @param tokens: The Reverse Polish Notation
+    @return: the value
+    """
+    def evalRPN(self, tokens):
+        # write your code here
+        stack = []
+        for i in range(len(tokens)):
+            if tokens[i] != '+' and tokens[i] != '-' and tokens[i] != '*' and tokens[i] != '/':
+                stack.append(int(tokens[i]))
+            else:
+                a = stack.pop()
+                b = stack.pop()
+                if tokens[i] == '+': stack.append(a + b)
+                if tokens[i] == '-': stack.append(b - a)
+                if tokens[i] == '*': stack.append(a * b)
+                if tokens[i] == '/':
+                    if a * b < 0: stack.append(-((-b) // a))
+                    else: stack.append(b // a)
+        return stack.pop()
+        
+# 解题思路：
+# 这道题是经典的逆波兰式求值。具体思路是：
+# 开辟一个空栈，遇到数字压栈，
+# 遇到运算符弹出栈中的两个数进行运算，并将运算结果压栈，
+# 最后栈中只剩下一个数时，就是所求结果。
+# 这里需要注意的一点是python中的'/'除法和c语言不太一样。
+# 在python中，(-1)/2=-1，而在c语言中，(-1)/2=0。
+# 也就是c语言中，除法是向零取整，即舍弃小数点后的数。而在python中，是向下取整的。
+# 而这道题的oj是默认的c语言中的语法，所以需要在遇到'/'的时候注意一下。
