@@ -1,0 +1,45 @@
+class Solution:
+    """
+    @param grid: Given a 2D grid, each cell is either 'W', 'E' or '0'
+    @return: an integer, the maximum enemies you can kill using one bomb
+    """
+    def maxKilledEnemies(self, grid):
+        # write your code here
+        if not grid: return 0
+        
+        m, n = len(grid), len(grid[0])
+        res, row = 0, 0 
+        col = [0 for i in range(n)]
+        
+        for i in range(m):
+            for j in range(n):
+                if j == 0 or grid[i][j - 1] == 'W':
+                    row = 0
+                    for k in range(j, n):
+                        if grid[i][k] == 'W':
+                            break 
+                        if grid[i][k] == 'E':
+                            row += 1
+                if i == 0 or grid[i - 1][j] == 'W':
+                    col[j] = 0
+                    for k in range(i, m):
+                        if grid[k][j] == 'W': 
+                            break 
+                        if grid[k][j] == 'E':
+                            col[j] += 1
+                                
+                if grid[i][j] == '0' and row + col[j] > res: 
+                    res = row + col[j]
+        return res 
+
+
+# 需要一个rowCnt变量，用来记录到下一个墙之前的敌人个数。
+# 还需要一个数组colCnt，其中colCnt[j]表示第j列到下一个墙之前的敌人个数。
+# 算法思路是遍历整个数组grid，
+# 对于一个位置grid[i][j]，
+# 对于水平方向，如果当前位置是开头一个或者前面一个是墙壁，我们开始从当前位置往后遍历，遍历到末尾或者墙的位置停止，计算敌人个数。
+# 对于竖直方向也是同样，如果当前位置是开头一个或者上面一个是墙壁，我们开始从当前位置向下遍历，遍历到末尾或者墙的位置停止，计算敌人个数。
+# 可能会有人有疑问，为啥rowCnt就可以用一个变量，而colCnt就需要用一个数组呢，为啥colCnt不能也用一个变量呢？
+# 原因是由我们的遍历顺序决定的，我们是逐行遍历的，在每行的开头就统计了该行的敌人总数，所以再该行遍历没必要用数组，
+# 但是每次移动时就会换到不同的列，我们总不能没换个列就重新统计一遍吧，所以就在第一行时一起统计了存到数组中供后来使用。
+# 有了水平方向和竖直方向敌人的个数，那么如果当前位置是0，表示可以放炸弹，我们更新结果res即可
