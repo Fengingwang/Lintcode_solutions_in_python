@@ -1,0 +1,35 @@
+class Solution:
+    def generateMatrix(self, n):
+        if n == 0:
+            return []
+            
+        matrix = [[0] * n for _ in range(n)]
+        rowBegin, colBegin, rowEnd, colEnd = 0, 0 , n - 1, n - 1
+        num = 1
+        
+        while rowBegin <= rowEnd and colBegin <= colEnd:
+            # top 
+            for j in range(colBegin, colEnd + 1):
+                matrix[rowBegin][j] = num
+                num += 1
+            rowBegin += 1
+            
+            # right
+            for i in range(rowBegin, rowEnd + 1):
+                matrix[i][colEnd] = num
+                num += 1
+            colEnd -= 1
+            
+            # down
+            for j in range(colEnd, colBegin - 1, -1):
+                matrix[rowEnd][j] = num
+                num += 1
+            rowEnd -= 1
+            
+            # left 
+            for i in range(rowEnd, rowBegin - 1, -1):
+                matrix[i][colBegin] = num
+                num += 1
+            colBegin += 1
+            
+        return matrix
