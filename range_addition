@@ -1,0 +1,25 @@
+class Solution:
+    """
+    @param length: the length of the array
+    @param updates: update operations
+    @return: the modified array after all k operations were executed
+    """
+    def getModifiedArray(self, length, updates):
+        # Write your code here
+        res = [0] * length 
+        
+        for start, end, num in updates: 
+            res[start] += num
+            if end + 1 < length: 
+                res[end + 1] -= num
+        p = 0
+        for i in range(length):
+            res[i] += p
+            p = res[i]
+        return res 
+        
+# 这道题的提示说了我们肯定不能把范围内的所有数字都更新，
+# 而是只更新开头结尾两个数字就行了，
+# 那么我们的做法就是
+# 在开头坐标startIndex位置加上inc，
+# 而在结束位置加1的地方加上-inc
