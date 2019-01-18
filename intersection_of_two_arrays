@@ -14,7 +14,8 @@ class Solution:
             if val in dict.keys() and dict[val] > 0:
                 res.append(val)
                 dict[val] -= 1
-        return list(set(res))
+        return res #for II
+        return list(set(res)) #for I
 
 # 思路
 # 用字典统计第一个列表都出现了哪些数及出现的次数，
