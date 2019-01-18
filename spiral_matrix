@@ -1,0 +1,44 @@
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if not matrix: return []
+        
+        row_start, row_end = 0, len(matrix) - 1
+        col_start, col_end = 0, len(matrix[0]) - 1
+        res = []
+        
+        while row_start <= row_end and col_start <= col_end:
+            # right
+            for j in range(col_start, col_end + 1, 1):
+                res.append(matrix[row_start][j])
+            row_start += 1
+            # down
+            for i in range(row_start, row_end + 1, 1):
+                res.append(matrix[i][col_end])
+            col_end -= 1
+            # left
+            if row_start <= row_end:
+                for j in range(col_end, col_start - 1, -1):
+                    res.append(matrix[row_end][j])
+                row_end -= 1
+            # up
+            if col_start <= col_end:
+                for i in range(row_end, row_start - 1, -1):
+                    res.append(matrix[i][col_start])
+                col_start += 1
+        return res   
+ 
+        
+# Frist,  traverse right and increment rowBegin, 
+# Second, traverse down  and decrement colEnd, 
+# Third,  traverse left  and decrement rowEnd, 
+# Forth,  traverse up    and increment colBegin.
+
+# The only tricky part is that when I traverse left or up 
+# I have to check whether the row or col still exists to prevent duplicates.         
+                
+            
+            
