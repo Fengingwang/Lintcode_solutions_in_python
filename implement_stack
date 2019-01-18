@@ -1,0 +1,27 @@
+class Stack:
+    def __init__(self): 
+        self.queue = collections.deque()
+        
+    def push(self, x):
+        # write your code here
+        q = self.queue
+        q.append(x)
+        for _ in range(len(q) - 1):
+            q.append(q.popleft())
+
+    def pop(self):
+        # write your code here
+        return self.queue.popleft()
+        
+    def top(self):
+        # write your code here
+        return self.queue[0]
+
+    def isEmpty(self):
+        # write your code here
+        return not len(self.queue)
+
+# Explanation:
+# Just use a queue where you "push to front" by pushing to back
+# and then rotating the queue until the new element is at the front 
+# (i.e., size-1 times move the front element to the back).
