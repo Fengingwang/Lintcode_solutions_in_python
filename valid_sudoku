@@ -1,0 +1,24 @@
+class Solution:
+    """
+    @param board: the board
+    @return: whether the Sudoku is valid
+    """
+    def isValidSudoku(self, board):
+        # write your code here
+        row = [set() for i in range(9)]
+        col = [set() for i in range(9)]
+        block = [set() for i in range(9)]
+        
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == '.': continue
+                if board[i][j] in row[i]: return False
+                if board[i][j] in col[j]: return False
+                k = i // 3 * 3 + j // 3
+                if board[i][j] in block[k]: return False 
+                
+                row[i].add(board[i][j])
+                col[j].add(board[i][j])
+                block[k].add(board[i][j])
+        return True
+# 首先，简单说一下规则：数独的每一行、每一列、9个九宫格里的数字只能是0-9，且不能重复。
