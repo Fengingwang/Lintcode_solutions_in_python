@@ -1,0 +1,27 @@
+class Solution:
+    """
+    @param: n: The number of queens
+    @return: All distinct solutions
+    """
+    def solveNQueens(self, n):
+        # write your code here
+        board = [-1 for i in range(n)]
+        res = []
+        self.dfs(0, board, [], res)
+        return res
+    
+    def dfs(self, depth, board, valuelist, res):
+        #for i in range(len(board)):
+        if depth == len(board):
+            res.append(valuelist)
+        for j in range(len(board)):
+            if self.check(depth, j, board):
+                s='.' * len(board)
+                board[depth] = j
+                self.dfs(depth + 1, board, valuelist + [s[:j] + 'Q' + s[j + 1:]], res) 
+    
+    def check(self, k, j, board):
+        for i in range(k):
+            if board[i] == j or abs(k - i) == abs(board[i] - j):
+                return False
+        return True
