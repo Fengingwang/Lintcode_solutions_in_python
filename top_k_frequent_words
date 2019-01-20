@@ -1,0 +1,21 @@
+import heapq
+class Solution:
+    """
+    @param words: an array of string
+    @param k: An integer
+    @return: an array of string
+    """
+    def topKFrequentWords(self, words, k):
+        # write your code here
+        count = collections.Counter(words)
+        heap = [(-freq, word) for word, freq in count.items()]
+        heapq.heapify(heap)
+        return [heapq.heappop(heap)[1] for _ in range(k)]
+
+
+# 一般，找出k个最大最小的问题都是一个使用堆来做的。
+# heapq.heapify(heap)能在线性时间内，把一个列表转成堆。
+# heapq.heappop(heap)能直接弹出堆的堆顶。
+# heappush(heap,5)向堆中添加元素。
+# 注意，heap是个list，哪怕使用了上述函数之后，这个仍然是list.
+# python中的堆默认是小根堆，如果想使用大根堆，在添加元素的时候使用负号即可。
