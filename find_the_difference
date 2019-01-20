@@ -1,0 +1,16 @@
+class Solution:
+    """
+    @param s: a string
+    @param t: a string
+    @return: the letter that was added in t
+    """
+    def findTheDifference(self, s, t):
+        # Write your code here
+        dict = {}
+        for val in s: 
+            dict[val] = dict.get(val, 0) + 1
+        for val in t:
+            if dict.get(val, 0) == 0:
+                return val 
+            else:
+                dict[val] -= 1
