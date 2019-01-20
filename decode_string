@@ -1,0 +1,37 @@
+class Solution:
+    """
+    @param s: an expression includes numbers, letters and brackets
+    @return: a string
+    """
+    def expressionExpand(self, s):
+        # write your code here
+        curnum = 0
+        curstring = ''
+        stack = []
+        
+        for val in s:
+            if val == '[':
+                stack.append(curstring)
+                stack.append(curnum)
+                curstring = ''
+                curnum = 0
+            elif val == ']':
+                prenum = stack.pop()
+                prestring = stack.pop()
+                curstring = prestring + prenum * curstring 
+            elif val.isdigit():
+                curnum = curnum * 10 + int(val)
+            else:
+                curstring += val 
+        return curstring
+
+# 题目大意
+# 字符串的编码方式是数字+[字符串] == > 字符串连续重复数字次。求最后解码的字符串是多少。
+# 解题方法
+# 栈: 看到括号匹配的题肯定想到用栈去做。
+# 这个题，遇到’[‘就把之前的字符串进行进栈操作。遇到’]'进行出栈操作。
+# curstring保存的是出栈操作完成后的字符串。
+# 注意这一步：curstring = prestring + prenum * curstring，
+# prestring是前面的字符串，
+# prenum * curstring是这一步骤结束之后的字符串，
+# 所以是前面的字符串+现在的字符串得到目前已有的字符串。
