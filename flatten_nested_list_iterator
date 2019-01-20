@@ -1,0 +1,50 @@
+"""
+This is the interface that allows for creating nested lists.
+You should not implement it, or speculate about its implementation
+
+class NestedInteger(object):
+    def isInteger(self):
+        # @return {boolean} True if this NestedInteger holds a single integer,
+        # rather than a nested list.
+
+    def getInteger(self):
+        # @return {int} the single integer that this NestedInteger holds,
+        # if it holds a single integer
+        # Return None if this NestedInteger holds a nested list
+
+    def getList(self):
+        # @return {NestedInteger[]} the nested list that this NestedInteger holds,
+        # if it holds a nested list
+        # Return None if this NestedInteger holds a single integer
+"""
+
+class NestedIterator(object):
+    def __init__(self, nestedList):
+        # Initialize your data structure here.
+        self.queue = collections.deque()
+        self.getall(nestedList)
+        
+    def getall(self, target):
+        for nest in target:
+            if nest.isInteger():
+                self.queue.append(nest.getInteger())
+            else:
+                self.getall(nest.getList())
+        
+    # @return {int} the next element in the iteration
+    def next(self):
+        # Write your code here
+        return self.queue.popleft()
+        
+    # @return {boolean} true if the iteration has more element or false
+    def hasNext(self):
+        # Write your code here
+        return len(self.queue)
+
+# 解题方法
+# 需要我们设计一个数据结构保存嵌套数组的每个元素，一般选择列表，但为了速度快，我们选择了队列。
+# 重点是利用递归把整个嵌套的列表迭代器给压平。
+# 注意，题目已经给了我们它的数据结构，而不是普通的list。所以我们必须用他的函数。
+# 题目中虽然是多重嵌套，但是归根到底，对于每层的嵌套都是一个一维数组而已。
+# 因此，不要想复杂，直接循环该一维数组，如果是整数，添加到队列中，如果是嵌套的列表则继续解嵌套。。
+# 最后的结果是有按照从左到右有序的
