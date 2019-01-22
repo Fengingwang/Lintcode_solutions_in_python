@@ -1,0 +1,41 @@
+class Solution:
+    """
+    @param n: n nodes labeled from 0 to n - 1
+    @param edges: a undirected graph
+    @return:  a list of all the MHTs root labels
+    """
+    def findMinHeightTrees(self, n, edges):
+        # Wirte your code here
+        if n == 1: return [0]
+        neighbors = collections.defaultdict(list)
+        degrees = collections.defaultdict(int)
+        for u, v in edges: 
+            neighbors[u].append(v)
+            neighbors[v].append(u)
+            degrees[u] += 1
+            degrees[v] += 1
+        
+        # First find the leaves
+        prelevel, visited = [], set(range(n))
+        for i in range(n):
+            if degrees[i] == 1: prelevel.append(i)
+        
+        while len(visited) > 2: 
+            thislevel = []
+            for u in prelevel: 
+                visited.remove(u)
+                for v in neighbors[u]:
+                    if v in visited: 
+                        degrees[v] -= 1
+                        if degrees[v] == 1: 
+                            thislevel += [v]
+            prelevel = thislevel 
+        
+        return prelevel 
+
+# 方法是一个类似剥洋葱的方法，就是一层一层的褪去叶节点，最后剩下的一个或两个节点就是我们要求的最小高度树的根节点，
+# 需要建立一个图g，是一个二维数组，其中g[i]是一个一维数组，保存了i节点可以到达的所有节点。
+# 我们开始将所有只有一个连接边的节点(叶节点)都存入到一个队列queue中，
+# 然后我们遍历每一个叶节点，通过图来找到和其相连的节点，并且在其相连节点的集合中将该叶节点删去，
+# 如果删完后此节点也也变成一个叶节点了，加入队列中，再下一轮删除。
+# 那么我们删到什么时候呢，当节点数小于等于2时候停止，此时剩下的一个或两个节点就是我们要求的最小高度树的根节点啦
