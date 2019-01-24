@@ -1,6 +1,39 @@
 # 3 loops, same as 3sum logic, fix one then fix one then search i - j
-# General verison at the end 
 
+class Solution:
+    def fourSum(self, numbers, target):
+        # write your code here
+        numbers.sort()
+        res = []
+        self.Nsum(numbers, target, 4, [], res)
+        return res 
+        
+    def Nsum(self, nums, target, n, temp, res):
+        if n > len(nums) or n < 2: return []
+        if n == 2: 
+            i, j = 0, len(nums) - 1
+            while i < j: 
+                if nums[i] + nums[j] == target: 
+                    res.append(temp + [nums[i], nums[j]])
+                    i += 1 
+                    j -= 1
+                    while i < j and nums[i] == nums[i - 1]:
+                        i += 1
+                    while i < j and nums[j] == nums[j + 1]:
+                        j -= 1
+                elif nums[i] + nums[j] > target:
+                    j -= 1
+                else: 
+                    i += 1
+        else: 
+            for i in range(0, len(nums) - n + 1):
+                if n * nums[i] > target or target > n * nums[-1]:
+                    break 
+                if i > 0 and nums[i-1] == nums[i]:
+                    continue 
+                self.Nsum(nums[i + 1:], target - nums[i], n - 1, temp + [nums[i]], res)
+        return 
+         
 class Solution:
     """
     @param numbers: Give an array
@@ -36,36 +69,3 @@ class Solution:
                         i += 1
                         
         return res
-        
-        
-def fourSum(self, nums, target):
-    nums.sort()
-    results = []
-    self.findNsum(nums, target, 4, [], results)
-    return results
-
-def findNsum(self, nums, target, N, result, results):
-    if len(nums) < N or N < 2: return
-    # solve 2-sum
-    if N == 2:
-        l, r = 0, len(nums) - 1
-        while l < r:
-            if nums[l] + nums[r] == target:
-                results.append(result + [nums[l], nums[r]])
-                l += 1
-                r -= 1
-                while l < r and nums[l] == nums[l - 1]:
-                    l += 1
-                while r > l and nums[r] == nums[r + 1]:
-                    r -= 1
-            elif nums[l] + nums[r] < target:
-                l += 1
-            else:
-                r -= 1
-    else:
-        for i in range(0, len(nums) - N + 1):   # careful about range
-            if target < nums[i] * N or target > nums[-1] * N:  # take advantages of sorted list
-                break
-            if (i == 0) or (i > 0 and nums[i-1] != nums[i]):  # recursively reduce N
-                self.findNsum(nums[i + 1:], target - nums[i], N - 1, result+ [nums[i]], results)
-    return
