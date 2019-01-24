@@ -1,25 +1,22 @@
-class Solution(object):
+class Solution:
+    """
+    @param n: the nth
+    @return: the nth sequence
+    """
     def countAndSay(self, n):
-        """
-        :type n: int
-        :rtype: str
-        """
-        if n == 1: return "1"
-        
-        prev, res = "1", ""
-        for i in range(n - 1):
+        # write your code here
+        res = '1'
+        for i in range(2, n + 1):
+            temp = ''
             count = 1
-            for j in range(len(prev) - 1):
-                if prev[j] == prev[j + 1]:
+            for j in range(len(res)):
+                if j < len(res) - 1 and res[j] == res[j + 1]:
                     count += 1
                 else:
-                    res += str(count) + prev[j]
+                    temp += str(count) + str(res[j])
                     count = 1
-            res += str(count) + prev[-1]
-            prev = res
-            res = ""
-        return prev
-
+            res = temp 
+        return res 
 # 思路：
 # 题意实在太难理解了
 # n=1时输出字符串1；
