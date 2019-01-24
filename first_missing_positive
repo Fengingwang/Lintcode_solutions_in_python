@@ -13,8 +13,11 @@ class Solution:
         # write your code here
         n = len(nums)
         for i in range(n):
-            while 0 < nums[i] <= n and nums[i] != i + 1 and nums[i] != nums[nums[i] - 1]:
+            while 0 < nums[i] <= n and nums[i] != nums[nums[i] - 1]:
                 nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+                # nums[i], nums[nums[i] - 1] = nums[nums[i] - 1], nums[i] is not right here, since when you put nums[i] front
+                # nums[i] changes first then the nums[nums[i] - 1] also changes accrodingly, which points to somewhere else. 
+                # so when there is a reference put the referred address first when swapping 
         for i in range(n):
             if i + 1 != nums[i]:
                 return i + 1
