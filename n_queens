@@ -1,27 +1,23 @@
 class Solution:
-    """
-    @param: n: The number of queens
-    @return: All distinct solutions
-    """
     def solveNQueens(self, n):
         # write your code here
-        board = [-1 for i in range(n)]
         res = []
-        self.dfs(0, board, [], res)
-        return res
-    
-    def dfs(self, depth, board, valuelist, res):
-        #for i in range(len(board)):
-        if depth == len(board):
-            res.append(valuelist)
-        for j in range(len(board)):
-            if self.check(depth, j, board):
-                s='.' * len(board)
-                board[depth] = j
-                self.dfs(depth + 1, board, valuelist + [s[:j] + 'Q' + s[j + 1:]], res) 
-    
-    def check(self, k, j, board):
-        for i in range(k):
-            if board[i] == j or abs(k - i) == abs(board[i] - j):
-                return False
+        used = [False] * n 
+        # it contains for ith row the queen is palced in row[i] column
+        self.dfs(n, 0, used, [], res)
+        return res 
+        
+    def dfs(self, n, d, used, temp, res):
+        if d == n:
+            res.append(temp[:])
+        for j in range(n):
+            if self.isvalid(used, d, j):
+                s = '.' * n
+                used[d] = j
+                self.dfs(n, d + 1, used, temp + [s[:j] + 'Q' + s[j + 1:]], res)
+        
+    def isvalid(self, used, row, col):
+        for i in range(row):
+            if used[i] == col or abs(row - i) == abs(used[i] - col):
+                return False 
         return True
