@@ -5,12 +5,22 @@
 # 如果有n个台阶，那么走完n个台阶的方式有f(n)种。
 # 而走完n个台阶有两种方法，先走完n-2个台阶，然后跨2个台阶；先走完n-1个台阶，然后跨1个台阶。
 # 所以f(n) = f(n-1) + f(n-2)。
-
 class Solution:
-    """
-    @param n: An integer
-    @return: An integer
-    """
+    def climbStairs(self, n):
+        # write your code here
+        if n == 0: return 0
+        if n == 1: return 1
+        if n == 2: return 2
+        
+        f = [1] * n
+        f[0], f[1] = 1, 2
+        
+        for i in range(2, n):
+            f[i] = f[i - 1] + f[i - 2]
+            
+        return f[n - 1]
+        
+class Solution:
     def climbStairs(self, n):
         # write your code here
         if n == 0:
