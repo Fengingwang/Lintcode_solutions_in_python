@@ -52,3 +52,23 @@ void anti_rotate(vector<vector<int> > &matrix) {
             swap(matrix[i][j], matrix[j][i]);
     }
 }
+
+# up and down 
+for i in range(m // 2):
+            for j in range(n):
+                matrix[i][j], matrix[m - 1 - i][j] = matrix[m - 1 - i][j], matrix[i][j]
+[[3,4],[1,2]]
+# Diagonal [i][i]
+for i in range(m):
+            for j in range(i):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+[[1,3],[2,4]]
+# anti - Diagonal 
+for i in range(m):
+            for j in range(i):
+                matrix[m - 1 - i][j], matrix[n - 1 - j][i] = matrix[n - 1 - j][i], matrix[m - 1 - i][j]
+[[4,2],[3,1]]
+
+
+
+
