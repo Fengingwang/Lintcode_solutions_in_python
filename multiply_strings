@@ -13,21 +13,19 @@ class Solution:
     """
     def multiply(self, num1, num2):
         # write your code here
-        n1, n2 = num1[::-1], num2[::-1]
-        arr = [0 for i in range(len(n1) + len(n2))]
+        arr = [0 for i in range(len(num1) + len(num2))]
         
-        for i in range(len(n1)):
-            for j in range(len(n2)):
-                arr[i + j] += int(n1[i]) * int(n2[j])
+        for i in range(len(num1) - 1, -1, -1):
+            for j in range(len(num2) - 1, -1, - 1):
+                temp = (ord(num1[i]) - ord('0')) * (ord(num2[j]) - ord('0'))
+                poslow = i + j + 1
+                poshigh = i + j
+                temp += arr[poslow]
+                arr[poslow] = temp % 10
+                arr[poshigh] += temp // 10
         
-        res = []
-        for i in range(len(arr)):
-            digit = arr[i] % 10
-            carry = arr[i] // 10
-            if i < len(arr) - 1:
-                arr[i + 1] += carry 
-            res.insert(0, str(digit))
-        while res[0] == '0' and len(res) > 1:
-            del res[0]
+        while arr[0] == 0 and len(arr) > 1:
+            del arr[0]
         
-        return ''.join(res)
+        return ''.join([str(val) for val in arr]) if len(arr) > 0 else '0'     
+            
