@@ -1,24 +1,24 @@
-class Solution:
-    """
-    @param source : A string
-    @param target: A string
-    @return: A string denote the minimum window, return "" if there is no such a string
-    """
-    def minWindow(self, source , target):
-        # write your code here
-        
-        dic = collections.defaultdict(list)
-        counter = collections.Counter(target)
-        window, res = [], ''
-        
-        for index, char in filter(lambda x: x[1] in target, enumerate(source)):
-            dic[char].append(index)
-            window.append(index)
-            
-            if len(dic[char]) > counter[char]:
-                window.remove(dic[char].pop(0))
-            
-            if len(window) == len(target) and (res == '' or window[-1] - window[0] < len(res)):
-                res = source[window[0]: window[-1] + 1]
-            
-        return res 
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        mapt = [0] * 128
+        for val in t: mapt[ord(val)] += 1
+
+        cnt, start = len(t), 0
+        ans_s, ans_e = 0, len(s) + 1
+
+        for i in range(len(s)):
+            if mapt[ord(s[i])] > 0: cnt -= 1
+            mapt[ord(s[i])] -= 1
+            while cnt == 0:
+                if i - start < ans_e - ans_s:
+                    ans_s, ans_e = start, i
+                if mapt[ord(s[start])] == 0: cnt += 1
+                mapt[ord(s[start])] += 1
+                start += 1
+                
+        return "" if ans_e - ans_s == len(s) + 1 else s[ans_s: ans_e + 1]
