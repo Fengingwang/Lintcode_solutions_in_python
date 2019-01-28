@@ -1,0 +1,15 @@
+class Solution:
+    def sortedArrayToBST(self, A):
+        # write your code here
+        return self.helper(A, 0, len(A) - 1)
+        
+    def helper(self, array, start, end):
+        if start > end: 
+            return None
+        mid = (start + end) // 2
+        root = TreeNode(array[mid])
+        root.left = self.helper(array, start, mid - 1)
+        root.right = self.helper(array, mid + 1, end)
+        return root
+        
+        
