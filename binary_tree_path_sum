@@ -1,0 +1,27 @@
+class Solution:
+    def binaryTreePathSum(self, root, target):
+        # write your code here
+        if not root: return []
+        res = []
+        temp = []
+        temp.append(root.val)
+        self.dfs(root, target - root.val, temp, res)
+        return res 
+        
+    def dfs(self, root, target, temp, res):
+        if target == 0 and root.left is None and root.right is None:
+            res.append(temp[:])
+            return 
+        if root.left: 
+            # if root.left.val > target: return 
+            # It should not be here, since the next one can be negative
+            # like 3 4 -10
+            temp.append(root.left.val)
+            self.dfs(root.left, target - root.left.val, temp, res)
+            temp.pop()
+        if root.right: 
+            temp.append(root.right.val)
+            self.dfs(root.right, target - root.right.val, temp, res)
+            temp.pop()
+        
+        
