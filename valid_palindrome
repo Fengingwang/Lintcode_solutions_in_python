@@ -1,4 +1,19 @@
 class Solution:
+    def isPalindrome(self, s):
+        # write your code here
+        if len(s) == 0: return True     
+        stringlist = []
+        for val in s: 
+            if val.isalpha() or val.isdigit():
+                stringlist.append(val.lower())        
+        n = len(stringlist)
+        for i in range(n):
+            if stringlist[i] != stringlist[n - 1 - i]:
+                return False        
+        return True
+        
+        
+class Solution:
     """
     @param s: A string
     @return: Whether the string is a valid palindrome
