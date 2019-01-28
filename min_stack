@@ -12,7 +12,9 @@ class MinStack:
     def push(self, number):
         # write your code here
         self.stack.append(number)
-        if not self.min_stack or number <= self.min_stack[-1]:
+        if not self.min_stack or number <= self.min_stack[-1]: 
+        # here must be <= since when we have 2 same min numbers, we need to append twice, otherwiese when we do the pop 
+        # ww pop one out for the first one we still need one to be poped for the second one 
             self.min_stack.append(number)
 
     """
