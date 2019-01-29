@@ -1,15 +1,36 @@
+I
 class Solution:
-    """
-    @param nums: the given array
-    @return: if any value appears at least twice in the array
-    """
     def containsDuplicate(self, nums):
         # Write your code here
-        map = {}
-        for val in nums:
-            if val in map:
-                return True
-            map[val] = True
+        d = {}
+        for val in nums: 
+            if d.get(val, 0) > 0: return True 
+            d[val] = d.get(val, 0) + 1
         return False
-                
-        # return len(nums) != len(set(nums))
+II
+class Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        # Write your code here
+        d = {}
+        for index, val in enumerate(nums):
+            if val in d and index - d[val] <= k:
+                return True
+            d[val] = index 
+        return False
+III
+class Solution:
+    def containsNearbyAlmostDuplicate(self, nums, k, t):
+        # Write your code here
+        arr = []
+        for index, val in enumerate(nums):
+            arr.append((val, index))
+        arr = sorted(arr, key = lambda x: (x[0], x[1]))
+        
+        for i in range(len(arr) - 1):
+            j = i + 1
+            while j < len(arr) and arr[j][0] - arr[i][0] <= t: 
+                if abs(arr[i][1] - arr[j][1]) <= k: 
+                    return True 
+                j += 1
+        
+        return False 
