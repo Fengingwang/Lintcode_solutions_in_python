@@ -5,14 +5,12 @@ class Solution:
     """
     def isHappy(self, n):
         # write your code here
-        numset = ()
-        while n != 1 and n is not in numset:
-            numset.add(n)
-            sum_temp = 0
-            while n:
-                digit = n % 10
-                sum_temp += digit * digit 
-            n //= 10
+        d = {}
+        while n != 1: 
+            if n in d: return False 
+            d[n] = True 
+            n = sum([pow(int(c) , 2) for c in str(n)])
+        # return True
         return n == 1
     
 # 题目大意：
