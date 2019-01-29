@@ -1,0 +1,18 @@
+class Solution:
+    def rotate(self, nums, k):
+        # Write your code here
+        if len(nums) < 2: return nums
+        n = len(nums)
+        pos = k % n 
+        self.reverse(nums, 0, n - pos - 1)
+        self.reverse(nums, n - pos, n - 1)
+        self.reverse(nums, 0, n - 1)
+        return nums
+        
+    def reverse(self, nums, start, end):
+        if start >= end: 
+            return 
+        while start < end:
+            nums[start], nums[end] = nums[end], nums[start]
+            start += 1
+            end -= 1 
