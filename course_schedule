@@ -2,29 +2,26 @@
 拓扑排序的做法如下：
 每次找入度为0的点，输出该入度为0的点，并删除与之相连接的边
 重复1直到没有入度为0的点。之前输出入度为0的点若小于原图的结点数，那么说明图有环，即拓扑排序不存在，否则即为拓扑排序。
-
-class Solution(object):
+class Solution:
     def canFinish(self, n, prerequisites):
-        """
-        :type numCourses: int
-        :type prerequisites: List[List[int]]
-        :rtype: bool
-        """
-        G = [[] for i in range(n)]
-        degree = [0] * n
-        for j, i in prerequisites:
-            G[i].append(j)
-            degree[j] += 1
-            
-        bfs = [i for i in range(n) if degree[i] == 0]
+        # write your code here
         
-        for i in bfs:
+        G = [[] for _ in range(n)]
+        degree = [0] * n
+        
+        for i, j in prerequisites:
+            G[j].append(i)  
+            # G[i].append(j) is not right here i is from 1 to n so we just try to scan i
+            degree[i] += 1
+        
+        dfs = [i for i in range(n) if degree[i] == 0]
+        for i in dfs: 
             for j in G[i]:
                 degree[j] -= 1
-                if degree[j] == 0:
-                    bfs.append(j)
-                    
-        return len(bfs) == n
+                if degree[j] == 0: 
+                    dfs.append(j)
+        
+        return len(dfs) == n
         
 # PRUE DFS TLE 
 class Solution(object):
