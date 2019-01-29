@@ -1,26 +1,22 @@
 class Solution:
-    """
-    @param: numCourses: a total of n courses
-    @param: prerequisites: a list of prerequisite pairs
-    @return: the course order
-    """
-    def findOrder(self, n, prerequisites):
+    def findOrder(self, numCourses, prerequisites):
         # write your code here
-        G = [[] for i in range(n)]
-        degree = [0] * n
-        for j, i in prerequisites:
-            G[i].append(j)
-            degree[j] += 1
-            
-        bfs = [i for i in range(n) if degree[i] == 0]
+        n = numCourses
+        G = [[] for _ in range(n)]
+        degree = [0] * n 
         
-        for i in bfs:
+        for i, j in prerequisites:
+            G[j].append(i)
+            degree[i] += 1
+        
+        dfs = [i for i in range(n) if degree[i] == 0]
+        for i in dfs: 
             for j in G[i]:
                 degree[j] -= 1
-                if degree[j] == 0:
-                    bfs.append(j)
-                    
-        return bfs if len(bfs) == n else []
+                if degree[j] == 0: 
+                    dfs.append(j)
+            
+        return dfs if len(dfs) == n else []
 
 # PRUE DFS TLE 
 class Solution:
