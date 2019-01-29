@@ -1,20 +1,18 @@
 # Excel Sheet Column Title
 class Solution:
-    """
-    @param n: a integer
-    @return: return a string
-    """
     def convertToTitle(self, n):
         # write your code here
-        capitals = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+        capitals = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
         
         res = []
-        while n > 0:
-            res.append(capitals[(n - 1) % 26])
-            n = (n - 1) // 26
-        res.reverse()
+        while n: 
+            n -= 1
+            res.append(capitals[n % 26])
+            n  = n // 26
         
+        res.reverse()
         return ''.join(res)
+        
 
 # Excel Sheet Column number 
 # 26进制转化为10进制
