@@ -1,0 +1,10 @@
+class Solution:
+    def rangeBitwiseAnd(self, m, n):
+        # Write your code here
+        cnt = 0 
+        while m != n: 
+            m = m >> 1
+            n = n >> 1
+            cnt += 1
+        return m << cnt 
+# [m, n]范围的按位与的结果为m与n的公共“左边首部（left header）”
