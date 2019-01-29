@@ -1,24 +1,18 @@
 class Solution:
-    """
-    @param n: a integer
-    @return: return a integer
-    """
     def countPrimes(self, n):
         # write your code here
-        res = [True] * n 
-        res[0], res[1] = False, False 
-        
-        for i in range(2, n, 1):
-            if res[i] == True:
-                for j in range(i, (n - 1) // i + 1):
-                    res[i * j] = False 
-        
-        return sum(res)
+        f = [True] * n 
+        f[0], f[1] = False, False 
+        for i in range(2, n):
+            if f[i] == True: 
+                for j in range(2, (n - 1) // i + 1):
+                    f[i * j] = False 
+        return sum(f)
 
 # 厄拉多塞筛法的步骤：
 # 建立从2到n的集合G={2, 3, 4, ..., n}，
 # 每次从集合中取出最小的数A，这个数就是质数；
-# 然后将数A * times从集合中删除，其中1<=times<=n/A。
+# 然后将数A * times从集合中删除，其中2<=times<=n/A。
 # 得到一个新的集合G2，重复上述步骤直到集合为空，就取出了所有质数。
 # 举例一个集合{2, 3, 4, ..., 12}：
 # stp1：最小值为2，取出2并删除2，4，6，8，10，12，集合变为{3, 5, 7, 9, 11}；
