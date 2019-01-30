@@ -1,0 +1,7 @@
+class Solution:
+    def findMissing(self, nums):
+        # write your code here
+        n = len(nums)
+        return n * (n + 1) // 2 - sum(nums)
+
+# 解题思路：等差数列前n项和 - 数组之和
