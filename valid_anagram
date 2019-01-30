@@ -1,0 +1,13 @@
+class Solution:
+    def anagram(self, s, t):
+        # write your code here
+        if len(s) != len(t): return False
+        
+        dicts, dictt = {}, {}
+        for i in range(len(s)):
+            dicts[s[i]] = dicts.get(s[i], 0) + 1 
+            dictt[t[i]] = dictt.get(t[i], 0) + 1 
+        
+        if dicts != dictt: 
+            return False 
+        return True
