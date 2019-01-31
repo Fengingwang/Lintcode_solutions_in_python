@@ -48,3 +48,17 @@ class Solution:
                     res.add(neighbor)
                     q.append(neighbor)
         return res
+        
+# 2 
+    def getnodes(self, node): 
+        q = []
+        q.append(node)
+        res = set()
+        res.add(node)
+        while q: 
+            curt = q.pop(0)
+            for neighbor in curt.neighbors:
+                if neighbor not in res:
+                    res.add(neighbor)
+                    q.append(neighbor)
+        return res 
