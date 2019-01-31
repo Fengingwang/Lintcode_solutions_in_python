@@ -5,36 +5,23 @@
 # 层序遍历需要用到queue，此时queue里不能只存节点，而是要存序号和节点组成的pair，
 # 这样我们每次取出就可以操作序号，而且排入队中的节点也赋上其正确的序号
  
-"""
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
-"""
-
 class Solution:
-    """
-    @param root: the root of tree
-    @return: the vertical order traversal
-    """
     def verticalOrder(self, root):
         # write your code here
-        if root is None:
-            return []
+        if not root: return []
         
-        queue = [(root, 0)]
-        mapping = collections.defaultdict(list)
+        queue = []
+        queue.append((root, 0))
+        d = collections.defaultdict(list)
         
-        for node, order in queue:
-            if node is not None:
-                mapping[order].append(node.val)
-                queue.append((node.left, order - 1))
-                queue.append((node.right, order + 1))
-                # queue += (node.left, order - 1), (node.right, order + 1)
+        while queue: 
+            curt, order = queue.pop(0)
+            d[order].append(curt.val)
+            if curt.left: queue.append((curt.left, order - 1))
+            if curt.right: queue.append((curt.right, order + 1))
         
         res = []
-        for i in range(min(mapping.keys()), max(mapping.keys()) + 1):
-            res.append(mapping[i])
-            
+        for i in range(min(d.keys()), max(d.keys()) + 1):
+            res.append(d[i])
+        
         return res
