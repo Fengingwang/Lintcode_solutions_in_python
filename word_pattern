@@ -1,21 +1,17 @@
 # similar to isomorphic strings
-class Solution(object):
-    def wordPattern(self, pattern, str):
-        """
-        :type pattern: str
-        :type str: str
-        :rtype: bool
-        """
-        #method Three
-        pdict, sdict = {}, {}
-        str = str.split()
-        if len(pattern) != len(str):
+class Solution:
+    def wordPattern(self, pattern, teststr):
+        # write your code here
+        strs = teststr.split(' ')
+        if len(pattern) != len(strs): 
             return False
-            
+        
+        pdict, sdict = {}, {}
         for i in range(len(pattern)):
-            if pt.get(pattern[i],0) != st.get(str[i],0):
+            if pdict.get(pattern[i], 0) != sdict.get(strs[i], 0):
                 return False
-            pt[pattern[i]] = i + 1
-            st[str[i]] = i + 1
-            
+                
+            pdict[pattern[i]] = pdict.get(pattern[i], 0) + 1
+            sdict[strs[i]] = sdict.get(strs[i], 0) + 1
+        
         return True
