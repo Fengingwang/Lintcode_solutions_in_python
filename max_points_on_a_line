@@ -1,0 +1,46 @@
+"""
+Definition for a point.
+class Point:
+    def __init__(self, a=0, b=0):
+        self.x = a
+        self.y = b
+"""
+
+class Solution:
+    """
+    @param points: an array of point
+    @return: An integer
+    """
+    def maxPoints(self, points):
+        # write your code here
+        n = len(points)
+        if n <= 2: return n
+        d = collections.defaultdict(int) # (x,y): count
+        res = 0
+        
+        for i in range(n):
+            d.clear()
+            overlap, curtmax = 0, 0 
+            for j in range(i + 1, n):
+                dx = points[j].x - points[i].x
+                dy = points[j].y - points[i].y
+                if dx == 0 and dy == 0: 
+                # count the same points
+                    overlap += 1
+                    continue 
+                gcd = self.getgcd(dx, dy)
+                dx = dx // gcd
+                dy = dy // gcd
+                # there are maybe horizontal and vertical lines
+                # so we use pair instead of slope directly 
+                d[(dx, dy)] += 1
+                curtmax = max(curtmax, d[(dx, dy)])
+            res = max(res, curtmax + overlap + 1)
+        return res 
+    
+    def getgcd(self, a, b):
+        if b == 0: return a 
+        return self.getgcd(b, a % b)
+                
+                 
+                
