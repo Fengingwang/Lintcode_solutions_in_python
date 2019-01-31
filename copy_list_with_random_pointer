@@ -3,67 +3,26 @@
 # 然后遍历链表并拷贝两个指针。
 # 因为任意指针可能指向空指针，所以在字典中添加一个空指针项。
 
-"""
-Definition for singly-linked list with a random pointer.
-class RandomListNode:
-    def __init__(self, x):
-        self.label = x
-        self.next = None
-        self.random = None
-"""
-
-"""
-Definition for singly-linked list with a random pointer.
-class RandomListNode:
-    def __init__(self, x):
-        self.label = x
-        self.next = None
-        self.random = None
-"""
-
-
 class Solution:
     # @param head: A RandomListNode
     # @return: A RandomListNode
     def copyRandomList(self, head):
         # write your code here
+        if not head: return None
         root = head 
-        if head is None:
-            return 
-        mapping = {}
+        d = {}
         
         # copy the nodes
-        node = head
-        while node:
-            mapping[node] = RandomListNode(node.label)
-            node = node.next 
+        curt = head
+        while curt: 
+            d[curt] = RandomListNode(curt.label)
+            curt = curt.next
         
-        # copy the next_pointer and random_pointer
-        mapping[None] = None 
-        node = head 
-        while node:
-            mapping[node].next = mapping[node.next]
-            mapping[node].random = mapping[node.random]
-            node = node.next 
+        # copy the pointer 
+        curt = head 
+        while curt:
+            d[curt].next = d[curt.next] if curt.next else None 
+            d[curt].random = d[curt.random] if curt.random else None
+            curt = curt.next 
         
-        return mapping[root]
-
-
-
-numbers = dict(x=5, y=0)    
-/*output: numbers = {'x': 5, 'y': 0}*/
-empty = dict()             
-/*output: empty = {}*/
-numbers1 = dict([('x', 5), ('y', -5)]) 
-/*output: numbers1 = {'y': -5, 'x': 5}*/
-numbers2 = dict([('x', 5), ('y', -5)], z=8)
-/*numbers2 = {'z': 8, 'y': -5, 'x': 5}*/
-numbers3 = dict(dict(zip(['x', 'y', 'z'], [1, 2, 3])))
-/*numbers3 = {'z': 3, 'y': 2, 'x': 1}*/
-numbers1 = dict({'x': 4, 'y': 5})
-/*numbers1 = {'x': 4, 'y': 5}*/
-numbers2 = {'x': 4, 'y': 5}
-/*numbers2 = {'x': 4, 'y': 5}*/
-numbers3 = dict({'x': 4, 'y': 5}, z=8)
-/*numbers3 = {'x': 4, 'z': 8, 'y': 5}*/
-
+        return d[root]
