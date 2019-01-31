@@ -4,13 +4,11 @@ class Solution:
     @return: The length of LIS (longest increasing subsequence)
     """
     def longestIncreasingSubsequence(self, nums):
-        # write your code here
-        
         # intial 
         n = len(nums)
         f = [1 for i in range(n)]
-        maxn = 0
-        
+        # f = [0] * n and f[0] = 1 this is not right here. even later one is not bigger, it is still 1 length not 0
+        maxn = 0  
         # status and transfer
         for i in range(n):
             for j in range(i):
@@ -18,7 +16,6 @@ class Solution:
                     f[i] = max(f[i], f[j] + 1)
             if f[i] > maxn:
                 maxn = f[i]
-        
         # return            
         return maxn
   
