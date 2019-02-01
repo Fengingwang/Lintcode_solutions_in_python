@@ -1,0 +1,38 @@
+class UnionFindSet:
+    def __init__(self, n):
+        self.parents = [i for i in range(n + 1)]
+        self.ranks = [1 for i in range(n + 1)]
+    def find(self, u):
+        while u != self.parents[u]:
+            self.parents[u] = self.parents[self.parents[u]]
+            u = self.parents[u]
+        return u
+    def union(self, u, v):
+        pu, pv = self.find(u), self.find(v)
+        if pu == pv: return False 
+        if self.ranks[pu] < self.ranks[pv]: 
+            self.parents[pu] = pv
+        elif self.ranks[pu] > self.ranks[pv]: 
+            self.parents[pv] = pu
+        else:
+            self.parents[pv] = pu
+            self.ranks[pu] += 1
+        return True 
+
+class Solution:
+    def validTree(self, n, edges):
+        # write your code here
+        s = UnionFindSet(len(edges))
+        for edge in edges: 
+            if s.union(edge[0], edge[1]) == False: 
+                return False 
+        return len(edges) == n - 1
+
+# 这道题给了我们一个无向图，让我们来判断其是否为一棵树，
+# 我们知道如果是树的话，所有的节点必须是连接的，
+# 也就是说必须是连通图，而且不能有环，
+# 所以我们的焦点就变成了验证是否是连通图和是否含有环。
+# 这道题目很重要，他介绍了一个基本知识。
+# 如何判断一个图是否有环。
+# 当然，这道题目还需要再多判断一个问题：
+# 如何判断这个图只有一个强连接部分 strong connected component
