@@ -1,21 +1,25 @@
-class Solution(object):
+class Solution:
     def numberToWords(self, num):
-        """
-        :type num: int
-        :rtype: str
-        """
-        to19 = 'One Two Three Four Five Six Seven Eight Nine Ten Eleven Twelve ' \
-               'Thirteen Fourteen Fifteen Sixteen Seventeen Eighteen Nineteen'.split()
-        tens = 'Twenty Thirty Forty Fifty Sixty Seventy Eighty Ninety'.split()
-        def words(n):
-            if n < 20:
-                return to19[n - 1: n] # list index from 0
-            if n < 100:
-                return [tens[n // 10 - 2]] + words(n % 10) # list index from 0 and the tens starts at 20 not 10, so here is n // 10 - 2
-            if n < 1000:
-                return [to19[n // 100 - 1]] + ['Hundred'] + words(n % 100)
-            for p, w in enumerate(('Thousand', 'Million', 'Billion'), 1):
-                if n < 1000**(p + 1):
-                    return words(n // 1000 ** p) + [w] + words(n % 1000 ** p)
-                    
-        return ' '.join(words(num)) or 'Zero'
+        # Write your code here
+        self.LESS_THAN_20 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", 
+        "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+        self.TENS = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+        self.THOUSANDS = ["", "Thousand", "Million", "Billion"]
+        
+        if num == 0: return 'Zero'
+        words = ""
+        i = 0
+        
+        while num > 0: 
+            if num % 1000 != 0: 
+                words = self.convert(num % 1000) + self.THOUSANDS[i] + " " + words
+            num = num // 1000
+            i += 1
+        
+        return words.strip()
+        
+    def convert(self, num):
+        if num == 0: return ''
+        elif num < 20: return self.LESS_THAN_20[num] + ' '
+        elif num < 100: return self.TENS[num // 10] + ' ' + self.convert(num % 10)
+        else: return self.LESS_THAN_20[num // 100] + " Hundred " + self.convert(num % 100)
