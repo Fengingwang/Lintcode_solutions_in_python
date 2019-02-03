@@ -1,0 +1,51 @@
+class WordNode:
+    def __init__(self):
+        self.children = {}
+        self.isend = False 
+        
+class WordDictionary:
+    def __init__(self):
+        self.root = WordNode()
+        
+    """
+    @param: word: Adds a word into the data structure.
+    @return: nothing
+    """
+    def addWord(self, word):
+        # write your code here
+        node = self.root
+        for w in word: 
+            if w in node.children: 
+                node = node.children[w]
+            else: 
+                node.children[w] = WordNode()
+                node = node.children[w]
+        node.isend = True 
+
+    """
+    @param: word: A word could contain the dot character '.' to represent any one letter.
+    @return: if the word is in the data structure.
+    """
+    def search(self, word):
+        # write your code here
+        return self.searchhelper(self.root, word)
+        
+    def searchhelper(self, node, word):
+        for i in range(len(word)):
+            c = word[i]
+            if c == '.':
+                for k in node.children: 
+                    if self.searchhelper(node.children[k], word[i + 1:]):
+                        return True 
+                return False
+            elif c not in node.children: 
+                return False 
+            node = node.children[c]
+        return node.isend 
+        
+        
+        
+        
+        
+        
+        
