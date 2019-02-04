@@ -1,23 +1,35 @@
 import random
-class RandomizedSet(object):
+class RandomizedSet:
     def __init__(self):
-        self.nums, self.pos = [], {}
+        # do intialization if necessary
+        self.pos = {}
+        self.nums = []
         
     def insert(self, val):
-        if val in self.pos:  return False
-        self.nums.append(val)
+        # write your code here
+        if val in self.pos.keys(): return False 
         self.pos[val] = len(self.nums) - 1
-        return True
+        self.nums.append(val)
 
     def remove(self, val):
-        if val not in self.pos: return False 
-        idx, last = self.pos[val], self.nums[-1]
-        self.nums[idx], self.pos[last] = last, idx
-        self.nums.pop(); self.pos.pop(val, 0)
+        # write your code here
+        if val not in self.pos.keys(): return False 
+        lastval, lastpos = self.nums[-1], len(self.nums) - 1
+        curtval, curtpos = val, self.pos[val]
+        lastval, lastpos = curtval, curtpos 
+        self.nums.pop()
+        del self.pos[val]  # self.pos.pop(val, 0)
         return True
-            
+
     def getRandom(self):
+        # write your code here
         return self.nums[random.randint(0, len(self.nums) - 1)]
+
+
+# Use d.pop if you want to capture the removed item, 
+# like in item = d.pop("keyA").
+# Use del if you want to delete an item from a dictionary.
+
 
 # 这道题让我们在常数时间范围内实现插入删除和获得随机数操作，如果这道题没有常数时间的限制，直接用一个set就可以搞定所有的操作。
 # 但是由于时间的限制，我们无法在常数时间内实现获取随机数，所以只能另辟蹊径。
