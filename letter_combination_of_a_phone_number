@@ -1,25 +1,43 @@
 class Solution:
+    def letterCombinations(self, digits):
+        # write your code here
+        if len(digits) == 0: return []
+        
+        mapping = {"2":"abc", "3":"def", "4":"ghi", "5":"jkl", "6":"mno", "7":"pqrs", "8":"tuv", "9":"wxyz"}
+        res = []
+        self.dfs(digits, mapping, 0, [], res)
+        return [''.join([str(c) for c in lst]) for lst in res]
+        
+    def dfs(self, nums, mapping, pos, cur, res):
+        if len(nums) == len(cur): 
+            res.append(cur[:])
+            return 
+        for i in range(pos, len(nums)):
+            for val in mapping[nums[i]]:
+                cur.append(val)
+                self.dfs(nums, mapping, i + 1, cur, res)
+                cur.pop(-1)
+                
+# list1= [[1, '1', 1], [2,'2',2], [3,'3',3]]
+# outlst = [' '.join([str(c) for c in lst]) for lst in list1]
+# Output: ['1 1 1', '2 2 2', '3 3 3']
+class Solution:
     """
     @param digits: A digital string
     @return: all posible letter combinations
     """
     def letterCombinations(self, digits):
         # write your code here
-        if not digits:
-            return []
-            
+        if not digits: return []        
         mapping = {"2":"abc", "3":"def", "4":"ghi", "5":"jkl", "6":"mno", "7":"pqrs", "8":"tuv", "9":"wxyz"}
-        
         res = []
         self.dfs(digits, mapping, 0, "", res)
-        
         return res 
         
     def dfs(self, target, mapping, index, temp, res):
         if len(temp) == len(target):
             res.append(temp)
             return 
-        
         for i in range(index, len(target)):
             for j in mapping[target[i]]:
                 self.dfs(target, mapping, i + 1, temp + j, res)
