@@ -2,11 +2,10 @@ class Solution:
     def countPrimes(self, n):
         # write your code here
         f = [True] * n 
-        f[0], f[1] = False, False 
-        for i in range(2, n):
-            if f[i] == True: 
-                for j in range(2, (n - 1) // i + 1):
-                    f[i * j] = False 
+        f[0], f[1] = False, False
+        for i in range(2, int(n ** 0.5)+1):
+            for j in range(i, (n - 1) // i + 1): 
+                f[i * j] = False 
         return sum(f)
 
 # 厄拉多塞筛法的步骤：
