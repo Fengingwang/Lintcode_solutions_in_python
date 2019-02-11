@@ -13,16 +13,16 @@ class Solution:
     """
     def houseRobber3(self, root):
         # write your code here
-        return self.search(root)[1]
+        res =  self.helper(root)
+        return max(res[0], res[1])
         
-    def search(self, root):
-        if root is None:
-            return [0, 0] # before layer, norobcur, robcur
-        
-        robleft = self.search(root.left)
-        robright = self.search(root.right)
-        
-        norobcur = robleft[1] + robright[1]
-        robcur = max(root.val + robleft[0] + robright[0], norobcur)
-        
-        return [norobcur, robcur]
+    def helper(self, root):
+        # norob is max value if not rob current one 
+        # orb is max value if rob current one 
+        if not root: 
+            return [0, 0]
+        left = self.helper(root.left)
+        right = self.helper(root.right)
+        norob = max(left[0], left[1]) + max(right[0], right[1])
+        rob = left[0] + right[0] + root.val
+        return [norob, rob]
