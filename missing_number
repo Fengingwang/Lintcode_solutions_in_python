@@ -1,6 +1,26 @@
 class Solution:
     def findMissing(self, nums):
         # write your code here
+        if nums is None or len(nums) == 0: 
+            return 
+        
+        nums.sort()
+        
+        start, end = 0, len(nums) - 1
+        while start + 1 < end: 
+            mid = (start + end) // 2
+            if nums[mid] > mid: 
+                end = mid
+            else: 
+                start = mid
+        
+        if nums[start] != start: return start
+        elif nums[end] != end: return end
+        else: return len(nums)
+        
+class Solution:
+    def findMissing(self, nums):
+        # write your code here
         n = len(nums)
         return n * (n + 1) // 2 - sum(nums)
 
