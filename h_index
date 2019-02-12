@@ -1,3 +1,12 @@
+class Solution:   
+    def hIndex(self, citations):
+        # write your code here
+        citations = sorted(citations, reverse = True)
+        for index, val in enumerate(citations):
+            if index >= val: 
+                return index
+        return len(citations)
+        
 class Solution:
     """
     @param citations: a list of integers
@@ -6,3 +15,9 @@ class Solution:
     def hIndex(self, citations):
         # write your code here
         return sum(i < j for i, j in enumerate(sorted(citations, reverse = True)))
+        
+这道题让我们求H指数，这个质数是用来衡量研究人员的学术水平的质数，
+定义为一个人的学术文章有n篇分别被引用了n次，那么H指数就是n。
+而且wiki上直接给出了算法，可以按照如下方法确定某人的H指数：
+1、将其发表的所有SCI论文按被引次数从高到低排序；
+2、从前往后查找排序后的列表，直到某篇论文的序号大于 or = 该论文被引次数。所得序号即为H指数。
