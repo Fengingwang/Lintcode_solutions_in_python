@@ -15,7 +15,7 @@ class Solution:
         d = collections.defaultdict(list)
         
         while queue: 
-            curt, order = queue.pop(0)
+            curt, order = queue.pop(0) # it is pop(0) not pop()
             d[order].append(curt.val)
             if curt.left: queue.append((curt.left, order - 1))
             if curt.right: queue.append((curt.right, order + 1))
