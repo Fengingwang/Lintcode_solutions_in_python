@@ -1,3 +1,36 @@
+class Solution:
+    def maxSubArrayLen(self, nums, k):
+        # Write your code here
+        # d = collections.defaultdict(int)
+        # return {"1":0,"0":1,"5":2,"3":3,"6":4}
+        # so it should be used here 
+        d = {0: -1}
+        sumi, res = 0, 0
+        for i in range(len(nums)):
+            sumi += nums[i]
+            if sumi - k in d.keys(): 
+                res = max(res, i - d[sumi - k])
+            if sumi not in d: 
+                d[sumi] = i
+        
+        return res
+
+# # d = defaultdict(int)
+# s = 'mississippi'
+# for k in s: d[k] += 1
+# d.items()
+# [('i', 4), ('p', 2), ('s', 4), ('m', 1)]
+# # d = defaultdict(list)
+# s = [('yellow', 1), ('blue', 2), ('yellow', 3), ('blue', 4), ('red', 1)]
+# for k, v in s: d[k].append(v)
+# d.items()
+# [('blue', [2, 4]), ('red', [1]), ('yellow', [1, 3])]
+# # d = defaultdict(set)
+# s = [('red', 1), ('blue', 2), ('red', 3), ('blue', 4), ('red', 1), ('blue', 4)]
+# for k, v in s: d[k].add(v)
+# d.items()
+# [('blue', set([2, 4])), ('red', set([1, 3]))]
+
 # This is the version to get the maximum length array lintcode 
 class Solution:
     """
