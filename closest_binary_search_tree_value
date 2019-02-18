@@ -1,17 +1,23 @@
-"""
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
-"""
-
 class Solution:
-    """
-    @param root: the given BST
-    @param target: the given target
-    @return: the value in the BST that is closest to the target
-    """
+    def closestValue(self, root, target):
+        # write your code here
+        if not root: return 
+        
+        dif = abs(target - root.val)
+        res = root.val
+        q = []
+        q.append(root)
+        
+        while q: 
+            node = q.pop(0)
+            if abs(node.val - target) < dif: 
+                dif = abs(node.val - target)
+                res = node.val 
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)          
+        return res
+        
+class Solution:
     def closestValue(self, root, target):
         if root == None: return None 
         
