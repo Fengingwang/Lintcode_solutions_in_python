@@ -1,32 +1,17 @@
 class MovingAverage:
-    """
-    @param: size: An integer
-    """
     def __init__(self, size):
         # do intialization if necessary
-        
-        from collections import deque 
-        
-        self.size = size
-        self.length = 0
-        self.sumi = 0
-        self.queue = deque()
+        self.queue = []
+        self.maxsize = size 
+        self.cursum = 0
 
-    """
-    @param: val: An integer
-    @return:  
-    """
     def next(self, val):
         # write your code here
-        self.length += 1
+        if len(self.queue) == self.maxsize: 
+            self.cursum -= self.queue.pop(0)
         self.queue.append(val)
-        self.sumi += val 
-        
-        if self.length > self.size:
-            self.length -= 1
-            self.sumi  -= self.queue.popleft()
-        
-        return float(self.sumi / self.length)
+        self.cursum += val 
+        return self.cursum / len(self.queue)
 
 
 # Your MovingAverage object will be instantiated and called as such:
