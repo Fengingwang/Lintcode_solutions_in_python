@@ -1,39 +1,24 @@
-# For every position in the array, there are only three possible statuses for it.
-# up position, it means nums[i] > nums[i-1]
-# down position, it means nums[i] < nums[i-1]
-# equals to position, nums[i] == nums[i-1]
-# So we can use two arrays up[] and down[] to record the max wiggle sequence length so far at index i.
-# If nums[i] > nums[i-1], that means it wiggles up. 
-# the element before it must be a down position. so up[i] = down[i-1] + 1; down[i] keeps the same with before.
-# If nums[i] < nums[i-1], that means it wiggles down. 
-# the element before it must be a up position. so down[i] = up[i-1] + 1; up[i] keeps the same with before.
-# If nums[i] == nums[i-1], that means it will not change anything 
-# becasue it did not wiggle at all. so both down[i] and up[i] keep the same.
-
 class Solution:
-    """
-    @param nums: the given sequence
-    @return: the length of the longest subsequence that is a wiggle sequence
-    """
     def wiggleMaxLength(self, nums):
         # Write your code here
-        if nums is None or len(nums) == 0:
-            return 
-        
+        if nums is None or len(nums) == 0: 
+            return 0
         n = len(nums)
-        up, down = [0] * n , [0] * n 
-        up[0] = 1
-        down[0] = 1
+        p, q = [1] * n, [1] * n
         
         for i in range(1, n):
-            if nums[i] > nums[i - 1]:
-                up[i] = down[i - 1] + 1
-                down[i] = down[i - 1]
-            elif nums[i] < nums[i - 1]:
-                up[i] = up[i - 1]
-                down[i] = up[i - 1] + 1
-            else:
-                up[i] = up[i - 1]
-                down[i] = down[i - 1]
+            for j in range(0, i):
+                if nums[i] > nums[j]: 
+                    p[i] = max(p[i], q[j] + 1)
+                elif nums[i] < nums[j]:
+                    q[i] = max(q[i], p[j] + 1)
+                    
+        return max(p[n - 1], q[n  - 1])
         
-        return max(up[n - 1], down[n - 1])
+# 这道题给我了我们一个数组，让我们求最长摆动子序列，
+# 看DP的做法，我们维护两个dp数组p和q，
+# p[i]表示到i位置时首差值为正的摆动子序列的最大长度，
+# q[i]表示到i位置时首差值为负的摆动子序列的最大长度。
+# 我们从i=1开始遍历数组，然后对于每个遍历到的数字，
+# 再从开头位置遍历到这个数字，然后比较nums[i]和nums[j]，
+# 分别更新对应的位置
