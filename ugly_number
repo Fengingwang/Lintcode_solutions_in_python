@@ -1,4 +1,17 @@
 class Solution:
+    def isUgly(self, num):
+        # write your code here
+        if num == 0: return False 
+        if num == 1: return True
+        
+        factors = [2, 3, 5]
+        for factor in factors: 
+            while num % factor == 0:
+                num = num / factor
+        return num == 1
+
+
+class Solution:
     """
     @param num: An integer
     @return: true if num is an ugly number or false
