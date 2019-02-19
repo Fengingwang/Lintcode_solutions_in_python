@@ -1,39 +1,15 @@
-"""
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
-"""
-
-
 class Solution:
-    """
-    @param: root: The root of the binary search tree.
-    @param: A: A TreeNode in a Binary.
-    @param: B: A TreeNode in a Binary.
-    @return: Return the least common ancestor(LCA) of the two nodes.
-    """
     def lowestCommonAncestor(self, root, A, B):
         # write your code here
-        # A & 下面有B => A
-        # B & 下面有A => B
-        # A & 下面啥都没有 => A
-        # B & 下面啥都有 => B
-        if root is None or root == A or root == B:
-            return root 
-        
-        left_result = self.lowestCommonAncestor(root.left, A, B)
-        right_result = self.lowestCommonAncestor(root.right, A, B)
-        
-        # A 和 B 一边一个
-        # 左子树有一个点或者左子树有LCA
-        # 右子树有一个点或者右子树有LCA
-        # 左右子树啥都没有
-        if left_result and right_result:
+        if not root:
+            return None
+        if root == A or root == B:
             return root
-        if left_result:
-            return left_result
-        if right_result:
-            return right_result 
-        return None 
+        
+        left = self.lowestCommonAncestor(root.left, A, B)
+        right = self.lowestCommonAncestor(root.right, A, B)
+        
+        if left and right: return root
+        if not left: return right 
+        if not right: return left
+        
