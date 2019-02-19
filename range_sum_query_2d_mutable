@@ -1,24 +1,23 @@
 class NumMatrix(object):
     def __init__(self, matrix):
-        for row in matrix:
-            for col in range(1, len(row)):
-                row[col] += row[col - 1]
+        m, n = len(matrix), len(matrix[0])
+        for i in range(m):
+            for j in range(1, n):
+                matrix[i][j] += matrix[i][j - 1]
         self.matrix = matrix
 
     def update(self, row, col, val):
         original = self.matrix[row][col]
-        if col != 0:
+        if col != 0: 
             original -= self.matrix[row][col - 1]
-
-        diff = original - val
-
-        for y in range(col, len(self.matrix[0])):  # update elements in the row
-            self.matrix[row][y] -= diff
+        delta = original - val 
+        for j in range(col, len(self.matrix[0])):
+            self.matrix[row][j] -= delta
 
     def sumRegion(self, row1, col1, row2, col2):
-        region_sum = 0
+        sums = 0
         for x in range(row1, row2 + 1):
-            region_sum += self.matrix[x][col2]
-            if col1 != 0:
-                region_sum -= self.matrix[x][col1 - 1]
-        return region_sum
+            sums += self.matrix[x][col2]
+            if col1 != 0: 
+                sums -= self.matrix[x][col1 - 1]
+        return sums 
