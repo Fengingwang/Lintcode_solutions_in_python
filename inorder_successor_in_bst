@@ -2,22 +2,6 @@ BST中找中序遍历的后继节点
 class Solution:
     def inorderSuccessor(self, root, p):
         # write your code here
-        if not root or not p: return 
-        
-        res = TreeNode(None)
-        while root: 
-            if root.val > p.val: 
-                res = root
-                root = root.left
-            else: 
-                root = root.right 
-        
-        if res.val == None: return 
-        else: return res
-        
-class Solution:
-    def inorderSuccessor(self, root, p):
-        # write your code here
         if root is None or p is None:
             return 
         if root.val <= p.val:
@@ -28,6 +12,13 @@ class Solution:
                 return root 
             else:
                 return left
+
+# case1: 目标节点如果有右节点的情况比较好处理，
+# 我们只要返回它的右节点的最左边的节点就行了
+# （右节点自己没有左节点时则是右节点本身。
+# case2: 如果目标节点没有右节点，
+# 说明比目标节点稍大的节点应该在上面，
+# 因为我们知道目标节点的左节点肯定是比目标节点要小的。
                 
 # 方法充分地利用到了BST的性质，
 # 我们首先看根节点值和p节点值的大小，
@@ -37,27 +28,3 @@ class Solution:
 # 我们再比较此时root值和p节点值的大小，如果还是root值大，我们重复上面的操作，
 # 如果p节点值，那么我们将root移到其右子节点，
 # 这样当root为空时，res指向的就是p的后继节点
-
-class Solution:
-    """
-    @param: root: The root of the BST.
-    @param: p: You need find the successor node of p.
-    @return: Successor of p.
-    """
-    def inorderSuccessor(self, root, p):
-        # write your code here
-        if not root or not p: return 
-        self.pre, self.suc = TreeNode(None), TreeNode(None)
-        self.search(root, p)
-        if self.suc.val == None: return 
-        else: return self.suc       
-        
-    def search(self, root, p):
-        if not root: return 
-        self.search(root.left, p)
-        if p == self.pre: self.suc = root 
-        self.pre = root
-        self.search(root.right, p)
-        
-
-            
