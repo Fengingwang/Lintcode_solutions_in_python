@@ -1,8 +1,4 @@
 class Solution:
-    """
-    @param n: An integer
-    @return: how much money you need to have to guarantee a win
-    """
     def getMoneyAmount(self, n):
         # write your code here
         f = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
@@ -11,14 +7,17 @@ class Solution:
                 f[i][j] = min(k + max(f[i][k - 1], f[k + 1][j]) for k in range(i, j))
         return f[1][n]
 
-        
 # 这题要求我们在猜测数字y未知的情况下（1~n任意一个数），
 # 要我们在最坏情况下我们支付最少的钱。也就是说要考虑所有y的情况。        
 # 这道题需要用到Minimax极小化极大算法，那么我们需要建立一个二维的dp数组，
 # 其中dp[i][j]表示从数字i到j之间猜中任意一个数字最少需要花费的钱数，
 # 那么我们需要遍历每一段区间[j, i]，维护一个全局最小值global_min变量，
-# 然后遍历该区间中的每一个数字，计算局部最大值local_max = k + max(dp[j][k - 1], dp[k + 1][i])，
+# 然后遍历该区间中的每一个数字，计算局部最大值
+# local_max = k + max(dp[j][k - 1], dp[k + 1][i])，
 # 这个正好是将该区间在每一个位置都分为两段，
 # 然后取当前位置的花费加上左右两段中较大的花费之和为局部最大值，
-# 为啥要取两者之间的较大值呢，因为我们要cover所有的情况，就得取最坏的情况。
+# 1, 为啥要取两者之间的较大值呢，因为我们要cover所有的情况，就得取最坏的情况。
+# 2, why take max(dp[i][k - 1], dp[k + 1][j]) instead of max(dp[i][k - 1] + dp[k + 1][j])? 
+#    since after you pick k, then you get an answer about higher or lower, then you just throw 
+#    the left or right part.
 # dp[i][j] = min(k + max(dp[i][k - 1], dp[k + 1][j]))
