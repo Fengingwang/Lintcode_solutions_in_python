@@ -31,8 +31,7 @@ class MiniTwitter:
             result.append(tweet)
             i += 1    
         return result
-        
-   
+       
     def getTimeline(self, user_id):
         # write your code here
         heap = []
